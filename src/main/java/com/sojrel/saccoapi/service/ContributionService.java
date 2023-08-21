@@ -2,6 +2,7 @@ package com.sojrel.saccoapi.service;
 
 import com.sojrel.saccoapi.dto.requests.ContributionRequestDto;
 import com.sojrel.saccoapi.dto.responses.ContributionResponseDto;
+import com.sojrel.saccoapi.dto.responses.MemberContributionsResponseDto;
 import com.sojrel.saccoapi.model.Contribution;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public interface ContributionService {
     public List<ContributionResponseDto> getContributions();
     ContributionResponseDto editContribution(Long contributionId, ContributionRequestDto contributionRequestDto);
     public ContributionResponseDto deleteContribution(Long contributionId);
-
+    public List<MemberContributionsResponseDto> getMemberContributions();
 //    public ContributionResponseDto removeMemberFromContribution(Long contributionId, String memberId);
 
 }

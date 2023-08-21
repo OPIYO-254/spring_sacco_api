@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Sojrel Sacco Ltd</title>
@@ -8,13 +8,10 @@
 
 </head>
 <body>
-    <div class="container-fluid text-light bg-dark d-flex p-2 mb-5">
-        <h2>Member Registration</h2>
-    </div>
+    <div th:insert="base :: navbar">  </div>
 
-    <h3 align="center" style="color:#09AA5C">Register A New Member</h3>
-
-    <div class="container pt-5" align="center">
+    <div class="container pt-5" align="center" style="height:80vh;">
+        <h3 class="pb-4 pt-3" style="color:#09AA5C;">Register A New Member</h3>
         <form th:action="@{/save-member}" th:object="${member}" method="post">
             <div class="row" style="width:50%">
                 <div class="col">
@@ -41,7 +38,7 @@
 
         </form>
     </div>
-
+    <div th:insert="base :: footer">  </div>
     <script>
         function formatDate() {
         var dobInput = document.getElementById("dobInput").value;

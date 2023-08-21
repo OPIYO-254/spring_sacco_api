@@ -3,6 +3,7 @@ package com.sojrel.saccoapi.service;
 import com.sojrel.saccoapi.dto.requests.ContributionRequestDto;
 import com.sojrel.saccoapi.dto.responses.ContributionResponseDto;
 import com.sojrel.saccoapi.dto.responses.Mapper;
+import com.sojrel.saccoapi.dto.responses.MemberContributionsResponseDto;
 import com.sojrel.saccoapi.model.Contribution;
 import com.sojrel.saccoapi.model.Member;
 import com.sojrel.saccoapi.repository.ContributionRepository;
@@ -10,10 +11,13 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+import java.sql.Timestamp;
 @Service
 public class ContributionServiceImpl implements ContributionService{
     @Autowired
@@ -70,6 +74,26 @@ public class ContributionServiceImpl implements ContributionService{
         Contribution contribution = getContributionById(contributionId);
         contributionRepository.delete(contribution);
         return Mapper.contributionToContributionResponseDto(contribution);
+    }
+
+    @Override
+    public List<MemberContributionsResponseDto> getMemberContributions() {
+        List<Object[]> results = contributionRepository.findMemberContributions();
+        List<MemberContributionsResponseDto> dtos = new ArrayList<>();
+        for (Object[] row : results) {
+            MemberContributionsResponseDto dto = new MemberContributionsResponseDto();
+            dto.setId((Long) row[0]);
+            dto.setMemberId((String) row[1]);
+            dto.setFirstName((String) row[2]);
+            dto.setMidName((String) row[3]);
+            Timestamp timestamp = (Timestamp) row[4];
+            LocalDateTime localtime = timestamp.toLocalDateTime();
+            dto.setContributionDate(localtime);
+            dto.setContributionType((String) row[5]);
+            dto.setAmount((int) row[6]);
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
 

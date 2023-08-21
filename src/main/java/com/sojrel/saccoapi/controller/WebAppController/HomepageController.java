@@ -1,6 +1,8 @@
 package com.sojrel.saccoapi.controller.WebAppController;
 
+import com.sojrel.saccoapi.dto.requests.ContributionRequestDto;
 import com.sojrel.saccoapi.dto.requests.MemberRequestDto;
+import com.sojrel.saccoapi.dto.responses.MemberContributionsResponseDto;
 import com.sojrel.saccoapi.dto.responses.MemberResponseDto;
 import com.sojrel.saccoapi.dto.responses.MemberTotalSavingsDto;
 import com.sojrel.saccoapi.model.Member;
@@ -21,9 +23,9 @@ public class HomepageController {
     MemberService memberService;
     @Autowired
     ContributionService contributionService;
-    @GetMapping("/")
+    @GetMapping("/dashboard")
     public ModelAndView membersSavings(){
-        ModelAndView modelAndView = new ModelAndView("index");
+        ModelAndView modelAndView = new ModelAndView("dashboard");
 //        List<Member> members = memberService.listMembers();
         List<MemberTotalSavingsDto> memberTotalSavingDtos = memberService.findMemberSavings();
         modelAndView.addObject("savings", memberTotalSavingDtos);
@@ -40,7 +42,7 @@ public class HomepageController {
     @PostMapping("/save-member")
     public String saveMember(@ModelAttribute MemberRequestDto memberRequestDto){
         memberService.saveMember(memberRequestDto);
-        return "redirect:/";
+        return "redirect:/members";
     }
 
     @GetMapping("/members")
@@ -49,5 +51,20 @@ public class HomepageController {
         List<MemberResponseDto> memberResponseDtos = memberService.getAllMembers();
         modelAndView.addObject("members", memberResponseDtos);
         return  modelAndView;
+    }
+    @GetMapping("/add-contributions")
+    public ModelAndView addContribution(){
+        ModelAndView modelAndView = new ModelAndView("add-contributions");
+        ContributionRequestDto contributionRequestDto = new ContributionRequestDto();
+        modelAndView.addObject("contribution", contributionRequestDto);
+        return modelAndView;
+    }
+
+    @GetMapping("members-contributions")
+    public ModelAndView listContributions(){
+        ModelAndView modelAndView = new ModelAndView("members-contributions");
+        List<MemberContributionsResponseDto> memberContributionsResponseDtos = contributionService.getMemberContributions();
+        modelAndView.addObject("contributions", memberContributionsResponseDtos);
+        return modelAndView;
     }
 }

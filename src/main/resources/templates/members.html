@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Members</title>
@@ -8,11 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-      <div class="container-fluid text-light bg-dark d-flex p-2">
-        <h2>Sojrel Sacco Members</h2>
-      </div>
-      <hr>
-      <div class="container pt-5">
+    <div th:insert="base :: navbar"></div>
+      <h2 class="text-success pt-4 pb-3" align="center">Registered Members</h2>
+      <div class="container-fluid px-4 mt-2" style="height:80vh;">
           <table class="table" id="members_table">
               <thead>
                 <th>Member No.</th>
@@ -40,6 +38,7 @@
               </tbody>
           </table>
       </div>
+    <div th:insert="base :: footer">  </div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
       <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
       <script>
