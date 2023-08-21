@@ -16,9 +16,23 @@
     <div class="container-fluid mt-0">
         <div class="container-fluid p-0">
             <div class="row pt-0">
-                <div class="col-2" style="background-color: #09AA5C; height:89vh">
-                    <!-- First container with 1/12 width -->
-                    First Container
+                <div class="col-2 pt-2 p-0 bg-success" style=" height:89vh">
+                    <div class="container-fluid pt-4 pb-4 d-flex border-bottom border-top border-light" style="background-color: #198754; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#09AA5C'" onmouseout="this.style.backgroundColor='#198754'">
+                        <a th:href="@{/members}" class="text-decoration-none text-light"><h5>Sacco Members</h5></a>
+                    </div>
+                    <div class="container-fluid mt-1 pt-4 pb-4 d-flex border-bottom border-light" style="background-color: #198754; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#09AA5C'" onmouseout="this.style.backgroundColor='#198754'">
+                        <a href="" class="text-decoration-none text-light"><h5>Members</h5></a>
+                    </div>
+                    <div class="container-fluid mt-1 pt-4 pb-4 d-flex border-bottom border-light" style="background-color: #198754; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#09AA5C'" onmouseout="this.style.backgroundColor='#198754'">
+                        <a href="#" class="text-decoration-none text-light"><h5>Members</h5></a>
+                    </div>
+                    <div class="container-fluid mt-1 pt-4 pb-4 d-flex border-bottom border-light" style="background-color: #198754; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#09AA5C'" onmouseout="this.style.backgroundColor='#198754'">
+                        <a href="#" class="text-decoration-none text-light"><h5>Members</h5></a>
+                    </div>
+                    <div class="container-fluid mt-1 pt-4 pb-4 d-flex border-bottom border-light" style="background-color: #198754; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#09AA5C'" onmouseout="this.style.backgroundColor='#198754'">
+                        <a href="#" class="text-decoration-none text-light"><h5>Members</h5></a>
+                    </div>
+
                 </div>
                 <div class="col bg-light m-1">
                     <div class="row d-flex text-light">
@@ -34,7 +48,7 @@
                         <div class="col m-1 p-4 d-flex justify-content-center rounded-2" style="background-color: #09AA5C;"><a href="#" class="text-decoration-none text-light"><h5>Completed</h5></a></a></div>
                     </div>
                     <hr>
-                    <div class="container-fluid">
+                    <div class="container">
                         <table class="table" id="member-table">
                             <thead height="56px">
                                 <th scope="col" class="text-success">MemberID</th>
@@ -47,26 +61,24 @@
                                 <th scope="col" class="text-success">Action</th>
                             </thead>
                             <tbody>
-                                <tr th:each="member: ${members}">
-                                    <td th:text="${member.id}"></td>
-                                    <td th:text="${member.firstName}"></td>
-                                    <td th:text="${member.midName}"></td>
-                                    <td th:text="${member.email}"></td>
-                                    <td th:text="${member.idNo}"></td>
-                                    <td th:text="${member.phone}"></td>
-                                    <td th:text="${member.totalSavings}"></td>
+                                <tr th:each="saving: ${savings}">
+                                    <td th:text="${saving.id}"></td>
+                                    <td th:text="${saving.firstName}"></td>
+                                    <td th:text="${saving.midName}"></td>
+                                    <td th:text="${saving.email}"></td>
+                                    <td th:text="${saving.idNo}"></td>
+                                    <td th:text="${saving.phone}"></td>
+                                    <td th:text="${saving.totalSavings}"></td>
                                     <td><button class="btn btn-success" style="width:100%;">View</button></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-dark text-light">
+    <div class="container-fluid bg-dark text-light p-3">
         <p>Sojrel Sacco Ltd</p>
         <p>All rights reserved</p>
     </div>

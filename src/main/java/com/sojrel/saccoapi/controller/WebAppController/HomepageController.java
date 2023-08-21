@@ -1,6 +1,7 @@
-package com.sojrel.saccoapi.controller;
+package com.sojrel.saccoapi.controller.WebAppController;
 
 import com.sojrel.saccoapi.dto.requests.MemberRequestDto;
+import com.sojrel.saccoapi.dto.responses.MemberResponseDto;
 import com.sojrel.saccoapi.dto.responses.MemberTotalSavingsDto;
 import com.sojrel.saccoapi.model.Member;
 import com.sojrel.saccoapi.service.ContributionService;
@@ -21,11 +22,11 @@ public class HomepageController {
     @Autowired
     ContributionService contributionService;
     @GetMapping("/")
-    public ModelAndView listMembers(){
+    public ModelAndView membersSavings(){
         ModelAndView modelAndView = new ModelAndView("index");
 //        List<Member> members = memberService.listMembers();
         List<MemberTotalSavingsDto> memberTotalSavingDtos = memberService.findMemberSavings();
-        modelAndView.addObject("members", memberTotalSavingDtos);
+        modelAndView.addObject("savings", memberTotalSavingDtos);
         return modelAndView;
     }
     @GetMapping("/register")
@@ -40,5 +41,13 @@ public class HomepageController {
     public String saveMember(@ModelAttribute MemberRequestDto memberRequestDto){
         memberService.saveMember(memberRequestDto);
         return "redirect:/";
+    }
+
+    @GetMapping("/members")
+    public ModelAndView listMembers(){
+        ModelAndView modelAndView = new ModelAndView("members");
+        List<MemberResponseDto> memberResponseDtos = memberService.getAllMembers();
+        modelAndView.addObject("members", memberResponseDtos);
+        return  modelAndView;
     }
 }
