@@ -1,23 +1,20 @@
 package com.sojrel.saccoapi.service;
 
 import com.sojrel.saccoapi.dto.requests.LoanRequestDto;
-import com.sojrel.saccoapi.dto.responses.LoanResponseDto;
-import com.sojrel.saccoapi.dto.responses.Mapper;
-import com.sojrel.saccoapi.model.Loan;
-import com.sojrel.saccoapi.model.Member;
-import com.sojrel.saccoapi.model.Repayment;
+import com.sojrel.saccoapi.dto.responses.*;
+import com.sojrel.saccoapi.model.*;
+import com.sojrel.saccoapi.repository.LoanGuarantorRepository;
 import com.sojrel.saccoapi.repository.LoanRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 @Service
@@ -28,6 +25,8 @@ public class LoanServiceImpl implements LoanService{
     private MemberService memberService;
 
     private RepaymentService repaymentService;
+    @Autowired
+    private LoanGuarantorRepository loanGuarantorRepository;
     @Transactional
     @Override
     public LoanResponseDto addLoan(LoanRequestDto loanRequestDto) {
@@ -152,7 +151,7 @@ public class LoanServiceImpl implements LoanService{
     }
     @Transactional
     @Override
-    public LoanResponseDto addGuarantorToLoan(Long loanId, String guarantorId) {
+    public LoanResponseDto addGuarantorToLoan(String guarantorId,Long loanId) {
         Loan loan = getLoanById(loanId);
         Member guarantor = memberService.getMemberById(guarantorId);
         if(loan.getGuarantors().contains(guarantor)){
@@ -174,4 +173,76 @@ public class LoanServiceImpl implements LoanService{
         guarantor.removeLoanGuaranteed(loan);
         return Mapper.loanToLoanResponseDto(loan);
     }
+
+    @Override
+    public List<MemberLoansResponseDto> getAppliedLoans() {
+        List<Object[]> loans = loanRepository.findAppliedLoans();
+        List<MemberLoansResponseDto> memberLoansResponseDtos = new ArrayList<>();
+        for (Object[] row:loans) {
+            MemberLoansResponseDto dto= new MemberLoansResponseDto();
+            dto.setMemberId((String)row[0]);
+            dto.setFirstName((String)row[1]);
+            dto.setMidName((String)row[2]);
+            dto.setId((Long)row[3]);
+            dto.setLoanType((String)row[4]);
+            Timestamp timestamp = (Timestamp) row[5];
+            LocalDateTime localtime = timestamp.toLocalDateTime();
+            dto.setApplicationDate(localtime);
+            dto.setPrincipal((Double)row[6]);
+            dto.setInstalments((int)row[7]);
+            dto.setLoanStatus((String)row[8]);
+
+            memberLoansResponseDtos.add(dto);
+        }
+        return memberLoansResponseDtos;
+    }
+
+    @Override
+    public ItemCountDto countAppliedLoans() {
+        int loanCount = loanRepository.countAppliedLoans();
+        ItemCountDto itemCountDto = new ItemCountDto();
+        itemCountDto.setCount(loanCount);
+
+        return itemCountDto;
+    }
+
+
+    @Override
+    public void updateGuaranteedAmount(String memberId, Long loanId, Double amount) {
+        LoanGuarantor loanGuarantor = loanGuarantorRepository.findByMemberIdAndLoanId(memberId, loanId)
+                .orElseThrow(() -> new EntityNotFoundException("Loan guarantor not found"));
+        loanGuarantor.setAmount(amount);
+        loanGuarantorRepository.save(loanGuarantor);
+    }
+
+
+
+//    @Override
+//    public LoanGuarantorResponseDto updateGuaranteedAmount(String memberId, Long loanId, Double amount) {
+//        LoanGuarantorResponseDto loanGuarantorResponseDto =loanRepository.addGuaranteedAmount(memberId,loanId, amount);
+//        return loanGuarantorResponseDto;
+//    }
+
+//    @Override
+//    public LoanResponseDto updateGuaranteedAmount(Long loanId, Map<String, Double> fields) {
+//        Loan loan = getLoanById(loanId);
+//        List<Member> guarantors = loan.getGuarantors();
+//
+//        for (Member m:guarantors) {
+//            if(m.getId()==)
+//        }
+//        if(Objects.nonNull(loan)) {
+//            fields.forEach((key, value) -> {
+//                Field field = ReflectionUtils.findField(Loan.class, key);
+//                field.setAccessible(true);
+//                ReflectionUtils.setField(field, loan, Loan.LoanStatus.valueOf(value));
+//            });
+//            loanRepository.save(loan);
+//            return Mapper.loanToLoanResponseDto(loan);
+//        }
+//        return null;
+//        return null;
+//    }
 }
+
+

@@ -19,7 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class Loan {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,6 +54,7 @@ public class Loan {
     @JoinColumn(name = "member_id")
     private Member borrower;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "loan_guarantors",

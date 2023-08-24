@@ -1,5 +1,6 @@
 package com.sojrel.saccoapi.repository;
 
+import com.sojrel.saccoapi.dto.responses.ItemCountDto;
 import com.sojrel.saccoapi.dto.responses.MemberTotalSavingsDto;
 import com.sojrel.saccoapi.model.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +17,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 
     @Query("SELECT new com.sojrel.saccoapi.dto.responses.MemberTotalSavingsDto(m.id, m.firstName, m.midName,m.idNo, m.email, m.phone, SUM(c.amount)) FROM Contribution c JOIN c.member m WHERE c.contributionType = 'SAVINGS' GROUP BY m.id")
     List<MemberTotalSavingsDto> findMemberSavings();
+
+    @Query("SELECT COUNT(*) FROM Member")
+    int findMemberCount();
 }

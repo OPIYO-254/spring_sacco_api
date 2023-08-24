@@ -1,6 +1,7 @@
 package com.sojrel.saccoapi.service;
 
 import com.sojrel.saccoapi.dto.requests.MemberRequestDto;
+import com.sojrel.saccoapi.dto.responses.ItemCountDto;
 import com.sojrel.saccoapi.dto.responses.MemberResponseDto;
 import com.sojrel.saccoapi.dto.responses.MemberTotalSavingsDto;
 import com.sojrel.saccoapi.model.Member;
@@ -24,4 +25,5 @@ public interface MemberService {
     public List<Member> listMembers();
     List<MemberTotalSavingsDto> findMemberSavings();
     public void saveMember(MemberRequestDto member);
+    public ItemCountDto getMemberCount();
 }

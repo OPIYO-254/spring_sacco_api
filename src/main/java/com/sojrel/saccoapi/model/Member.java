@@ -71,7 +71,7 @@ public class Member {
     @OneToMany(mappedBy = "borrower", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Loan> loansTaken;
 
-    @JsonIgnore
+
     @ManyToMany(mappedBy = "guarantors", fetch = FetchType.LAZY)
     private List<Loan> loansGuaranteed;
 

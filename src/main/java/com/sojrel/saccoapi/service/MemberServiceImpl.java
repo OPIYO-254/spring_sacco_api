@@ -1,6 +1,7 @@
 package com.sojrel.saccoapi.service;
 
 import com.sojrel.saccoapi.dto.requests.MemberRequestDto;
+import com.sojrel.saccoapi.dto.responses.ItemCountDto;
 import com.sojrel.saccoapi.dto.responses.Mapper;
 import com.sojrel.saccoapi.dto.responses.MemberResponseDto;
 import com.sojrel.saccoapi.dto.responses.MemberTotalSavingsDto;
@@ -199,6 +200,13 @@ public class MemberServiceImpl implements MemberService{
         member.setAddress(memberRequestDto.getAddress());
         member.setResidence(memberRequestDto.getResidence());
         memberRepository.save(member);
+    }
+    @Override
+    public ItemCountDto getMemberCount(){
+        int memberCount = memberRepository.findMemberCount();
+        ItemCountDto itemCountDto = new ItemCountDto();
+        itemCountDto.setCount(memberCount);
+        return itemCountDto;
     }
 
 

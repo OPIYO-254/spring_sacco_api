@@ -1,6 +1,8 @@
 package com.sojrel.saccoapi.controller;
 
+import com.sojrel.saccoapi.dto.requests.LoanGuarantorRequestDto;
 import com.sojrel.saccoapi.dto.requests.LoanRequestDto;
+import com.sojrel.saccoapi.dto.responses.LoanGuarantorResponseDto;
 import com.sojrel.saccoapi.dto.responses.LoanResponseDto;
 import com.sojrel.saccoapi.model.Loan;
 import com.sojrel.saccoapi.service.LoanService;
@@ -61,7 +63,7 @@ public class LoanController {
     }
     @PostMapping("/add-guarantor/{loanId}/{guarantorId}")
     public ResponseEntity<LoanResponseDto> addGuarantor(@PathVariable Long loanId, @PathVariable String guarantorId){
-        LoanResponseDto loanResponseDto = loanService.addGuarantorToLoan(loanId, guarantorId);
+        LoanResponseDto loanResponseDto = loanService.addGuarantorToLoan(guarantorId, loanId);
         return new ResponseEntity<>(loanResponseDto, HttpStatus.OK);
     }
 
@@ -79,6 +81,21 @@ public class LoanController {
     public ResponseEntity<LoanResponseDto> removeBorrower(@PathVariable Long loanId, @PathVariable String borrowerId){
         LoanResponseDto loanResponseDto = loanService.removeBorrowerFromLoan(loanId, borrowerId);
         return new ResponseEntity<>(loanResponseDto, HttpStatus.OK);
+    }
+
+    @PutMapping("/update-amount")
+    public ResponseEntity<String> addGuaranteeAmount(
+            @RequestParam String memberId,
+            @RequestParam Long loanId,
+            @RequestParam double amount){
+        loanService.updateGuaranteedAmount(memberId, loanId, amount);
+        return ResponseEntity.ok("Loan guarantor amount updated successfully.");
+//        try {
+//
+//
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating loan guarantor amount.");
+//        }
     }
 
 }
