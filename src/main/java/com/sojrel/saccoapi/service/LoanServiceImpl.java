@@ -176,34 +176,42 @@ public class LoanServiceImpl implements LoanService{
 
     @Override
     public List<MemberLoansResponseDto> getAppliedLoans() {
-        List<Object[]> loans = loanRepository.findAppliedLoans();
-        List<MemberLoansResponseDto> memberLoansResponseDtos = new ArrayList<>();
-        for (Object[] row:loans) {
-            MemberLoansResponseDto dto= new MemberLoansResponseDto();
-            dto.setMemberId((String)row[0]);
-            dto.setFirstName((String)row[1]);
-            dto.setMidName((String)row[2]);
-            dto.setId((Long)row[3]);
-            dto.setLoanType((String)row[4]);
-            Timestamp timestamp = (Timestamp) row[5];
-            LocalDateTime localtime = timestamp.toLocalDateTime();
-            dto.setApplicationDate(localtime);
-            dto.setPrincipal((Double)row[6]);
-            dto.setInstalments((int)row[7]);
-            dto.setLoanStatus((String)row[8]);
+        List<MemberLoansResponseDto> loans = loanRepository.findAppliedLoans(Loan.LoanStatus.REVIEW);
+        return loans;
+    }
 
-            memberLoansResponseDtos.add(dto);
-        }
-        return memberLoansResponseDtos;
+    public List<MemberLoansResponseDto> getRejectedLoans(){
+        List<MemberLoansResponseDto> loans = loanRepository.findAppliedLoans(Loan.LoanStatus.REJECTED);
+        return loans;
+    }
+
+    public List<MemberLoansResponseDto> getApprovedLoans(){
+        List<MemberLoansResponseDto> loans = loanRepository.findAppliedLoans(Loan.LoanStatus.APPROVED);
+        return loans;
     }
 
     @Override
     public ItemCountDto countAppliedLoans() {
-        int loanCount = loanRepository.countAppliedLoans();
-        ItemCountDto itemCountDto = new ItemCountDto();
-        itemCountDto.setCount(loanCount);
+        ItemCountDto loanCount = loanRepository.countAppliedLoans(Loan.LoanStatus.REVIEW);
+        return loanCount;
+    }
 
-        return itemCountDto;
+    @Override
+    public ItemCountDto countRejectedLoans() {
+        ItemCountDto loanCount = loanRepository.countAppliedLoans(Loan.LoanStatus.REJECTED);
+        return loanCount;
+    }
+
+    @Override
+    public ItemCountDto countApprovedLoans() {
+        ItemCountDto loanCount = loanRepository.countAppliedLoans(Loan.LoanStatus.APPROVED);
+        return loanCount;
+    }
+
+    @Override
+    public ItemCountDto countCompletedLoans() {
+        ItemCountDto loanCount = loanRepository.countAppliedLoans(Loan.LoanStatus.COMPLETED);
+        return loanCount;
     }
 
 
@@ -215,6 +223,33 @@ public class LoanServiceImpl implements LoanService{
         loanGuarantorRepository.save(loanGuarantor);
     }
 
+    @Override
+    public List<LoanGuarantorResponseDto> getLoanGuarantors(Long loanId) {
+        List<LoanGuarantorResponseDto> loanGuarantorResponseDtos = loanGuarantorRepository.findLoanGuarantorById(loanId);
+        return loanGuarantorResponseDtos;
+    }
+
+    @Override
+    public ItemTotalDto getTotalGuaranteed(Long loanId) {
+        Long totalGuaranteed = loanGuarantorRepository.getTotalGuaranteed(loanId);
+        ItemTotalDto itemTotalDto = new ItemTotalDto();
+        itemTotalDto.setTotal(totalGuaranteed);
+        return itemTotalDto;
+    }
+
+    @Override
+    public void approveLoan(Long loanId) {
+        Loan loan = getLoanById(loanId);
+        loan.setLoanStatus(Loan.LoanStatus.APPROVED);
+        loanRepository.save(loan);
+    }
+
+    @Override
+    public void rejectLoan(Long loanId) {
+        Loan loan = getLoanById(loanId);
+        loan.setLoanStatus(Loan.LoanStatus.REJECTED);
+        loanRepository.save(loan);
+    }
 
 
 //    @Override

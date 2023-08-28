@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Sojrel Sacco Ltd</title>
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="p-0 m-0">
+    <div th:insert="~{base :: navbar}"></div>
+    <div class="container">
+        <div class=""><h5 class="mt-3 p-3 text-success">Loan Details</h5></div>
+        <hr>
+        <table class="table" id="details-table">
+            <tbody>
+                <tr>
+                    <th scope="row" style="width:20%">Member ID</th>
+                    <td th:text="${loan.memberId}"></td>
+                </tr>
+                <tr>
+                    <th scope="row" style="width:20%">ID:</th>
+                    <td th:text="${loan.id}"></td>
+                </tr>
+                <tr>
+                    <th scope="row" style="width:20%">Type:</th>
+                    <td th:text="${loan.loanType}"></td>
+                </tr>
+                <tr>
+                    <th scope="row" style="width:20%">Date:</th>
+                    <td th:text="${#temporals.format(loan.applicationDate, 'dd MMM yyyy')}"></td>
+                </tr>
+                <tr>
+                    <th scope="row" style="width:20%">Principal:</th>
+                    <td th:text="'Ksh '+${loan.principal}"></td>
+                </tr>
+                <tr>
+                    <th scope="row" style="width:20%">Amount:</th>
+                    <td th:text="'Ksh '+${loan.amount}"></td>
+                </tr>
+                <tr>
+                    <th scope="row" style="width:20%">Instalments:</th>
+                    <td th:text="${loan.instalments} +' months'"></td>
+                </tr>
+                <tr>
+                    <th scope="row" style="width:20%">Total Guaranteed:</th>
+                    <td th:text="${total != null ? 'Ksh '+total: 'Ksh 0'}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row mt-2 mb-3 d-flex">
+            <div class="col-md-9"><h5 class="text-success">Approval</h5></div>
+            <div class="col">
+                <form th:action="@{/approve-loan/{id}(id=${loan.id})}" th:method="post">
+<!--                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+                    <a href="#"><button type="submit" class="btn btn-success text-light w-100">Approve</button></a>
+                </form>
+            </div>
+            <div class="col">
+                <form th:action="@{/reject-loan/{id}(id=${loan.id})}" th:method="post">
+                    <a><button class="btn btn-danger text-light w-100">Reject</button></a>
+                </form>
+            </div>
+        </div>
+        <hr>
+
+        <table class="table" id="guarantors-table">
+            <thead>
+                <th>Guarantor No.</th>
+                <th>Guarantor Name</th>
+                <th>Amount Guaranteed</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+            </thead>
+            <tbody>
+                <tr th:each="guarantor: ${guarantors}">
+                    <td th:text="${guarantor.memberId}"></td>
+                    <td th:text="${guarantor.firstName}+' '+${guarantor.midName}"></td>
+                    <td th:text="${guarantor.amount != null ? 'Ksh ' + guarantor.amount : 'Ksh 0'}"></td>
+                    <td th:text="${guarantor.phone}"></td>
+                    <td th:text="${guarantor.email}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+
+
+    </div>
+
+
+
+
+<!--    <div th:insert="~{base :: footer}">  </div>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            var table = $("#guarantors-table").DataTable({
+
+            });
+
+        });
+    </script>
+</body>
+</html>
+
+
+<!--
+"id": 2,
+    "loanType": "EMERGENCY",
+    "applicationDate": "2023-08-18T22:45:47.585701",
+    "principal": 10000.0,
+    "instalments": 4,
+    "amount": 10505.0,
+    "interest": 2.0,
+    "loanStatus": "REVIEW",
+    "repayments": [],
+    "memberId": "SJL002",
+-->

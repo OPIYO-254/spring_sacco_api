@@ -1,5 +1,6 @@
 package com.sojrel.saccoapi.dto.responses;
 
+import com.sojrel.saccoapi.model.Loan;
 import com.sojrel.saccoapi.model.Member;
 import com.sojrel.saccoapi.model.Repayment;
 import lombok.AllArgsConstructor;
@@ -19,10 +20,10 @@ public class MemberLoansResponseDto {
     private String firstName;
     private String midName;
     private Long id;
-    private String loanType;
+    private Loan.LoanType loanType;
     private LocalDateTime applicationDate;
     private double principal;
     private int instalments;
-    private String loanStatus;
+    private Loan.LoanStatus loanStatus;
 
 }

@@ -1,10 +1,7 @@
 package com.sojrel.saccoapi.service;
 
 import com.sojrel.saccoapi.dto.requests.LoanRequestDto;
-import com.sojrel.saccoapi.dto.responses.ItemCountDto;
-import com.sojrel.saccoapi.dto.responses.LoanGuarantorResponseDto;
-import com.sojrel.saccoapi.dto.responses.LoanResponseDto;
-import com.sojrel.saccoapi.dto.responses.MemberLoansResponseDto;
+import com.sojrel.saccoapi.dto.responses.*;
 import com.sojrel.saccoapi.model.Loan;
 import com.sojrel.saccoapi.model.LoanGuarantor;
 import com.sojrel.saccoapi.model.LoanGuarantorId;
@@ -30,8 +27,16 @@ public interface LoanService {
     public LoanResponseDto addGuarantorToLoan(String memberId, Long loanId);
     public LoanResponseDto removeGuarantorFromLoan(Long loanId, String guarantorId);
     public List<MemberLoansResponseDto> getAppliedLoans();
+    public List<MemberLoansResponseDto> getRejectedLoans();
+    public List<MemberLoansResponseDto> getApprovedLoans();
     public ItemCountDto countAppliedLoans();
-
+    public ItemCountDto countRejectedLoans();
+    public ItemCountDto countApprovedLoans();
+    public ItemCountDto countCompletedLoans();
     public void updateGuaranteedAmount(String memberId, Long loanId, Double amount);
+    public List<LoanGuarantorResponseDto> getLoanGuarantors(Long loanId);
+    public ItemTotalDto getTotalGuaranteed(Long loanId);
+    public void approveLoan(Long loanId);
+    public void rejectLoan(Long loanId);
 
 }

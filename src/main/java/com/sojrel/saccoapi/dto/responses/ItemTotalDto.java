@@ -9,6 +9,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ItemCountDto {
-    private Long count;
+public class ItemTotalDto {
+    private Long total;
 }

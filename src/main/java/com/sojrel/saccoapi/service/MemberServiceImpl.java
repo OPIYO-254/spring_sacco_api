@@ -182,7 +182,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public List<MemberTotalSavingsDto> findMemberSavings() {
-        return memberRepository.findMemberSavings();
+        return memberRepository.findMemberSavings(Contribution.ContributionType.SAVINGS);
     }
 
     @Override
@@ -203,9 +203,7 @@ public class MemberServiceImpl implements MemberService{
     }
     @Override
     public ItemCountDto getMemberCount(){
-        int memberCount = memberRepository.findMemberCount();
-        ItemCountDto itemCountDto = new ItemCountDto();
-        itemCountDto.setCount(memberCount);
+        ItemCountDto itemCountDto = memberRepository.findMemberCount();
         return itemCountDto;
     }
 

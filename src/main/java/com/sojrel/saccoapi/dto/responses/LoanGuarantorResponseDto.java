@@ -13,5 +13,9 @@ import lombok.ToString;
 public class LoanGuarantorResponseDto {
     private String memberId;
     private Long loanId;
-    private double amount;
+    private String firstName;
+    private String midName;
+    private Double amount;
+    private String phone;
+    private String email;
 }
