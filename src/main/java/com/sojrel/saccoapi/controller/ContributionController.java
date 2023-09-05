@@ -2,12 +2,15 @@ package com.sojrel.saccoapi.controller;
 
 import com.sojrel.saccoapi.dto.requests.ContributionRequestDto;
 import com.sojrel.saccoapi.dto.responses.ContributionResponseDto;
+import com.sojrel.saccoapi.dto.responses.ItemCountDto;
+import com.sojrel.saccoapi.dto.responses.MemberTotalSavingsDto;
 import com.sojrel.saccoapi.service.ContributionService;
 import com.sojrel.saccoapi.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -58,5 +61,10 @@ public class ContributionController {
 //        ContributionResponseDto contributionResponseDto = contributionService.removeMemberFromContribution(contributionId, memberId);
 //        return new ResponseEntity<>(contributionResponseDto, HttpStatus.OK);
 //    }
+    @GetMapping("/total-savings")
+    public ResponseEntity<List<MemberTotalSavingsDto>> membersTotalSavings(){
+        List<MemberTotalSavingsDto> memberTotalSavingDtos = memberService.findMemberSavings();
+        return new ResponseEntity<>(memberTotalSavingDtos, HttpStatus.OK);
+    }
 
 }

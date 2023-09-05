@@ -12,20 +12,19 @@
     <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
-
 </head>
 <body>
     <div th:insert="~{base :: navbar}"></div>
     <div class="container-fluid">
         <div class="row">
             <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-2 col-lg-2 p-0" id="sidebar-container"></div>
-            <div class="col-md-10 main-section details-main-section">
+            <div class="col-md-10 main-section">
                 <span class="d-flex justify-content-center mt-3 text-success">Loan Details</span>
                 <hr>
                 <table class="table" id="details-table">
                     <tbody>
                         <tr>
-                            <th scope="row row-scoped">Member ID</th>
+                            <th scope="row row-scoped" style="width:40%">Member ID</th>
                             <td th:text="${loan.memberId}"></td>
                         </tr>
                         <tr>
@@ -58,22 +57,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="row mt-2 mb-3 d-flex">
-<!--                    <div class="col-md-9"><span class="text-success d-flex justify-content-center mb-4">Approval</span></div>-->
-                    <div class="col">
-                        <form th:action="@{/approve-loan/{id}(id=${loan.id})}" th:method="post">
-                            <!--                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
-                            <div class="d-flex justify-content-center"><button type="submit" class="btn btn-success text-light d-flex w-auto">Approve</button></div>
-                        </form>
-                    </div>
-                    <div class="col">
-                        <form th:action="@{/reject-loan/{id}(id=${loan.id})}" th:method="post">
-                            <div class="d-flex justify-content-center"><button class="btn btn-danger text-light w-auto">Reject</button></div>
-                        </form>
-                    </div>
-                </div>
                 <hr>
-                <div class="container mt-4">
+                <span class="d-flex justify-content-center">Loan Guarantors</span>
+                <hr>
+                <div class="container guarantor-table-area mt-4">
                     <div class="table-responsive table-responsive-sm">
                         <table class="table" id="guarantors-table" style="width:100%;">
                             <thead>

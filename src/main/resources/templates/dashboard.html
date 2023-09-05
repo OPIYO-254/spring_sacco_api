@@ -2,193 +2,174 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Sojrel Sacco Ltd</title>
     <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles.css">
-
+    <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
 </head>
-<body class="p-0 m-0">
+<body>
     <div th:insert="~{base :: navbar}">  </div>
-    <div class="container-fluid mt-0" style=" height:80vh">
-        <div class="container-fluid p-0">
-            <div class="row pt-0">
-                <div class="col-2 pt-2 p-0 bg-success" style=" height:80vh">
-                    <div class="container-fluid pt-2 pb-2 mt-2 d-flex flex-row" style="background-color: #198754; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#09AA5C'" onmouseout="this.style.backgroundColor='#198754'">
-                        <div>
-                            <i class="fa fa-plus-square-o text-light" aria-hidden="true"></i>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-3 col-lg-2 p-0" id="sidebar-container"></div>
+            <!-- Main Section -->
+            <div class="col-md-9 main-section">
+                <div class="card-section px-2">
+                    <div class="cards-row row mt-lg-3">
+                        <div class="card-item col-sm-3">
+                            <div class="col-sm pt-2 pb-2 d-flex justify-content-center rounded-2">
+                                <a th:href="@{/members}" class="container-fluid text-decoration-none text-light">
+                                    <div class="col d-flex align-items-center">
+                                        <div class="left-icon col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2">
+                                            <i class="fa fa-users" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-sm-10 p-0">
+                                            <p class="card-text m-0">Members</p>
+                                            <p class="card-text  m-0" th:text="${member_count}"></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                        <div class="px-2">
-                            <a th:href="@{/register}" class="text-decoration-none text-light"><h6>Add New Member</h6></a>
+                        <div class="card-item col-sm-3">
+                            <div class="col-sm pt-2 pb-2 d-flex justify-content-center rounded-2">
+                                <a th:href="@{/members-contributions}" class="container-fluid text-decoration-none text-light">
+                                    <div class="col d-flex align-items-center">
+                                        <div class="left-icon col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2">
+                                            <i class="fa fa-money" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-sm-10 p-0">
+                                            <p class="one-row-item card-text text-light m-0">Contributions</p>
+<!--                                            <p class="card-text m-0"></p>-->
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-item col-sm-3">
+                            <div class="col-sm pt-2 pb-2 d-flex justify-content-center rounded-2">
+                                <a th:href="@{/applied-loans}" class="container-fluid text-decoration-none text-light">
+                                    <div class="col d-flex align-items-center">
+                                        <div class="left-icon col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2">
+                                            <i class="fa fa-list-ol" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-sm-10 p-0">
+                                            <p class="card-text text-light m-0">Applied</p>
+                                            <p class="card-text text-light m-0" th:text="${loan_count}"></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-item col-sm-3">
+                            <div class="col-sm pt-2 pb-2 d-flex justify-content-center rounded-2">
+                                <a th:href="@{/approved-loans}" class="container-fluid text-decoration-none text-light">
+                                    <div class="col d-flex align-items-center">
+                                        <div class="left-icon col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2">
+                                            <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-sm-10 p-0">
+                                            <p class="card-text text-light m-0">Approved</p>
+                                            <p class="card-text text-light m-0" th:text="${approved_count}"></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="container-fluid pt-2 pb-2 mt-2 mb-2 d-flex" style="background-color: #198754; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#09AA5C'" onmouseout="this.style.backgroundColor='#198754'">
-                        <div>
-                            <i class="fa fa-money text-light" aria-hidden="true"></i>
+                    <div class="cards-row row mt-lg-3 mb-lg-2">
+                        <div class="card-item col-sm-3">
+                            <div class="col-sm pt-2 pb-2 d-flex justify-content-center rounded-2">
+                                <a th:href="@{/rejected-loans}" class="container-fluid text-decoration-none text-light">
+                                    <div class="col d-flex align-items-center">
+                                        <div class="left-icon col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2">
+                                            <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-sm-10 p-0">
+                                            <p class="card-text text-light m-0">Rejected</p>
+                                            <p class="card-text text-light m-0" th:text="${rejected_count}"></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                        <div class="px-2">
-                            <a th:href="@{/members-contributions}" class="text-decoration-none text-light"><h6>Members Contributions</h6></a>
+                        <div class="card-item col-sm-3">
+                            <div class="col-sm pt-2 pb-2 d-flex justify-content-center rounded-2">
+                                <a href="#" class="container-fluid text-decoration-none text-light">
+                                    <div class="col d-flex align-items-center">
+                                        <div class="left-icon col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2">
+                                            <i class="fa fa-spinner" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-sm-10 p-0">
+                                            <p class="card-text text-light m-0">In Progress</p>
+                                            <p class="card-text text-light m-0" th:text="${completed_count}"></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-item col-sm-3">
+                            <div class="col-sm pt-2 pb-2 d-flex justify-content-center rounded-2">
+                                <a href="#" class="container-fluid text-decoration-none text-light">
+                                    <div class="col d-flex align-items-center">
+                                        <div class="left-icon col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2">
+                                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-sm-10 p-0">
+                                            <p class="card-text text-light m-0">Repaid</p>
+                                            <p class="card-text text-light m-0" th:text="${completed_count}"></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-item col-sm-3">
+                            <div class="col-sm pt-2 pb-2 d-flex justify-content-center rounded-2">
+                                <a href="#" class="container-fluid text-decoration-none text-light">
+                                    <div class="col d-flex align-items-center">
+                                        <div class="left-icon col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2">
+                                            <i class="fa fa-tasks" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-sm-10 one-row-item">
+                                            <p class="card-text text-light">Guarantors</p>
+<!--                                            <p class=" card-text text-light m-0">0</p>-->
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="container-fluid pt-2 pb-2 mt-2 mb-2 d-flex" style="background-color: #198754; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#09AA5C'" onmouseout="this.style.backgroundColor='#198754'">
-                        <div>
-                            <i class="fa fa-money text-light" aria-hidden="true"></i>
-                        </div>
-                        <div class="px-2">
-                            <a href="#" class="text-decoration-none text-light"><h6>Share Capital</h6></a>
-                        </div>
-
-                    </div>
-                    <div class="container-fluid pt-2 pb-2 mt-2 mb-2 d-flex" style="background-color: #198754; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#09AA5C'" onmouseout="this.style.backgroundColor='#198754'">
-                        <div>
-                            <i class="fa fa-money text-light" aria-hidden="true"></i>
-                        </div>
-                        <div class="px-2">
-                            <a href="#" class="text-decoration-none text-light"><h6>Member Savings</h6></a>
-                        </div>
-
-                    </div>
-                    <div class="container-fluid pt-2 pb-2 mt-2 mb-2 d-flex" style="background-color: #198754; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#09AA5C'" onmouseout="this.style.backgroundColor='#198754'">
-                        <div>
-                            <i class="fa fa-money text-light" aria-hidden="true"></i>
-                        </div>
-                        <div class="px-2">
-                            <a href="#" class="text-decoration-none text-light"><h6>Members</h6></a>
-                        </div>
-                    </div>
-
                 </div>
-                <div class="col bg-light m-1">
-                    <div class="row d-flex text-light">
-                        <div class="col-sm m-1 px-0 pt-3 pb-3 d-flex justify-content-center rounded-2">
-                            <a th:href="@{/members}" class="container-fluid text-decoration-none text-light">
-                                <div class="col d-flex">
-                                    <div class="col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2" style="width:36px; height:36px;">
-                                        <i class="fa fa-plus-square-o"></i>
-                                    </div>
-                                    <div class="col-sm-10 p-0">
-                                        <h6 class="card-title m-0">Members</h6>
-                                        <h6 class="card-info m-0" th:text="${member_count}"></h6>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm m-1 px-0 pt-3 pb-3 d-flex justify-content-center rounded-2">
-                            <a th:href="@{/add-contribution}" class="container-fluid text-decoration-none text-light">
-                                <div class="col d-flex">
-                                    <div class="col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2" style="width:36px; height:36px;">
-                                        <i class="fa fa-money" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="col-sm-10 p-0 d-flex align-items-center">
-                                        <h6 class="text-light m-0">Add Contributions</h6>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm m-1 px-0 pt-3 pb-3 d-flex justify-content-center rounded-2">
-                            <a th:href="@{/applied-loans}" class="container-fluid text-decoration-none text-light">
-                                <div class="col d-flex">
-                                    <div class="col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2" style="width:36px; height:36px;">
-                                        <i class="fa fa-list-ol" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="col-sm-10 p-0">
-                                        <h6 class="text-light m-0">Applied Loans</h6>
-                                        <h6 class="text-light m-0" th:text="${loan_count}"></h6>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm m-1 px-0 pt-3 pb-3 d-flex justify-content-center rounded-2">
-                            <a th:href="@{/approved-loans}" class="container-fluid text-decoration-none text-light">
-                                <div class="col d-flex">
-                                    <div class="col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2" style="width:36px; height:36px;">
-                                        <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="col-sm-10 p-0">
-                                        <h6 class="text-light m-0">Approved Loans</h6>
-                                        <h6 class="text-light m-0" th:text="${approved_count}"></h6>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-sm m-1 px-0 pt-3 pb-3 d-flex justify-content-center rounded-2"><!--style="background-color: #09AA5C;"-->
-                            <a th:href="@{/rejected-loans}" class="container-fluid text-decoration-none text-light">
-                                <div class="col d-flex">
-                                    <div class="col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2" style="width:36px; height:36px;">
-                                        <i class="fa fa-times-circle" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="col-sm-10 p-0">
-                                        <h6 class="text-light m-0">Rejected Loans</h6>
-                                        <h6 class="text-light m-0" th:text="${rejected_count}"></h6>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm m-1 px-0 pt-3 pb-3 d-flex justify-content-center rounded-2">
-                            <a href="#" class="container-fluid text-decoration-none text-light">
-                                <div class="col d-flex">
-                                    <div class="col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2" style="width:36px; height:36px;">
-                                        <i class="fa fa-file-o" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="col-sm-10 p-0">
-                                        <h6 class="text-light m-0">Repaid Loans</h6>
-                                        <h6 class="text-light m-0" th:text="${completed_count}"></h6>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm m-1 px-0 pt-3 pb-3 d-flex justify-content-center rounded-2">
-                            <a href="#" class="container-fluid text-decoration-none text-light">
-                                <div class="col d-flex">
-                                    <div class="col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2" style="width:36px; height:36px;">
-                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="col-sm-10 p-0 d-flex align-items-center">
-                                        <h6 class="text-light m-0">Track Loan</h6>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm m-1 px-0 pt-3 pb-3 d-flex justify-content-center rounded-2">
-                            <a href="#" class="container-fluid text-decoration-none text-light">
-                                <div class="col d-flex">
-                                    <div class="col-sm-2 bg-light d-flex align-items-center justify-content-center rounded-2 mx-2" style="width:36px; height:36px;">
-                                        <i class="fa fa-tasks" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="col-sm-10 p-0 d-flex align-items-center">
-                                        <h6 class="text-light m-0">Guarantee Status</h6>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="container-fluid">
-                        <table class="table" id="member-table">
+                <div class="container-fluid mt-4 table-area">
+                    <div class="table-responsive table-responsive-sm">
+                        <table class="table" id="member-table" style="width:100%">
                             <thead>
-                                <th scope="col" class="text-success">MemberID</th>
+                                <th scope="col" class="text-success">Member ID</th>
                                 <th scope="col" class="text-success">Name</th>
-                                <th scope="col" class="text-success">Email</th>
-                                <th scope="col" class="text-success">IDNo.</th>
+                                <th scope="col" class="text-success hide-md">Email</th>
+                                <th scope="col" class="text-success">ID No.</th>
                                 <th scope="col" class="text-success">Phone No.</th>
                                 <th scope="col" class="text-success">Total Savings</th>
-                                <th scope="col" class="text-success">Action</th>
+                                <th scope="col" class="text-success hide-sm">Action</th>
                             </thead>
                             <tbody>
-                                <tr th:each="saving: ${savings}">
-                                    <td th:text="${saving.id}"></td>
-                                    <td th:text="${saving.firstName} +' '+ ${saving.midName}"></td>
-                                    <td th:text="${saving.email}"></td>
-                                    <td th:text="${saving.idNo}"></td>
-                                    <td th:text="${saving.phone}"></td>
-                                    <td th:text="'Ksh '+${saving.totalSavings}"></td>
-                                    <td><button class="btn btn-success" style="width:100%;">View</button></td>
-                                </tr>
+                            <tr th:each="saving: ${savings}">
+                                <td data-label="Member ID:" th:text="${saving.id}"></td>
+                                <td data-label="Name:"  th:text="${saving.firstName} +' '+ ${saving.midName}"></td>
+                                <td data-label="Email:"  th:text="${saving.email}" class="hide-md"></td>
+                                <td data-label="IDNo.:"  th:text="${saving.idNo}"></td>
+                                <td data-label="Phone No.:"  th:text="${saving.phone}"></td>
+                                <td data-label="Total Savings:"  th:text="'Ksh '+${saving.totalSavings}"></td>
+                                <td data-label=""><button class="btn btn-success">View</button></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -196,43 +177,7 @@
             </div>
         </div>
     </div>
-    <div th:insert="~{base :: footer}">  </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
-    <script>
-        $(document).ready( function () {
-            var table = $("#member-table").DataTable({
-                columnDefs: [
-                    { orderable: false, targets: 6,}
-                ]
-            });
-
-        });
-    </script>
+    <div class="dashboard-footer" th:insert="~{base :: footer}"></div>
+    <script src="main.js" type="text/javascript"></script>
 </body>
 </html>
-<!--
-private String id;
-    private String firstName;
-    private String midName;
-    private int idNo;
-    private String email;
-    private String phone;
-    private double totalSavings;
-
-
-
-
-
-    <div class="container-fluid">
-
-                                    <div class="row d-flex">
-                                        <div class="col-sm-2 rounded-1 bg-light align-item-center justify-content-center"><i class="fa fa-plus-square-o fa-2x text-success" align="center"></i></div>
-                                        <div class="col-sm-10">
-                                            <p>Sacco Members</p>
-                                            <h5 class="text-light" th:text="${member_count}"></h5>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
--->

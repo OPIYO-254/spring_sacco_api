@@ -60,11 +60,12 @@ public class HomepageController {
         return  modelAndView;
     }
 
-    @PostMapping("/save-member")
-    public String saveMember(@ModelAttribute MemberRequestDto memberRequestDto){
-        memberService.saveMember(memberRequestDto);
-        return "redirect:/members";
+    @GetMapping("/add-contributions")
+    public String contributionForm(){
+        return "add-contributions";
     }
+
+
 
     @GetMapping("/members")
     public ModelAndView listMembers(){
@@ -73,6 +74,14 @@ public class HomepageController {
         modelAndView.addObject("members", memberResponseDtos);
         return  modelAndView;
     }
+    @GetMapping("/member-details")
+    public ModelAndView memberDetails(@RequestParam String id){
+        ModelAndView modelAndView = new ModelAndView("member-details");
+        MemberResponseDto memberResponseDto = memberService.getMember(id);
+        modelAndView.addObject("member", memberResponseDto);
+        return modelAndView;
+    }
+
     @GetMapping("/add-contribution")
     public ModelAndView addContributionForm(){
         ModelAndView modelAndView = new ModelAndView("add-contribution");
@@ -80,6 +89,7 @@ public class HomepageController {
         modelAndView.addObject("contribution", contributionRequestDto);
         return modelAndView;
     }
+
 
     @GetMapping("members-contributions")
     public ModelAndView listContributions(){
@@ -89,11 +99,27 @@ public class HomepageController {
         return modelAndView;
     }
 
-    @PostMapping("/save-contribution")
-    public String saveContribution(@ModelAttribute ContributionRequestDto contributionRequestDto){
-        contributionService.addContribution(contributionRequestDto);
-        return "redirect:/members-contributions";
+//    @PostMapping("/save-contribution")
+//    public String saveContribution(@ModelAttribute ContributionRequestDto contributionRequestDto){
+//        contributionService.addContribution(contributionRequestDto);
+//        return "redirect:/members-contributions";
+//    }
+
+
+    @PostMapping("/save-contributions")
+    public ResponseEntity<?> addContribution(@RequestBody ContributionRequestDto contributionRequestDto){
+        try {
+            contributionService.addContribution(contributionRequestDto);
+            // Return a JSON response with success message
+            return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Contribution added successfully.\"}");
+        } catch (Exception e) {
+            // Return a JSON response with error message
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"status\": \"error\", \"message\": \"Error adding contribution.\"}");
+        }
     }
+
+
 
     @GetMapping("/apply-loan")
     public ModelAndView addLoanForm(){
@@ -127,7 +153,7 @@ public class HomepageController {
     public ModelAndView listApprovedLoans(){
         ModelAndView modelAndView = new ModelAndView("approved-loans");
         List<MemberLoansResponseDto> rejectedLoans = loanService.getApprovedLoans();
-        System.out.println(rejectedLoans);
+//        System.out.println(rejectedLoans);
         modelAndView.addObject("approvedLoans", rejectedLoans);
         return modelAndView;
     }
@@ -135,6 +161,18 @@ public class HomepageController {
     @GetMapping("/loan-details")
     public ModelAndView loanDetails(@RequestParam Long id){
         ModelAndView modelAndView = new ModelAndView("loan-details");
+        LoanResponseDto loanResponseDto = loanService.getLoan(id);
+        List<LoanGuarantorResponseDto> loanGuarantorResponseDtos = loanService.getLoanGuarantors(id);
+        ItemTotalDto item = loanService.getTotalGuaranteed(id);
+        modelAndView.addObject("loan", loanResponseDto);
+        modelAndView.addObject("guarantors", loanGuarantorResponseDtos);
+        Long total = item.getTotal();
+        modelAndView.addObject("total", total);
+        return modelAndView;
+    }
+    @GetMapping("/approved-loan-details")
+    public ModelAndView approvedLoanDetails(@RequestParam Long id){
+        ModelAndView modelAndView = new ModelAndView("approved-loan-details");
         LoanResponseDto loanResponseDto = loanService.getLoan(id);
         List<LoanGuarantorResponseDto> loanGuarantorResponseDtos = loanService.getLoanGuarantors(id);
         ItemTotalDto item = loanService.getTotalGuaranteed(id);
@@ -155,6 +193,18 @@ public class HomepageController {
     public String rejectLoan(@PathVariable Long id){
         loanService.rejectLoan(id);
         return "redirect:/applied-loans";
+    }
+    @GetMapping("/rejected-loan-details")
+    public ModelAndView rejectedLoanDetails(@RequestParam Long id){
+        ModelAndView modelAndView = new ModelAndView("rejected-loan-details");
+        LoanResponseDto loanResponseDto = loanService.getLoan(id);
+        List<LoanGuarantorResponseDto> loanGuarantorResponseDtos = loanService.getLoanGuarantors(id);
+        ItemTotalDto item = loanService.getTotalGuaranteed(id);
+        modelAndView.addObject("loan", loanResponseDto);
+        modelAndView.addObject("guarantors", loanGuarantorResponseDtos);
+        Long total = item.getTotal();
+        modelAndView.addObject("total", total);
+        return modelAndView;
     }
 
 }

@@ -46,7 +46,6 @@ public class Member {
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    @Temporal(TemporalType.DATE)
     private Date dob;
 
     @Column(nullable = false, unique = true)

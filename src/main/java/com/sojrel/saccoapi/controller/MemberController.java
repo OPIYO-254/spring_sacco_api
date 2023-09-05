@@ -23,6 +23,19 @@ public class MemberController {
         MemberResponseDto memberResponseDto = memberService.addMember(memberRequestDto);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
     }
+    @PostMapping("/save-member")
+    public ResponseEntity<?> saveMember(@RequestBody MemberRequestDto memberRequestDto){
+        try {
+            memberService.saveMember(memberRequestDto);
+            // Return a JSON response with success message
+            return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Member added successfully.\"}");
+        } catch (Exception e) {
+            // Return a JSON response with error message
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"status\": \"error\", \"message\": \"Error adding member.\"}");
+        }
+
+    }
 
     @GetMapping("/get-one/{id}")
     public ResponseEntity<MemberResponseDto> getMember(@PathVariable String id) {

@@ -1,8 +1,40 @@
-
+html{
+    height:-webkit-fill-available
+}
+body{
+    margin:0;
+    padding:0;
+    height:-webkit-fill-available
+    font-family: 'Poppins', sans-serif;
+    min-height:100vh;
+    display: flex;
+    flex-direction: column;
+}
+.navbar{
+    height: 80px;
+}
+.menu-toggler{
+    display:none;
+    height:24px;
+    transition:all 0.5s;
+}
+.menu-item{
+    width: 20px;
+    height:2px;
+    margin: 5px;
+    background: #fff;
+    display:block;
+}
+.footer{
+    position:sticky;
+    bottom:0;
+    text-align:center;
+}
+.nav-link{
+    color:#fff
+}
 .col-sm{
-
     background-color: #09AA5C;
-
 }
 .col-sm-2 .fa{
     color: #09AA5C;
@@ -10,3 +42,751 @@
 .col-sm-10 h6{
     color: #fff;
 }
+.navbar-brand a{
+    text-decoration:none;
+}
+
+.page-title {
+    background-color:#09AA5C;
+    border-radius: 8px;
+}
+
+.spinner-border{
+    width:15px;
+    height:15px;
+}
+.sidebar{
+    height:100%;
+}
+.sidebar-item{
+    background-color: #198754;
+}
+.sidebar-item:hover{
+    background-color:#09AA5C;
+    transition: background-color 0.3s;
+}
+.sidebar-item px-2{
+    align-items:center;
+}
+.left-icon{
+    width:36px;
+    height:36px;
+}
+.selection{
+    width:100%;
+}
+.btn{
+    width:auto;
+    font-size: 16px;
+}
+.input-container input{
+    font-size:24px;
+}
+.input-container select{
+    font-size:24px;
+}
+.table-area{
+    height:auto;
+}
+.main-body{
+    height: auto;
+}
+.reg-main{
+    height:auto;
+}
+.add-contribution-main{
+    height:auto;
+}
+.card-holder{
+    display:flex;
+    flex-direction-row;
+}
+.table{
+    width:100%;
+}
+.members-table-area, .contribution-table-area{
+    height:auto;
+}
+.applied-table-area{
+    height:auto;
+}
+.row-scoped{
+    width: 30%;
+}
+.details-main-section{
+    height:auto;
+}
+
+
+@media only screen and (max-width:576px){
+
+    .navbar-brand a{
+         text-decoration:none;
+    }
+
+    .sidebar{
+        height:auto;
+
+    }
+    .sidebar-container{
+        display:none;
+    }
+    .hide-sm{
+             display: none;
+        }
+
+    .left-icon{
+        width: 24px;
+        height:24px;
+    }
+    .card-section{
+        margin-top:1rem;
+        margin-bottom:1rem;
+        display:flex;
+    }
+    .cards-row{
+        margin: 1rem 0;
+        display: flex;
+        flex-direction: column;
+        width:100%;
+    }
+    .col-sm-3{
+        width:auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 0 0.4rem
+    }
+
+    .card-item{
+        margin-top:1rem;
+     }
+    .cards-row{
+        margin-top:0;
+        margin-bottom:0
+    }
+    .card-text{
+        font-size: 12px;
+    }
+    .one-row-item{
+        padding-top:.7rem;
+        padding-bottom:.7rem;
+    }
+
+    .input-row{
+        width:100%;
+    }
+    .input-container{
+        width:100%;
+    }
+
+    .reg-main{
+        height:auto;
+    }
+    .table-responsive-sm tbody tr:nth-child(even){
+    	background-color: #f5f5f5;
+    }
+    .table-responsive-sm {
+        display: block;
+    }
+    .table-responsive-sm thead {
+        display: none; /* Hide the table header on small screens */
+    }
+    .table-responsive-sm tbody tr {
+        display: block;
+        margin-bottom: 20px; /* Add space between rows */
+    }
+    .table-responsive-sm tbody td {
+        display: block;
+    }
+    .table-responsive-sm td::before{
+        content: attr(data-label);
+        position: absolute;
+        left:0;
+        width: 50%;
+        padding-left:15px;
+        font-size:15px;
+        font-weight: bold;
+        text-align: left;
+    }
+    .input-container input{
+        font-size:18px;
+    }
+    .input-container select{
+        font-size:18px;
+    }
+    .input-container button{
+        width: 100%;
+    }
+    .reg-main{
+        height:auto;
+    }
+    .page-title p{
+        font-size: 24px;
+    }
+
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .menu-toggler{
+        display:block;
+        transition:all 0.5s;
+    }
+
+    .sidebar{
+            height:auto;
+        }
+    .sidebar-container{
+            display:none;
+        }
+    .hide-md{
+             display: none;
+        }
+
+    .left-icon{
+        width: 22px;
+        height:22px;
+    }
+
+    .card-item{
+        margin-top: 0.2rem;
+    }
+    .cards-row{
+        margin-top:0;
+        margin-bottom:0
+    }
+    .one-row-item{
+        padding-top:10px;
+        padding-bottom:.5rem;
+    }
+
+
+    .table-responsive-sm {
+        width:100%;
+        display: block;
+    }
+    .table-responsive-sm thead {
+        display: none; /* Hide the table header on small screens */
+    }
+    .table-responsive-sm tbody{
+        width:100%;
+    }
+    .table-responsive-sm tbody tr {
+        display: block;
+        margin-bottom: 20px; /* Add space between rows */
+    }
+    .table-responsive-sm tbody td {
+        display: block;
+        text-align: left;
+        position: relative;
+        text-align: left;
+        padding-left: 40%;
+        font-size: 14px;
+    }
+    .table-responsive-sm td::before{
+        content: attr(data-label);
+        position: absolute;
+        left:0;
+        /*width: 50%;*/
+        padding-left:15px;
+        font-size:15px;
+        font-weight: bold;
+        text-align: left;
+        ont-size: 14px;
+    }
+    .table-responsive-sm td button{
+        display:flex;
+        align-self:center;
+    }
+    .btn {
+        width: auto;
+        font-size: 16px;
+    }
+    .add-contribution-main{
+        height:81vh;
+    }
+    .table-area{
+         height: auto;
+    }
+    .page-title p{
+        font-size: 16px;
+        font-weight:bold;
+    }
+    .applied-table-area{
+         height:75vh;
+    }
+    .row-scoped{
+        width: 50%;
+    }
+    .details-main-section{
+        height:85vh;
+    }
+
+
+}
+
+@media only screen and (min-width: 576px) and (max-width:600px){
+    .input-container input {
+        font-size:24px;
+        margin:2rem 0;
+        width:80%;
+        position:relative;
+        left:10%;
+    }
+    .input-container button{
+        font-size:24px;
+        width:80%;
+        position:relative;
+    }
+    .input-container select{
+        font-size:24px;
+        width:80%;
+        position:relative;
+        left:10%;
+    }
+    .btn {
+        width: auto;
+        font-size: 16px;
+    }
+    .add-contribution-main{
+         height:81vh;
+     }
+    .card-text{
+        font-size:12px;
+    }
+    .applied-table-area{
+         height:74vh;
+    }
+    .card-section{
+        margin-top:1rem;
+        margin-bottom:1rem;
+        display:flex;
+    }
+    .cards-row{
+        margin: 1rem 0;
+        display: flex;
+        flex-direction: column;
+        width:100%;
+    }
+    .col-sm-3{
+        width:auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .table-area{
+         height: 100vh;
+    }
+}
+
+@media only screen and (min-width: 600px) and (max-width:768px){
+    .menu-toggler{
+        display:block;
+    }
+
+    .sidebar-container{
+            display:none;
+        }
+    .sidebar{
+        /*height:auto;*/
+        width:100%;
+        height:100%;
+    }
+    .card-section{
+        margin-top:1rem;
+        margin-bottom:1rem;
+        display:flex;
+    }
+    .hide-md{
+         display: none;
+    }
+    .input-row{
+        width:100%;
+    }
+    .input-container input {
+        font-size:24px;
+        margin:2rem 0;
+        width:80%;
+        position:relative;
+        left:10%;
+    }
+    .input-container button{
+        font-size:24px;
+        width:80%;
+        position:relative;
+    }
+    .input-container select{
+        font-size:24px;
+        width:80%;
+        position:relative;
+        left:10%;
+    }
+    .add-contribution-main{
+        height:81vh;
+    }
+    .table-area{
+         height: 100vh;
+    }
+    .cards-row{
+        margin: 1rem 0;
+        display: flex;
+        flex-direction: column;
+        width:100%;
+    }
+    .col-sm-3{
+        width:auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .card-text{
+        font-size:12px;
+    }
+    .left-icon{
+        width: 20px;
+        height: 20px;
+    }
+    .one-row-item{
+         padding:8px 0;
+     }
+
+    .page-title p{
+         font-size: 24px;
+         padding:0;
+     }
+    .applied-table-area {
+         height:73vh;
+    }
+    .approved-table-area{
+        height:78vh;
+    }
+    .members-table-area,{
+         height: 74vh;
+    }
+    .details-main-section{
+        height:84vh;
+    }
+}
+
+@media only screen and (min-width:768px) and (max-width:992px){
+    .menu-toggler{
+        display:block;
+    }
+
+    .sidebar-container{
+        width:100%;
+        display:none;
+    }
+    .page-title p{
+        font-size: 42px;
+        font-weight:bold;
+        padding:12px 0;
+    }
+    .sidebar{
+        height:auto;
+        width: 100%;
+    }
+    .main-section{
+        width:100%;
+    }
+    .card-icon{
+        font-size:16px;
+
+    }
+    .card-title{
+        font-size: 16px;
+        margin:0 12px;
+    }
+    .input-row{
+        width:90%;
+    }
+    .input-row input {
+        font-size:24px;
+        margin:2rem 0;
+    }
+    .input-row button{
+        font-size:24px;
+    }
+    .input-row select{
+        font-size:24px;
+    }
+    .input-container{
+        width:100%;
+    }
+    .input-container input {
+        font-size:24px;
+        margin:2rem 0;
+        width:60%;
+        position:relative;
+        left:20%;
+    }
+    .input-container button{
+        font-size:24px;
+        width:60%;
+        position:relative;
+    }
+    .input-container select{
+        font-size:24px;
+        width:60%;
+        position:relative;
+        left:20%;
+    }
+    .add-contribution-main{
+        height:81vh;
+    }
+    /*.table-area{
+       height:auto;
+     }*/
+    .one-row-item{
+         padding:10px 0;
+     }
+    .card-section{
+        padding: 1rem 0;
+    }
+    .cards-row{
+        margin: 1rem 0;
+    }
+    .card-text{
+        font-size:12px;
+    }
+    .page-title p{
+        font-size: 24px;
+    }
+    .contribution-table-area{
+         height:63vh;
+    }
+    .applied-table-area {
+         height:73vh;
+    }
+    .approved-table-area{
+        height:78vh;
+      }
+    .details-main-section{
+        height:84vh;
+    }
+    .table-area{
+         height: 90vh;
+    }
+}
+
+@media only screen and (min-width:992px) and (max-width:1200px){
+    .card-title{
+        visibility:hidden;
+    }
+    .card-icon{
+        font-size:24px;
+    }
+    .sidebar-container{
+        display:block;
+        width:10%;
+    }
+    .sidebar{
+        width:10%;
+        height:100%
+    }
+    .main-section{
+        width:90%;
+    }
+    .page-title p{
+         font-size: 28px;
+         font-weight:bold;
+     }
+    .table-area{
+        height: 90vh;
+    }
+    .input-row{
+         width:40%;
+    }
+    .input-row:nth-child(1){
+        padding-bottom: 3rem;
+    }
+    .input-row input {
+        font-size: 24px;
+        margin: 2rem 0;
+    }
+    .input-row select {
+        font-size: 24px;
+        margin: 2rem 0;
+    }
+    .input-row button {
+        font-size: 24px;
+        margin: 2rem 0;
+    }
+    .column-container{
+         display:flex;
+         justify-content:center;
+    }
+    .input-container{
+        width:50%;
+    }
+    .btn{
+        width:100%;
+    }
+    .main-body{
+        height: 84vh;
+    }
+    .reg-main{
+             height:85vh;
+         }
+    .add-contribution-main{
+        height:85vh;
+    }
+   /* .table-area{
+      height:69vh;
+    }*/
+    .one-row-item{
+        padding:10px 0;
+    }
+    .contribution-table-area{
+         height:65vh;
+    }
+   .applied-table-area{
+      height:75vh;
+  }
+  .approved-table-area{
+    height:78vh;
+  }
+   .members-table-area,{
+        height: 74vh;
+   }
+   .details-main-section{
+       height:84vh;
+   }
+   .guarantor-table-area{
+       height:50vh;
+   }
+}
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .members-table-area,{
+            height: 74vh;
+        }
+    .sidebar{
+        height:100%;
+    }
+    /*
+    #member-table{
+        width:100%;
+    }*/
+    .sidebar-container{
+            display:block;
+            width:20%;
+        }
+    .main-section{
+        width:80%;
+
+    }
+    .dashboard-main{
+        height:105vh;
+    }
+
+    .page-title p{
+        font-size: 28px;
+        font-weight:bold;
+        }
+    .input-row{
+        width:30%;
+    }
+    .column-container{
+        display:flex;
+        justify-content:center;
+    }
+    .input-container{
+        width:50%;
+        align-self:center;
+    }
+    .btn{
+        width: 100%;
+    }
+    .main-body{
+        height: 83vh;
+    }
+    .reg-main{
+        height:86vh;
+    }
+    .add-contribution-main{
+        height:85vh;
+    }
+    .table-area{
+         height: 83vh;
+    }
+    .one-row-item{
+        padding:10px 0;
+    }
+    .input-row input {
+        font-size: 24px;
+        margin: 2rem 0;
+    }
+    .input-row select {
+        font-size: 24px;
+        margin: 2rem 0;
+    }
+    .contribution-table-area{
+         height:65vh;
+    }
+    .applied-table-area{
+        height:74vh;
+    }
+    .approved-table-area{
+        height: 78vh;
+    }
+    .details-main-section{
+        height:84vh;
+    }
+    .guarantor-table-area{
+        height:50vh;
+    }
+}
+
+@media only screen and (max-width:1360px){
+
+
+
+
+}
+
+@media only screen and (min-width:1360px){
+    .input-row{
+            width:30%;
+        }
+    .column-container{
+        display:flex;
+        justify-content:center;
+    }
+    .main-body{
+        height: 85vh;
+    }
+    .reg-main{
+        height:86vh;
+    }
+    .btn{
+        width:100%;
+        font-size: 16px;
+    }
+    .table-area{
+         height: 75vh;
+     }
+
+}
+
+@media only screen and (min-width:1404px){
+    /*.table-area{
+        height: 70vh;
+    }*/
+    .members-table-area{
+         height:74vh;
+    }
+
+    .contribution-table-area{
+             height:68vh;
+        }
+    .applied-table-area {
+        height:76vh;
+    }
+    .approved-table-area{
+        height:78vh;
+      }
+
+}
+
+
