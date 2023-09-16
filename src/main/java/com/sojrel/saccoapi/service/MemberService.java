@@ -25,5 +25,6 @@ public interface MemberService {
     public List<Member> listMembers();
     List<MemberTotalSavingsDto> findMemberSavings();
     public void saveMember(MemberRequestDto member);
+    public List<MemberTotalSavingsDto> membersTotalShares();
     public ItemCountDto getMemberCount();
 }

@@ -185,6 +185,7 @@ public class MemberServiceImpl implements MemberService{
         return memberRepository.findMemberSavings(Contribution.ContributionType.SAVINGS);
     }
 
+
     @Override
     public void saveMember(MemberRequestDto memberRequestDto) {
         Member member = new Member();
@@ -201,6 +202,12 @@ public class MemberServiceImpl implements MemberService{
         member.setResidence(memberRequestDto.getResidence());
         memberRepository.save(member);
     }
+
+    @Override
+    public List<MemberTotalSavingsDto> membersTotalShares() {
+        return null;
+    }
+
     @Override
     public ItemCountDto getMemberCount(){
         ItemCountDto itemCountDto = memberRepository.findMemberCount();

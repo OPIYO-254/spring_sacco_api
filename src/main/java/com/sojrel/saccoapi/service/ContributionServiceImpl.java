@@ -1,9 +1,7 @@
 package com.sojrel.saccoapi.service;
 
 import com.sojrel.saccoapi.dto.requests.ContributionRequestDto;
-import com.sojrel.saccoapi.dto.responses.ContributionResponseDto;
-import com.sojrel.saccoapi.dto.responses.Mapper;
-import com.sojrel.saccoapi.dto.responses.MemberContributionsResponseDto;
+import com.sojrel.saccoapi.dto.responses.*;
 import com.sojrel.saccoapi.model.Contribution;
 import com.sojrel.saccoapi.model.Member;
 import com.sojrel.saccoapi.repository.ContributionRepository;
@@ -94,6 +92,34 @@ public class ContributionServiceImpl implements ContributionService{
             dtos.add(dto);
         }
         return dtos;
+    }
+
+    @Override
+    public ItemTotalDto getTotalContributions() {
+        ItemTotalDto totalDto = contributionRepository.findTotalContributions();
+        return totalDto;
+    }
+
+    @Override
+    public ItemTotalDto getTotalShares() {
+        return contributionRepository.findTotalContribType(Contribution.ContributionType.SHARES);
+    }
+
+    @Override
+    public ItemTotalDto getTotalSavings() {
+        return contributionRepository.findTotalContribType(Contribution.ContributionType.SAVINGS);
+    }
+
+    @Override
+    public ItemTotalDto getMemberTotalShares(String memberId) {
+        ItemTotalDto shares = contributionRepository.getMemberTotalContribTypes(Contribution.ContributionType.SHARES, memberId);
+        return shares;
+    }
+
+    @Override
+    public ItemTotalDto getMemberTotalSavings(String memberId) {
+        ItemTotalDto savings = contributionRepository.getMemberTotalContribTypes(Contribution.ContributionType.SAVINGS, memberId);
+        return savings;
     }
 
 

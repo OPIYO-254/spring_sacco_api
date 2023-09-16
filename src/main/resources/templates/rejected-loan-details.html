@@ -19,8 +19,8 @@
         <div class="row">
             <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-2 col-lg-2 p-0" id="sidebar-container"></div>
             <div class="col-md-10 main-section">
-                <span class="d-flex justify-content-center mt-3 text-success">Loan Details</span>
-                <hr>
+                <span class="d-flex justify-content-center mt-3 text-success fs-3 fw-bold">Loan Details</span>
+                <hr class="border-2 border-success">
                 <table class="table" id="details-table">
                     <tbody>
                         <tr>
@@ -57,9 +57,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <hr>
-                <span class="d-flex justify-content-center">Loan Guarantors</span>
-                <hr>
+                <hr class="border-2 border-success">
+                <span class="d-flex justify-content-center text-success fw-bold">Loan Guarantors</span>
+                <hr class="border-2 border-success">
                 <div class="container guarantor-table-area mt-4">
                     <div class="table-responsive table-responsive-sm">
                         <table class="table" id="guarantors-table" style="width:100%;">

@@ -10,6 +10,72 @@ body{
     display: flex;
     flex-direction: column;
 }
+
+.navbar{
+    background-color:#4C4E52;
+}
+/*
+.mycontainer {
+    flex-grow: 1;
+    display: flex;
+    overflow: hidden; /* Hide overflow content from main and sidebar */
+}*/
+
+/* Style the sidebar */
+.sidebar-container {
+    min-height: calc(100vh - 80px); /* Minimum height calculation */
+    /*flex-basis: 20%; /* Set a fixed width for the sidebar */
+    background-color:#198754;
+    /*padding: 20px;*/
+
+}
+/* Style the main content */
+.my-section {
+    min-height: calc(100vh-80px); /* Minimum height calculation */
+    flex-grow: 1; /* Allow main content to grow and fill available space */
+    background-color: #fff;
+    padding: 20px;
+    overflow-y: auto; /* Add a scrollbar if content overflows */
+    width: 80%;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border: none;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button a{
+    background-color: #fff;
+    color: #09AA5C;
+    border:none;
+}
+.dataTables_wrapper .paginate_button.next a, .paginate_button.previous a{
+    box-shadow:none;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.active a{
+    background-color: #09AA5C;
+    color:#fff;
+    box-shadow:none;
+    border-radius:48px;
+    font-size:12px;
+}
+.repayment-item {
+    margin:0 12px;
+    background-color: #09AA5C;
+    border-radius: 5px;
+    display:flex;
+    justify-content:space-between;
+    padding: 8px;
+
+}
+.repayment-container .btn{
+    margin:0 12px;
+    border-radius: 24px;
+    background-color:white;
+    color: #09AA5C;
+    border: 1px solid #09AA5C;
+}
+.repayment-item span{
+    color: white;
+    margin:0 8px;
+}
 .navbar{
     height: 80px;
 }
@@ -18,12 +84,31 @@ body{
     height:24px;
     transition:all 0.5s;
 }
+
 .menu-item{
     width: 20px;
     height:2px;
     margin: 5px;
     background: #fff;
     display:block;
+}
+.totals{
+    display:flex;
+    justify-content:space-between;
+}
+.contribution-box{
+    margin: 12px;
+    padding:20px 12px;
+    border-radius: 6px;
+    background-color:#09AA5C;
+    width: 30%;
+    display:flex;
+    justify-content:space-around;
+}
+.contribution-box span{
+    color:white;
+    font-size: 16px;
+    font-weight:bold;
 }
 .footer{
     position:sticky;
@@ -50,20 +135,27 @@ body{
     background-color:#09AA5C;
     border-radius: 8px;
 }
-
+.contribution-card{
+    background-color:#09AA5C;
+    display:flex;
+    justify-content: space-around;
+}
+.detail-table-area{
+    height:auto;
+}
 .spinner-border{
     width:15px;
     height:15px;
 }
 .sidebar{
-    height:100%;
+    height:100vh;
 }
 .sidebar-item{
     background-color: #198754;
 }
 .sidebar-item:hover{
     background-color:#09AA5C;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
 }
 .sidebar-item px-2{
     align-items:center;
@@ -77,14 +169,24 @@ body{
 }
 .btn{
     width:auto;
-    font-size: 16px;
+    background-color:#09AA5C;
+    border: 1px solid #09AA5C;
+    color: white;
 }
-.input-container input{
-    font-size:24px;
+.btn:hover{
+    background-color:#198754;
+    border-color:#198754;
+    color:white;
 }
-.input-container select{
-    font-size:24px;
+.btn:active{
+    background-color:#198754;
+    border-color:#198754;
+    color:white;
 }
+.contribution-card span{
+    font-weight: bold;
+}
+
 .table-area{
     height:auto;
 }
@@ -116,7 +218,24 @@ body{
 .details-main-section{
     height:auto;
 }
-
+@media only screen and (max-width:480px){
+    .contribution-card{
+        margin: 6px;
+        padding: 6px;
+    }
+    .contribution-card span{
+        font-size: 12px;
+    }
+    .card-holder{
+        padding:0 10px;
+    }
+    .modal-dialog{
+       width:80%;
+       margin: auto;
+       position:relative;
+       top:30%;
+   }
+}
 
 @media only screen and (max-width:576px){
 
@@ -124,7 +243,7 @@ body{
          text-decoration:none;
     }
 
-    .sidebar{
+    .sidebar, .mysidebar{
         height:auto;
 
     }
@@ -175,8 +294,8 @@ body{
     .input-row{
         width:100%;
     }
-    .input-container{
-        width:100%;
+    .form-container{
+        width: 100%;
     }
 
     .reg-main{
@@ -208,31 +327,72 @@ body{
         font-weight: bold;
         text-align: left;
     }
-    .input-container input{
-        font-size:18px;
+    #registration-form{
+            justify-content:center;
+        }
+    .col-md-9{
+        margin-top: 12px;
     }
-    .input-container select{
-        font-size:18px;
+    .input-container{
+        display: flex;
+        flex-direction:column;
+        justify-content-center;
     }
-    .input-container button{
-        width: 100%;
-    }
+
     .reg-main{
         height:auto;
     }
     .page-title p{
         font-size: 24px;
     }
-
+    .contribution-card{
+        margin: 8px;
+        padding: 8px;
+    }
+    .contribution-card span{
+        font-size: 16px;
+    }
+    .card-holder{
+        padding:0 10px;
+    }
+    .reg-form-container{
+         width:100%;
+     }
 }
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
+    .contribution-box{
+        margin: 12px;
+        padding:12px 12px;
+        border-radius: 6px;
+        background-color:#09AA5C;
+        width: 30%;
+        display:flex;
+        flex-direction:column;
+        text-transform:uppercase;
+    }
+    .contribution-box span{
+        font-size:12px;
+    }
     .menu-toggler{
         display:block;
         transition:all 0.5s;
     }
-
+    #registration-form{
+        justify-content:center;
+    }
+    .col-md-9{
+        margin-top: 12px;
+    }
+    .input-container{
+        display: flex;
+        flex-direction:column;
+        justify-content-center;
+    }
+    .form-container{
+        width: 100%;
+    }
     .sidebar{
             height:auto;
         }
@@ -246,6 +406,21 @@ body{
     .left-icon{
         width: 22px;
         height:22px;
+    }
+
+    .contribution-card{
+        background-color:#09AA5C;
+        display:flex;
+        flex-direction:column;
+        margin: 8px;
+        padding: 8px;
+    }
+
+    .contribution-card span{
+        font-size: 12px;
+    }
+    .card-holder{
+        padding:0 10px;
     }
 
     .card-item{
@@ -298,10 +473,7 @@ body{
         display:flex;
         align-self:center;
     }
-    .btn {
-        width: auto;
-        font-size: 16px;
-    }
+
     .add-contribution-main{
         height:81vh;
     }
@@ -312,41 +484,58 @@ body{
         font-size: 16px;
         font-weight:bold;
     }
-    .applied-table-area{
-         height:75vh;
-    }
+
     .row-scoped{
         width: 50%;
     }
     .details-main-section{
         height:85vh;
     }
+    .btn{
+        width:auto;
+    }
+    .submitBtn{
+        width:100%;
+    }
+    .modal-dialog{
+       width:60%;
+       margin: auto;
+       position:relative;
+       top:30%;
+   }
+   .repayment-container{
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+  }
+  .repayment-item{
+      margin: 6px 0;
+  }
+  .repayment-btn{
+      margin-top:6px;
+      padding:0
+  }
+  .repayment-btn .btn{
+    width:100%;
 
+  }
+  .reg-form-container{
+       width:100%;
+   }
 
 }
 
 @media only screen and (min-width: 576px) and (max-width:600px){
-    .input-container input {
-        font-size:24px;
-        margin:2rem 0;
-        width:80%;
-        position:relative;
-        left:10%;
-    }
-    .input-container button{
-        font-size:24px;
-        width:80%;
-        position:relative;
-    }
-    .input-container select{
-        font-size:24px;
-        width:80%;
-        position:relative;
-        left:10%;
-    }
-    .btn {
-        width: auto;
-        font-size: 16px;
+    .contribution-box{
+        margin: 12px;
+        padding:12px 12px;
+        border-radius: 6px;
+        background-color:#09AA5C;
+        width: 30%;
+        display:flex;
+        flex-direction:column;
+        text-transform:uppercase;
+
     }
     .add-contribution-main{
          height:81vh;
@@ -373,21 +562,27 @@ body{
         margin-top: 10px;
         margin-bottom: 10px;
     }
-    .table-area{
-         height: 100vh;
-    }
+
 }
 
 @media only screen and (min-width: 600px) and (max-width:768px){
     .menu-toggler{
         display:block;
     }
-
+    .contribution-box{
+        margin: 12px;
+        padding:12px 12px;
+        border-radius: 6px;
+        background-color:#09AA5C;
+        width: 30%;
+        display:flex;
+        flex-direction:column;
+        text-transform:uppercase;
+    }
     .sidebar-container{
             display:none;
         }
     .sidebar{
-        /*height:auto;*/
         width:100%;
         height:100%;
     }
@@ -402,30 +597,11 @@ body{
     .input-row{
         width:100%;
     }
-    .input-container input {
-        font-size:24px;
-        margin:2rem 0;
-        width:80%;
-        position:relative;
-        left:10%;
-    }
-    .input-container button{
-        font-size:24px;
-        width:80%;
-        position:relative;
-    }
-    .input-container select{
-        font-size:24px;
-        width:80%;
-        position:relative;
-        left:10%;
-    }
+
     .add-contribution-main{
         height:81vh;
     }
-    .table-area{
-         height: 100vh;
-    }
+
     .cards-row{
         margin: 1rem 0;
         display: flex;
@@ -464,15 +640,62 @@ body{
     .details-main-section{
         height:84vh;
     }
+    .contribution-card{
+        background-color:#09AA5C;
+        display:flex;
+        flex-direction:column;
+        margin: 8px;
+        padding: 8px;
+    }
+    .form-container{
+        width: 60%;
+    }
+    .contribution-card span{
+        font-size: 16px;
+    }
+    .card-holder{
+        padding:0 10px;
+    }
+    .submitBtn{
+        width:100%;
+    }
+    .modal-dialog{
+       width:40%;
+       margin: auto;
+       position:relative;
+       top:30%;
+   }
+   .repayment-container{
+       display:flex;
+       justify-content:space-between;
+   }
+   .repayment-item{
+        display:flex;
+        flex-direction:column;
+   }
+   .repayment-item span{
+        font-size:16px;
+   }
+
 }
 
 @media only screen and (min-width:768px) and (max-width:992px){
     .menu-toggler{
         display:block;
     }
-
+    .contribution-box{
+        margin: 12px;
+        padding:12px 12px;
+        border-radius: 6px;
+        background-color:#09AA5C;
+        width: 30%;
+        display:flex;
+        flex-direction:column;
+        text-transform:uppercase;
+    }
     .sidebar-container{
         width:100%;
+        background-color:#198754;
         display:none;
     }
     .page-title p{
@@ -489,6 +712,16 @@ body{
     }
     .card-icon{
         font-size:16px;
+
+    }
+    .contribution-box{
+        margin: 12px;
+        padding:12px 12px;
+        border-radius: 6px;
+        background-color:#09AA5C;
+        width: 30%;
+        display:flex;
+        flex-direction:column;
 
     }
     .card-title{
@@ -508,27 +741,12 @@ body{
     .input-row select{
         font-size:24px;
     }
-    .input-container{
-        width:100%;
+    .form-container{
+        width: 35%;
     }
-    .input-container input {
-        font-size:24px;
-        margin:2rem 0;
-        width:60%;
-        position:relative;
-        left:20%;
-    }
-    .input-container button{
-        font-size:24px;
-        width:60%;
-        position:relative;
-    }
-    .input-container select{
-        font-size:24px;
-        width:60%;
-        position:relative;
-        left:20%;
-    }
+    .reg-form-container{
+             width:60%;
+         }
     .add-contribution-main{
         height:81vh;
     }
@@ -562,9 +780,34 @@ body{
     .details-main-section{
         height:84vh;
     }
-    .table-area{
-         height: 90vh;
+
+    .contribution-card{
+        background-color:#09AA5C;
+        display:flex;
+        flex-direction:column;
+        margin: 8px;
+        padding: 8px;
     }
+
+    .contribution-card span{
+        font-size: 16px;
+    }
+    .card-holder{
+        padding:0 10px;
+    }
+    .submitBtn{
+        width:100%;
+    }
+    .modal-dialog{
+       width:30%;
+       margin: auto;
+       position:relative;
+       top:30%;
+   }
+   .repayment-container{
+       display:flex;
+       justify-content:space-between;
+   }
 }
 
 @media only screen and (min-width:992px) and (max-width:1200px){
@@ -576,6 +819,7 @@ body{
     }
     .sidebar-container{
         display:block;
+        background-color:#198754;
         width:10%;
     }
     .sidebar{
@@ -589,9 +833,7 @@ body{
          font-size: 28px;
          font-weight:bold;
      }
-    .table-area{
-        height: 90vh;
-    }
+
     .input-row{
          width:40%;
     }
@@ -602,24 +844,13 @@ body{
         font-size: 24px;
         margin: 2rem 0;
     }
-    .input-row select {
-        font-size: 24px;
-        margin: 2rem 0;
+
+    .form-container{
+        width: 30%;
     }
-    .input-row button {
-        font-size: 24px;
-        margin: 2rem 0;
-    }
-    .column-container{
-         display:flex;
-         justify-content:center;
-    }
-    .input-container{
-        width:50%;
-    }
-    .btn{
-        width:100%;
-    }
+    .reg-form-container{
+             width:50%;
+         }
     .main-body{
         height: 84vh;
     }
@@ -653,24 +884,54 @@ body{
    .guarantor-table-area{
        height:50vh;
    }
+
+   .contribution-card{
+       background-color:#09AA5C;
+       display:flex;
+       flex-direction:column;
+       margin: 8px;
+       padding: 12px;
+   }
+
+   .contribution-card span{
+       font-size: 16px;
+   }
+   .card-holder{
+       padding:0 10px;
+   }
+   .submitBtn{
+       width:100%;
+   }
+   .modal-dialog{
+       width:25%;
+       margin: auto;
+       position:relative;
+       top:30%;
+   }
+   .repayment-container{
+       display:flex;
+       justify-content:space-between;
+   }
 }
 
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
     .members-table-area,{
-            height: 74vh;
-        }
-    .sidebar{
-        height:100%;
+        height: 74vh;
     }
-    /*
-    #member-table{
+    .submitBtn{
         width:100%;
-    }*/
+    }
+    .repayment-container{
+        display:flex;
+        justify-content:space-between;
+    }
+
     .sidebar-container{
             display:block;
-            width:20%;
+            background-color:#198754;
+            width: 20%;
         }
     .main-section{
         width:80%;
@@ -691,13 +952,7 @@ body{
         display:flex;
         justify-content:center;
     }
-    .input-container{
-        width:50%;
-        align-self:center;
-    }
-    .btn{
-        width: 100%;
-    }
+
     .main-body{
         height: 83vh;
     }
@@ -707,11 +962,9 @@ body{
     .add-contribution-main{
         height:85vh;
     }
-    .table-area{
-         height: 83vh;
-    }
+
     .one-row-item{
-        padding:10px 0;
+        padding:12px 0;
     }
     .input-row input {
         font-size: 24px;
@@ -735,6 +988,33 @@ body{
     }
     .guarantor-table-area{
         height:50vh;
+    }
+    .contribution-card{
+        background-color:#09AA5C;
+        display:flex;
+        margin: 8px;
+        padding: 12px;
+        height:80px;
+        align-items:center
+    }
+    .form-container{
+        width: 25%;
+    }
+    .reg-form-container{
+        width:50%;
+    }
+    .contribution-card span{
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .card-holder{
+        padding: 0 10px;
+    }
+    .modal-dialog{
+        width:20%;
+        margin: auto;
+        position:relative;
+        top:30%;
     }
 }
 
@@ -760,11 +1040,14 @@ body{
         height:86vh;
     }
     .btn{
-        width:100%;
+        width:auto;
         font-size: 16px;
     }
-    .table-area{
-         height: 75vh;
+    .submitBtn{
+        width:100%;
+    }
+    .reg-form-container{
+         width:40%;
      }
 
 }
@@ -786,6 +1069,7 @@ body{
     .approved-table-area{
         height:78vh;
       }
+
 
 }
 

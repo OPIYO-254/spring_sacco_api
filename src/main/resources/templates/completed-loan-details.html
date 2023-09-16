@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Sojrel Sacco Ltd</title>
+  <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
+</head>
+<body>
+<div th:insert="~{base :: navbar}"></div>
+<div class="container-fluid">
+  <div class="row">
+    <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-2 col-lg-2 p-0" id="sidebar-container"></div>
+    <div class="col-md-10 main-section">
+      <span class="d-flex justify-content-center mt-3 text-success fw-bold fs-3">Loan Details</span>
+      <hr class="border-2 border-success">
+      <table class="table" id="details-table">
+        <tbody>
+        <tr>
+          <th scope="row row-scoped" style="width:40%">Member ID</th>
+          <td th:text="${loan.memberId}"></td>
+        </tr>
+        <tr>
+          <th scope="row row-scoped">Loan ID:</th>
+          <td th:text="${loan.id}"></td>
+        </tr>
+        <tr>
+          <th scope="row row-scoped">Type:</th>
+          <td th:text="${loan.loanType}"></td>
+        </tr>
+        <tr>
+          <th scope="row row-scoped">Date:</th>
+          <td th:text="${#temporals.format(loan.applicationDate, 'dd MMM yyyy')}"></td>
+        </tr>
+        <tr>
+          <th scope="row row-scoped">Principal:</th>
+          <td th:text="'Ksh '+${loan.principal}"></td>
+        </tr>
+        <tr>
+          <th scope="row row-scoped">Amount:</th>
+          <td th:text="'Ksh '+${loan.amount}"></td>
+        </tr>
+        <tr>
+          <th scope="row row-scoped">Instalments:</th>
+          <td th:text="${loan.instalments} +' months'"></td>
+        </tr>
+        <tr>
+          <th scope="row row-scoped">Total Guaranteed:</th>
+          <td th:text="${total != null ? 'Ksh '+total: 'Ksh 0'}"></td>
+        </tr>
+        </tbody>
+      </table>
+      <hr class="border-2 border-success">
+      <span class="d-flex justify-content-center fw-bold text-success">Loan Guarantors</span>
+      <hr class="border-2 border-success">
+      <div class="container guarantor-table-area mt-4">
+        <div class="table-responsive table-responsive-sm">
+          <table class="table" id="guarantors-table" style="width:100%;">
+            <thead>
+            <th>Guarantor ID.</th>
+            <th>Guarantor Name</th>
+            <th>Amount Guaranteed</th>
+            <th>Phone Number</th>
+            <th class="hide-md">Email</th>
+            </thead>
+            <tbody>
+            <tr th:each="guarantor: ${guarantors}">
+              <td data-label="Guarantor ID:" th:text="${guarantor.memberId}"></td>
+              <td data-label="Name:" th:text="${guarantor.firstName}+' '+${guarantor.midName}"></td>
+              <td data-label="Amount:" th:text="${guarantor.amount != null ? 'Ksh ' + guarantor.amount : 'Ksh 0'}"></td>
+              <td data-label="Phone:" th:text="${guarantor.phone}"></td>
+              <td data-label="Email:" th:text="${guarantor.email}" class="hide-md"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <hr class="border-2 border-success">
+      <span class="d-flex justify-content-center fw-bold text-success">Loan Repayment</span>
+      <hr class="border-2 border-success">
+      <div class="container d-flex justify-content-center mt-3">
+        <div class="repayment-container">
+          <div class="repayment-item">
+            <span>Total Repaid:</span>
+            <span th:text="'KES '+${repaid}"></span>
+          </div>
+          <div class="repayment-item">
+            <span>Outstanding:</span>
+            <span th:text="'KES '+(${loan.amount}-${repaid})"></span>
+          </div>
+        </div>
+        <hr class="border-2 border-success">
+      </div>
+
+      <hr class="border-2 border-success">
+      <div class="container guarantor-table-area mt-4">
+        <div class="table-responsive table-responsive-sm">
+          <table class="table" id="repayments-table" style="width:100%;">
+            <thead>
+            <th>SN</th>
+            <th>Date</th>
+            <th>Amount</th>
+            </thead>
+            <tbody>
+            <tr th:each="repayment: ${repayments}">
+              <td data-label="SN" th:text="${repayment.id}"></td>
+              <td data-label="Date:" th:text="${#temporals.format(repayment.repaymentDate,'dd MMM yyyy')}"></td>
+              <td data-label="Amount:" th:text="'KES '+${repayment.amount}"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:insert="~{base :: footer}">  </div>
+
+<script>
+        $(document).ready(function(){
+            $("#repayment-form").submit(function(event){
+                event.preventDefault();
+                if($("#amount").val()==""){
+                    $("#msg").html("<p style='color:red; font-size:10px;'>Please enter amount</p>").
+                    $("#msg").fadeToggle(3000);
+                    console.log('error');
+                }
+                else{
+                    var originalButtonText = $("#submitBtn").html();
+                    $("#submitBtn").html('<div class="spinner-border" role="status" id="spinner">' +
+                          '<span class="visually-hidden"></span><div>');
+                    let formData = {
+                        loanId:$("#loanId").val(),
+                        amount:$("#amount").val()
+                    }
+                    $.ajax({
+                        type : "POST",
+                        contentType : "application/json",
+                        url : "api/repayment/add",
+                        data : JSON.stringify(formData),
+                        dataType : 'json',
+                        success: function(result){
+                            if(result.status == "success"){
+                                $("#submitBtn").html(originalButtonText);
+                                $("#msg").html('<div style="color:green;"><p>'+status.message+'</p></div>');
+                                $("#repayment-form")[0].reset();
+                                $("#repayModal").modal("hide");
+                                location.reload();
+                            }
+                            else{
+                                $("#submitBtn").html(originalButtonText);
+                                $("#msg").html('<div style="color:red;"><p>+status.message+</p></div>');
+                                $("#repayment-form")[0].reset();
+                                $("#repayModal").modal("hide");
+                                location.reload();
+                            }
+                        },
+                        error:function (xhr, status, error) {
+                            console.log(error);
+                            $("#repayment-form")[0].reset();
+                            $("#repayModal").modal("hide");
+                            location.reload();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+<script src="main.js" type="text/javascript"></script>
+</body>
+</html>

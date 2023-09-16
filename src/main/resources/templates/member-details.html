@@ -12,146 +12,190 @@
     <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
+    <style>
+            /* Reset default margin and padding
+          * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+          }
+
+          /* Define minimum height for the whole layout */
+          body {
+              min-height: 100%;
+              display: flex;
+              flex-direction: column;
+          }
+
+          /* Style the navigation bar */
+          .navbar {
+              height: 80px;
+              background-color: #333;
+              color: white;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+          }
+
+          Create a container to hold sidebar and main content */
+
+    </style>
 </head>
 <body>
     <div th:insert="~{base :: navbar}"></div>
-    <div class="container-fluid">
-        <div class="row">
-            <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-2 col-lg-2 p-0" id="sidebar-container"></div>
-            <div class="col-md-10 main-section">
-                <span class="d-flex justify-content-center mt-3 text-success">Member Details</span>
-                <hr>
-                <table class="table" id="details-table">
-                    <tbody>
-                        <tr>
-                            <th scope="row row-scoped" style="width:40%">Member ID</th>
-                            <td th:text="${member.id}"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row row-scoped">Name:</th>
-                            <td th:text="${member.firstName+' '+member.midName+' '+member.lastName}"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row row-scoped">Registration Date:</th>
-                            <td th:text="${#temporals.format(member.regDate,'dd MMM yyyy')}"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row row-scoped">ID No:</th>
-                            <td th:text="${member.idNo}"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row row-scoped">Date of Birth:</th>
-                            <td th:text="${#dates.format(member.dob,'dd MMM yyyy')}"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row row-scoped">Email:</th>
-                            <td th:text="${member.email}"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row row-scoped">Phone Number:</th>
-                            <td th:text="${member.phone}"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row row-scoped">KRA Pin:</th>
-                            <td th:text="${member.kraPin}"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row row-scoped">Address:</th>
-                            <td th:text="${member.address}"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row row-scoped">Residence:</th>
-                            <td th:text="${member.residence}"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <span class="d-flex justify-content-center">Contributions</span>
-                <hr>
-                <div class="container guarantor-table-area mt-4">
-                    <div class="table-responsive table-responsive-sm">
-                        <table class="table" id="member-contributions-table" style="width:100%;">
-                            <thead>
-                                <th>ID.</th>
-                                <th>Date</th>
-                                <th>Type</th>
-                                <th>Amount</th>
-                            </thead>
-                            <tbody>
-                            <tr th:each="contribution: ${member.contributions}">
-                                <td data-label="ID:" th:text="${contribution.id}"></td>
-                                <td data-label="Date:" th:text="${#temporals.format(contribution.contributionDate,'dd MMM yyyy')}"></td>
-                                <td data-label="Contribution Type:" th:text="${contribution.contributionType}"></td>
-                                <td data-label="Amount:" th:text="${contribution.amount != null? 'Ksh '+ contribution.amount: 'Ksh 0'}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+    <div class="row mycontainer">
+        <div th:insert="~{base :: sidebar}" class="sidebar-container col-lg-2 p-0" id="sidebar-container"></div>
+        <div class="my-section col-lg-10">
+            <span class="d-flex justify-content-center mt-3 text-success fs-3 fw-bold">Member Details</span>
+            <hr class="border-2 border-success">
+            <table class="table" id="details-table">
+                <tbody>
+                    <tr>
+                        <th scope="row row-scoped" style="width:40%">Member ID</th>
+                        <td th:text="${member.id}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row row-scoped">Name:</th>
+                        <td th:text="${member.firstName+' '+member.midName+' '+member.lastName}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row row-scoped">Registration Date:</th>
+                        <td th:text="${#temporals.format(member.regDate,'dd MMM yyyy')}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row row-scoped">ID No:</th>
+                        <td th:text="${member.idNo}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row row-scoped">Date of Birth:</th>
+                        <td th:text="${#dates.format(member.dob,'dd MMM yyyy')}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row row-scoped">Email:</th>
+                        <td th:text="${member.email}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row row-scoped">Phone Number:</th>
+                        <td th:text="${member.phone}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row row-scoped">KRA Pin:</th>
+                        <td th:text="${member.kraPin}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row row-scoped">Address:</th>
+                        <td th:text="${member.address}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row row-scoped">Residence:</th>
+                        <td th:text="${member.residence}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr class="border-2 border-success">
+            <span class="d-flex justify-content-center text-success fw-bold">Contributions</span>
+            <div class="totals">
+                <div class="contribution-box">
+                    <span>Total</span>
+                    <span th:text="'KES '+(${shares}+${savings})"></span>
                 </div>
+                <div class="contribution-box">
+                    <span>Shares</span>
+                    <span th:text="'KES '+${shares}"></span>
+                </div>
+                <div class="contribution-box">
+                    <span>Savings</span>
+                    <span th:text="'KES '+${savings}"></span>
+                </div>
+            </div>
+            <hr class="border-2 border-success">
+            <div class="container detail-table-area mt-4">
+                <div class="table-responsive table-responsive-sm">
+                    <table class="table" id="member-contributions-table" style="width:100%;">
+                        <thead>
+                            <th>ID.</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                        </thead>
+                        <tbody>
+                        <tr th:each="contribution: ${member.contributions}">
+                            <td data-label="ID:" th:text="${contribution.id}"></td>
+                            <td data-label="Date:" th:text="${#temporals.format(contribution.contributionDate,'dd MMM yyyy')}"></td>
+                            <td data-label="Type:" th:text="${contribution.contributionType}"></td>
+                            <td data-label="Amount:" th:text="${contribution.amount != null? 'Ksh '+ contribution.amount: 'Ksh 0'}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                <hr>
-                <span class="d-flex justify-content-center">Loans</span>
-                <hr>
-                <div class="container guarantor-table-area mt-4">
-                    <div class="table-responsive table-responsive-sm">
-                        <table class="table" id="member-loans-table" style="width:100%;">
-                            <thead>
+            <hr class="border-2 border-success">
+            <span class="d-flex justify-content-center text-success fw-bold">Loans</span>
+            <hr class="border-2 border-success">
+            <div class="container detail-table-area mt-4">
+                <div class="table-responsive table-responsive-sm">
+                    <table class="table" id="member-loans-table" style="width:100%;">
+                        <thead>
+                        <th>Loan ID.</th>
+                        <th>Type</th>
+                        <th>Principal</th>
+                        <th>Instalments</th>
+<!--                        <th>Amount</th>-->
+                        <th class="hide-md">Interest</th>
+                        <th>Status</th>
+                        </thead>
+                        <tbody>
+                        <tr th:each="loan: ${member.loansTaken}">
+                            <td data-label="Loan ID:" th:text="${loan.id}"></td>
+                            <td data-label="Type:" th:text="${loan.loanType}"></td>
+                            <td data-label="Principal:" th:text="${'Ksh '+loan.principal}"></td>
+                            <td data-label="Instalments:" th:text="${loan.instalments}"></td>
+<!--                            <td data-label="Amount:" th:text="${loan.amount}"></td>-->
+                            <td data-label="Interest:" th:text="${loan.interest}" class="hide-md"></td>
+                            <td data-label="Status:" th:text="${loan.loanStatus}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr class="border-2 border-success">
+            <span class="d-flex justify-content-center text-success fw-bold">Loans Guaranteed</span>
+<!--            <div th:each="guarantee: ${member.loansGuaranteed}">-->
+<!--                <span>Total Guaranteed:</span>-->
+<!--                <span th:text="${guarantee.amount}"></span>-->
+<!--            </div>-->
+            <hr class="border-2 border-success">
+            <div class="container detail-table-area mt-4">
+                <div class="table-responsive table-responsive-sm">
+                    <table class="table" id="member-guarantee-table" style="width:100%;">
+                        <thead>
                             <th>Loan ID.</th>
                             <th>Type</th>
                             <th>Principal</th>
                             <th>Instalments</th>
-                            <th>Amount</th>
+<!--                            <th>Amount</th>-->
                             <th class="hide-md">Interest</th>
                             <th>Status</th>
-                            </thead>
-                            <tbody>
-                            <tr th:each="loan: ${member.loansTaken}">
-                                <td data-label="Loan ID:" th:text="${loan.id}"></td>
-                                <td data-label="Type:" th:text="${loan.loanType}"></td>
-                                <td data-label="Principal:" th:text="${'Ksh '+loan.principal}"></td>
-                                <td data-label="Instalments:" th:text="${loan.instalments}"></td>
-                                <td data-label="Amount:" th:text="${loan.amount}"></td>
-                                <td data-label="Interest:" th:text="${loan.interest}" class="hide-md"></td>
-                                <td data-label="Status:" th:text="${loan.loanStatus}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        </thead>
+                        <tbody>
+                        <tr th:each="guarantee: ${member.loansGuaranteed}">
+                            <td data-label="Loan ID:" th:text="${guarantee.id}"></td>
+                            <td data-label="Type:" th:text="${guarantee.loanType}"></td>
+                            <td data-label="Principal:" th:text="${'Ksh '+guarantee.principal}"></td>
+                            <td data-label="Instalments:" th:text="${guarantee.instalments}"></td>
+                            <td data-label="Interest:" th:text="${guarantee.interest}" class="hide-md"></td>
+                            <td data-label="Status:" th:text="${guarantee.loanStatus}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-
-                <hr>
-                <span class="d-flex justify-content-center">Loans Guaranteed</span>
-                <hr>
-                <div class="container guarantor-table-area mt-4">
-                    <div class="table-responsive table-responsive-sm">
-                        <table class="table" id="member-guarantee-table" style="width:100%;">
-                            <thead>
-                                <th>Loan ID.</th>
-                                <th>Type</th>
-                                <th>Principal</th>
-                                <th>Instalments</th>
-                                <th>Amount</th>
-                                <th class="hide-md">Interest</th>
-                                <th>Status</th>
-                            </thead>
-                            <tbody>
-                            <tr th:each="guarantee: ${member.loansGuaranteed}">
-                                <td data-label="Loan ID:" th:text="${guarantee.id}"></td>
-                                <td data-label="Type:" th:text="${guarantee.loanType}"></td>
-                                <td data-label="Principal:" th:text="${'Ksh '+guarantee.principal}"></td>
-                                <td data-label="Instalments:" th:text="${guarantee.instalments}"></td>
-                                <td data-label="Amount:" th:text="${guarantee.amount}"></td>
-                                <td data-label="Interest:" th:text="${guarantee.interest}" class="hide-md"></td>
-                                <td data-label="Status:" th:text="${guarantee.loanStatus}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <hr>
             </div>
+            <hr>
         </div>
     </div>
+</div>
     <div th:insert="~{base :: footer}">  </div>
     <script src="main.js" type="text/javascript"></script>
 </body>

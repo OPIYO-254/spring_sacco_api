@@ -8,9 +8,5 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class LoanGuarantorServiceImp implements LoanGuarantorService{
     @Autowired
     private LoanGuarantorRepository loanGuarantorRepository;
-//    @Override
-//    public LoanGuarantor getLoanGuarantorById(LoanGuarantorId id) {
-//        LoanGuarantor guarantor = loanGuarantorRepository.findAllById(id);
-//        return null;
-//    }
+
 }

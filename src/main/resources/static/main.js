@@ -38,7 +38,7 @@ function showSideBar() {
 
 //function for adding contribution
 $(document).ready(function (){
-    $("#sub-form").submit(function(event){
+    $("#contrib-form").submit(function(event){
         event.preventDefault();
         if($("#id").val()==""){
             alert("Enter ID");
@@ -71,13 +71,13 @@ $(document).ready(function (){
                         $("#submitBtn").html(originalButtonText);
                         $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;"><p>Contribution added successfully</p></div>');
                         $("#results").fadeToggle(3000);
-                        $("#sub-form")[0].reset();
+                        $("#contrib-form")[0].reset();
                     }
                     else{
                         $("#submitBtn").html(originalButtonText);
                         $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;">Failed</p></div>');
                         $("#results").fadeToggle(3000);
-                        $("#sub-form")[0].reset();
+                        $("#contrib-form")[0].reset();
                     }
 
 
@@ -89,7 +89,7 @@ $(document).ready(function (){
                     $("#results").fadeToggle(3000);
                     $("#sub-form")[0].reset();
                     $("#submitBtn").html(originalButtonText);
-                    $("#sub-form")[0].reset();
+                    $("#contrib-form")[0].reset();
                     // Log the error response for inspection
                     console.log(xhr.responseText);
                     //close activity indicator here
@@ -102,7 +102,10 @@ $(document).ready(function (){
 
 //formating memember contributions table as datable
 $(document).ready( function () {
-    var table = $("#contributions-table").DataTable();
+    new DataTable("#contributions-table", {
+        processing:true,
+        pagingType:'simple_numbers'
+    });
 });
 
 //member table as datatable
@@ -141,6 +144,10 @@ $(document).ready( function () {
 
     });
 
+});
+
+$(document).ready(function(){
+    var table = $("#repayments-table").DataTable({});
 });
 
 $(document).ready( function () {

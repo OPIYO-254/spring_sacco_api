@@ -45,7 +45,7 @@ public class LoanController {
         LoanResponseDto loanResponseDto = loanService.updateLoan(id, fields);
         return new ResponseEntity<>(loanResponseDto, HttpStatus.OK);
     }
-    @PostMapping()
+    @PostMapping("/delete")
     public ResponseEntity<LoanResponseDto> deleteLoan(@RequestParam Long id){
         LoanResponseDto loanResponseDto = loanService.deleteLoan(id);
         return new ResponseEntity<>(loanResponseDto, HttpStatus.NOT_FOUND);
@@ -89,14 +89,10 @@ public class LoanController {
             @RequestParam Long loanId,
             @RequestParam double amount){
         loanService.updateGuaranteedAmount(memberId, loanId, amount);
-        return ResponseEntity.ok("Loan guarantor amount updated successfully.");
-//        try {
-//
-//
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating loan guarantor amount.");
-//        }
+        return ResponseEntity.ok("Guaranteed amount updated successfully.");
     }
+
+
 
 }
 

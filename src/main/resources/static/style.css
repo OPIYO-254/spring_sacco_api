@@ -1,0 +1,124 @@
+*{
+    margin:0;
+    padding:0;
+}
+html, body{
+    height:100%;
+}
+#container{
+    min-height:100%;
+}
+#main{
+    overflow:auto;
+    padding-bottom:80px;
+}
+#footer{
+    background-color: black;
+    position: relative;
+    height:80px;
+    margin-top:-80px;
+    clear:both;
+}
+.col-md-9{
+    display:flex;
+    flex-direction:column;
+    justify-content-center;
+    align-items:center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+.sidebar{
+    height: 100%;
+}
+.btn{
+    width:100%;
+    background-color:#09AA5C;
+    border: 1px solid #09AA5C;
+}
+.btn:hover{
+    background-color:#198754;
+    border-color:#198754;
+}
+.btn:active{
+    background-color:#198754;
+    border-color:#198754;
+}
+.page-title {
+    background-color:#09AA5C;
+    border-radius: 8px;
+}
+
+.sidebar-item:hover{
+    background-color: #198754;
+}
+@media only screen and (max-width:576px){
+    #registration-form{
+        justify-content:center;
+        width:100%;
+    }
+    .col-md-9{
+        margin-top: 12px;
+    }
+    .input-container{
+        width:100%;
+        display: flex;
+        flex-direction:column;
+        justify-content-center;
+        align-items:center;
+    }
+    .input-container input{
+        width:100%;
+    }
+}
+@media only screen and (max-width:600px){
+    .col-md-9{
+        margin-top: 12px;
+    }
+    .input-container{
+        display: flex;
+        flex-direction:column;
+        justify-content-center;
+        align-items:center;
+    }
+    form{
+        width: 100%;
+        padding:12px;
+    }
+    .sidebar{
+        height:auto;
+    }
+    .input-container input{
+        width:100%;
+
+    }
+
+}
+@media only screen and (min-width: 768px) and (max-width: 992px)
+.sidebar {
+    height: auto;
+    width: 100%;
+}
+
+@media only screen and (min-width:992px){
+
+}
+@media only screen and (min-width: 992px) and (max-width: 1200px){
+    .sidebar-container {
+        display: block;
+        width: 10%;
+        justify-content:center;
+    }
+    .card-title {
+        visibility: hidden;
+    }
+    .card-icon {
+        font-size: 24px;
+        margin-left: 18px;
+    }
+}
+@media only screen and (min-width:1200px){
+    .col-md-9{
+        margin-bottom: 64px;
+    }
+
+}

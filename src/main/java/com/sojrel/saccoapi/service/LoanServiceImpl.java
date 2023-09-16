@@ -1,6 +1,7 @@
 package com.sojrel.saccoapi.service;
 
 import com.sojrel.saccoapi.dto.requests.LoanRequestDto;
+import com.sojrel.saccoapi.dto.requests.RepaymentRequestDto;
 import com.sojrel.saccoapi.dto.responses.*;
 import com.sojrel.saccoapi.model.*;
 import com.sojrel.saccoapi.repository.LoanGuarantorRepository;
@@ -191,6 +192,18 @@ public class LoanServiceImpl implements LoanService{
     }
 
     @Override
+    public List<MemberLoansResponseDto> getCompletedLoans() {
+        List<MemberLoansResponseDto> loans = loanRepository.findCompletedLoans(Loan.LoanStatus.COMPLETED);
+        return loans;
+    }
+
+    @Override
+    public List<MemberLoansResponseDto> findRepayingLoans() {
+        List<MemberLoansResponseDto> loans = loanRepository.findRepayingLoans(Loan.LoanStatus.APPROVED);
+        return loans;
+    }
+
+    @Override
     public ItemCountDto countAppliedLoans() {
         ItemCountDto loanCount = loanRepository.countAppliedLoans(Loan.LoanStatus.REVIEW);
         return loanCount;
@@ -209,8 +222,14 @@ public class LoanServiceImpl implements LoanService{
     }
 
     @Override
+    public ItemCountDto countRepayingLoans() {
+        ItemCountDto loanCount = loanRepository.countRepayingLoans(Loan.LoanStatus.APPROVED);
+        return loanCount;
+    }
+
+    @Override
     public ItemCountDto countCompletedLoans() {
-        ItemCountDto loanCount = loanRepository.countAppliedLoans(Loan.LoanStatus.COMPLETED);
+        ItemCountDto loanCount = loanRepository.countCompletedLoans(Loan.LoanStatus.COMPLETED);
         return loanCount;
     }
 
@@ -250,6 +269,36 @@ public class LoanServiceImpl implements LoanService{
         loan.setLoanStatus(Loan.LoanStatus.REJECTED);
         loanRepository.save(loan);
     }
+
+    /*
+    * This method is to be used in loan repayment function to ensure that fully repaid loans are marked as completed
+    * */
+    @Override
+    public void completeLoan(Long loanId) {
+        Loan loan = getLoanById(loanId);
+        loan.setLoanStatus(Loan.LoanStatus.COMPLETED);
+        loanRepository.save(loan);
+    }
+
+    @Override
+    public RepaymentResponseDto addLoanRepayment(RepaymentRequestDto repaymentRequestDto) {
+        RepaymentResponseDto repaymentResponseDto = repaymentService.addRepayment(repaymentRequestDto);
+        return repaymentResponseDto;
+    }
+
+
+    @Override
+    public List<RepaymentResponseDto> getLoanRepayments(Long loanId) {
+        List<RepaymentResponseDto> repayments = loanRepository.getLoanRepayments(loanId);
+        return repayments;
+    }
+
+    @Override
+    public TotalDoubleItem getTotalRepaid(Long loanId) {
+        TotalDoubleItem totalRepaid = loanRepository.getTotalRepaid(loanId);
+        return totalRepaid;
+    }
+
 
 
 //    @Override

@@ -11,12 +11,13 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @ToString
 @Component
-public class MemberTotalSavingsDto{
+public class MemberTotalSavingsDto {
     private String id;
     private String firstName;
     private String midName;
     private Long idNo;
     private String email;
     private String phone;
+    private String residence;
     private Long totalSavings;
 }

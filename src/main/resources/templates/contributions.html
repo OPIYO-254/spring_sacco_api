@@ -20,13 +20,22 @@
     <div class="row">
         <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-3 col-lg-2 p-0" id="sidebar-container"></div>
         <div class="col-md-10 main-section">
-            <div class="page-title d-flex justify-content-center align-items-center p-2 m-3">
+            <div class="page-title d-flex justify-content-center align-items-center p-3 mt-3 mb-2 mx-1">
                 <span class="text-light">Members Contributions</span>
             </div>
-            <div class="px-3 mb-3 card-holder">
-                <div class="col p-4 bg-success text-light rounded-2"><h6>Total</h6></div>
-                <div class="col p-4 mx-3 bg-success text-light rounded-2"><h6>Savings</h6></div>
-                <div class="col p-4 bg-success text-light rounded-2"><h6>Shares</h6></div>
+            <div class="row mb-3 card-holder">
+                <div class="col text-light rounded-2 contribution-card">
+                    <span>TOTAL</span>
+                    <span th:text="${'KES '+total_contributions}"></span>
+                </div>
+                <div class="col contribution-card text-light rounded-2">
+                    <span>SAVINGS</span>
+                    <span th:text="${'KES '+savings}"></span>
+                </div>
+                <div class="col contribution-card text-light rounded-2">
+                    <span>SHARES</span>
+                    <span th:text="${'KES '+shares}"></span>
+                </div>
             </div>
             <div class="container mt-4 contribution-table-area">
                 <div class="table-responsive table-responsive-sm">

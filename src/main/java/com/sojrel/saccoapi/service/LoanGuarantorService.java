@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface LoanGuarantorService {
-//    public LoanGuarantor getLoanGuarantorById(LoanGuarantorId id);
+
 }
