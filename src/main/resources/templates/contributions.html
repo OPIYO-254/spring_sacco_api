@@ -26,15 +26,15 @@
             <div class="row mb-3 card-holder">
                 <div class="col text-light rounded-2 contribution-card">
                     <span>TOTAL</span>
-                    <span th:text="${'KES '+total_contributions}"></span>
+                    <span th:text="${total_contributions}!=null?${'KES '+total_contributions}:'KES 0.00'"></span>
                 </div>
                 <div class="col contribution-card text-light rounded-2">
                     <span>SAVINGS</span>
-                    <span th:text="${'KES '+savings}"></span>
+                    <span th:text="${savings}!=null?${'KES '+savings}:'KES 0.00'"></span>
                 </div>
                 <div class="col contribution-card text-light rounded-2">
                     <span>SHARES</span>
-                    <span th:text="${'KES '+shares}"></span>
+                    <span th:text="${shares}!=null?${'KES '+shares}: 'KES 0.00'"></span>
                 </div>
             </div>
             <div class="container mt-4 contribution-table-area">

@@ -1,10 +1,7 @@
 package com.sojrel.saccoapi.service;
 
 import com.sojrel.saccoapi.dto.requests.MemberRequestDto;
-import com.sojrel.saccoapi.dto.responses.ItemCountDto;
-import com.sojrel.saccoapi.dto.responses.Mapper;
-import com.sojrel.saccoapi.dto.responses.MemberResponseDto;
-import com.sojrel.saccoapi.dto.responses.MemberTotalSavingsDto;
+import com.sojrel.saccoapi.dto.responses.*;
 import com.sojrel.saccoapi.model.Contribution;
 import com.sojrel.saccoapi.model.Loan;
 import com.sojrel.saccoapi.model.Member;
@@ -13,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -185,6 +183,37 @@ public class MemberServiceImpl implements MemberService{
         return memberRepository.findMemberSavings(Contribution.ContributionType.SAVINGS);
     }
 
+    @Override
+    public List<NewMemberResponseDto> findNewMembers() {
+        List<NewMemberResponseDto> newMemberResponseDtos = new ArrayList<>();
+        List<Object[]> results = memberRepository.findNewMembers();
+        for(Object[] row: results){
+            NewMemberResponseDto newMemberResponseDto = new NewMemberResponseDto();
+            newMemberResponseDto.setId((String)row[0]);
+            newMemberResponseDto.setFirstName((String)row[1]);
+            newMemberResponseDto.setMidName((String)row[2]);
+            newMemberResponseDto.setLastName((String)row[3]);
+            newMemberResponseDto.setIdNo((Long)row[4]);
+            newMemberResponseDto.setEmail((String)row[5]);
+            newMemberResponseDto.setPhone((String)row[6]);
+            newMemberResponseDto.setResidence((String)row[7]);
+            newMemberResponseDto.setCredentialsId((Long) row[8]);
+            newMemberResponseDtos.add(newMemberResponseDto);
+        }
+        return newMemberResponseDtos;
+        /**
+         * private String id;
+         *     private String firstName;
+         *     private String midName;
+         *     private String lastName;
+         *     private Long idNo;
+         *     private String email;
+         *     private String phone;
+         *     private String credentialsId;
+         *     private String residence;
+         */
+    }
+
 
     @Override
     public void saveMember(MemberRequestDto memberRequestDto) {
@@ -213,6 +242,12 @@ public class MemberServiceImpl implements MemberService{
         ItemCountDto itemCountDto = memberRepository.findMemberCount();
         return itemCountDto;
     }
+
+//    @Override
+//    public MemberResponseDto updateCredentials(String memberId, Long credentialsId) {
+//        MemberResponseDto memberResponseDto = memberRepository.updateCredentials(credentialsId, memberId);
+//        return memberResponseDto;
+//    }
 
 
 }

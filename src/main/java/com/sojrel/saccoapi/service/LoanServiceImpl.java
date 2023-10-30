@@ -14,10 +14,16 @@ import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import static com.sojrel.saccoapi.utils.DateConverter.convertDateFormat;
+
 @Service
 public class LoanServiceImpl implements LoanService{
     @Autowired
@@ -32,7 +38,7 @@ public class LoanServiceImpl implements LoanService{
     @Override
     public LoanResponseDto addLoan(LoanRequestDto loanRequestDto) {
         Loan loan = new Loan();
-        System.out.println(loanRequestDto.getLoanType());
+//        System.out.println(loanRequestDto.getLoanType());
         loan.setLoanType(Loan.LoanType.valueOf(loanRequestDto.getLoanType()));
         Member member = memberService.getMemberById(loanRequestDto.getMemberId());
         if(Objects.nonNull(member)){
@@ -299,7 +305,61 @@ public class LoanServiceImpl implements LoanService{
         return totalRepaid;
     }
 
+    @Override
+    public ItemTotalDto getMonthlyDisbursement(){
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        String formattedDate = now.format(formatter);
+        Long monthlyTotal = loanRepository.getTotalDisbursement(formattedDate+'%');
+        System.out.println(formattedDate);
+        ItemTotalDto total = new ItemTotalDto();
+        total.setTotal(monthlyTotal);
+        System.out.println(total);
+        return  total;
+    }
 
+    @Override
+    public ItemTotalDto getAnnualDisbursement(){
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+        String formattedDate = now.format(formatter);
+        Long monthlyTotal = loanRepository.getTotalDisbursement(formattedDate+'%');
+        ItemTotalDto total = new ItemTotalDto();
+        total.setTotal(monthlyTotal);
+        return  total;
+    }
+    @Override
+    public List<KeyValueDto> totalMonthlyDisbursements(){
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime start = now.minusYears(1);
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        List<Object[]> monthlyDisbursements = loanRepository.getTotalMonthlyDisbursements(start.format(dateFormatter), now.format(dateFormatter));
+        List<KeyValueDto> keyValueDtos = new ArrayList<>();
+//        SimpleDateFormat outputDateFormat = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
+        for (Object[] row : monthlyDisbursements) {
+            String formattedDate = convertDateFormat((String)row[0]);
+            String key = formattedDate;
+            Double value = (Double) row[1];
+            KeyValueDto keyValueDto = new KeyValueDto(key, value);
+            keyValueDtos.add(keyValueDto);
+        }
+
+//        System.out.println(keyValueDtos);
+        return keyValueDtos;
+    }
+    @Override
+    public List<KeyValueDto> totalPerLoanCategory(){
+        List<Object[]> totalLoans = loanRepository.getTotalPerLoanCategory();
+        List<KeyValueDto> keyValueDtos = new ArrayList<>();
+        for(Object[] row: totalLoans){
+            String key = (String) row[0];
+            Double value = (Double) row[1];
+            KeyValueDto dto = new KeyValueDto(key, value);
+            keyValueDtos.add(dto);
+        }
+//        System.out.println(keyValueDtos);
+        return keyValueDtos;
+    }
 
 //    @Override
 //    public LoanGuarantorResponseDto updateGuaranteedAmount(String memberId, Long loanId, Double amount) {

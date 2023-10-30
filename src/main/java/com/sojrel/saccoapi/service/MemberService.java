@@ -4,6 +4,7 @@ import com.sojrel.saccoapi.dto.requests.MemberRequestDto;
 import com.sojrel.saccoapi.dto.responses.ItemCountDto;
 import com.sojrel.saccoapi.dto.responses.MemberResponseDto;
 import com.sojrel.saccoapi.dto.responses.MemberTotalSavingsDto;
+import com.sojrel.saccoapi.dto.responses.NewMemberResponseDto;
 import com.sojrel.saccoapi.model.Member;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,9 @@ public interface MemberService {
     public MemberResponseDto removeLoanGuaranteedFromMember(String memberId, Long loanId);
     public List<Member> listMembers();
     List<MemberTotalSavingsDto> findMemberSavings();
+    List<NewMemberResponseDto> findNewMembers();
     public void saveMember(MemberRequestDto member);
     public List<MemberTotalSavingsDto> membersTotalShares();
     public ItemCountDto getMemberCount();
+//    public MemberResponseDto updateCredentials(String memberId, Long credentialsId);
 }

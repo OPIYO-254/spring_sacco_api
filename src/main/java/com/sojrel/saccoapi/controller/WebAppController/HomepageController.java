@@ -1,38 +1,60 @@
 package com.sojrel.saccoapi.controller.WebAppController;
 
-import com.sojrel.saccoapi.dto.requests.ContributionRequestDto;
-import com.sojrel.saccoapi.dto.requests.LoanRequestDto;
-import com.sojrel.saccoapi.dto.requests.MemberRequestDto;
-import com.sojrel.saccoapi.dto.requests.RepaymentRequestDto;
+import com.sojrel.saccoapi.dto.requests.*;
 import com.sojrel.saccoapi.dto.responses.*;
 import com.sojrel.saccoapi.model.Loan;
-import com.sojrel.saccoapi.service.ContributionService;
-import com.sojrel.saccoapi.service.LoanService;
-import com.sojrel.saccoapi.service.MemberService;
-import com.sojrel.saccoapi.service.RepaymentService;
+import com.sojrel.saccoapi.model.User;
+import com.sojrel.saccoapi.repository.MemberRepository;
+import com.sojrel.saccoapi.service.*;
+import com.sojrel.saccoapi.utils.FileUploader;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@CrossOrigin
 @Controller
 public class HomepageController {
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private MemberRepository memberRepository;
     @Autowired
     private ContributionService contributionService;
     @Autowired
     private LoanService loanService;
     @Autowired
     private RepaymentService repaymentService;
-    @GetMapping("/dashboard")
-    public ModelAndView membersSavings(){
-        ModelAndView modelAndView = new ModelAndView("dashboard");
+    @Autowired
+    private CredentialsService credentialsService;
+    @Autowired
+    private ContactService contactService;
+    @Autowired
+    private FileUploadService fileUploadService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private UserDetailsService userDetailsService;
+    DecimalFormat df = new DecimalFormat("0.00");
+
+    @GetMapping("/home")
+    public ModelAndView adminMain(){
+        ModelAndView modelAndView = new ModelAndView("home");
         List<MemberTotalSavingsDto> memberTotalSavingDtos = memberService.findMemberSavings();
         ItemCountDto loanCount = loanService.countAppliedLoans();
         Long count = loanCount.getCount();
@@ -46,7 +68,11 @@ public class HomepageController {
         Long rejected = rejectedCount.getCount();
         ItemCountDto completedCount = loanService.countCompletedLoans();
         Long completed = completedCount.getCount();
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
+//        UserDetails userDetails = userDetailsService.loadUserByUsername(requestDto.getEmail());
 
+//        modelAndView.addObject("user", userDetails);
         modelAndView.addObject("loan_count", count);
         modelAndView.addObject("member_count", mCount);
         modelAndView.addObject("approved_count", approved);
@@ -54,14 +80,60 @@ public class HomepageController {
         modelAndView.addObject("rejected_count", rejected);
         modelAndView.addObject("completed_count", completed);
         modelAndView.addObject("savings", memberTotalSavingDtos);
+        modelAndView.addObject("unread", unread);
         return modelAndView;
     }
+
     @GetMapping("/register")
     public ModelAndView addMemberForm(){
         ModelAndView modelAndView = new ModelAndView("register");
         MemberRequestDto newMember = new MemberRequestDto();
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
         modelAndView.addObject("member", newMember);
+        modelAndView.addObject("unread", unread);
         return  modelAndView;
+    }
+    @GetMapping("/credentials")
+    public ModelAndView credentials(){
+        ModelAndView modelAndView = new ModelAndView();
+        List<NewMemberResponseDto> memberDetails = memberService.findNewMembers();
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
+        modelAndView.addObject("memberDetails", memberDetails);
+        modelAndView.addObject("unread", unread);
+        return modelAndView;
+    }
+
+    @GetMapping("/add-credentials")
+    public ModelAndView addCredetials(@RequestParam String id){
+        ModelAndView modelAndView = new ModelAndView("add-credentials");
+        MemberResponseDto memberResponseDto = memberService.getMember(id);
+        modelAndView.addObject("member", memberResponseDto);
+        return  modelAndView;
+    }
+
+    @GetMapping("/downloads/{fileName}")
+    ResponseEntity<Resource> downLoadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
+
+        Resource resource = FileUploader.downloadFile(fileName);
+
+//        MediaType contentType = MediaType.APPLICATION_PDF;
+
+        String mimeType;
+
+        try {
+            mimeType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException e) {
+            mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+        }
+        mimeType = mimeType == null ? MediaType.APPLICATION_OCTET_STREAM_VALUE : mimeType;
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(mimeType))
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName="+resource.getFilename())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + resource.getFilename())
+                .body(resource);
     }
 
     @GetMapping("/add-contributions")
@@ -75,7 +147,10 @@ public class HomepageController {
     public ModelAndView listMembers(){
         ModelAndView modelAndView = new ModelAndView("members");
         List<MemberResponseDto> memberResponseDtos = memberService.getAllMembers();
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
         modelAndView.addObject("members", memberResponseDtos);
+        modelAndView.addObject("unread", unread);
         return  modelAndView;
     }
     @GetMapping("/member-details")
@@ -83,16 +158,47 @@ public class HomepageController {
         ModelAndView modelAndView = new ModelAndView("member-details");
         MemberResponseDto memberResponseDto = memberService.getMember(id);
         ItemTotalDto savings = contributionService.getMemberTotalSavings(id);
+        CredentialsResponseDto credsDto = credentialsService.getMemberCredentials(id);
+        try{
+            String idFrontName = credsDto.getIdFrontName();
+            String idFrontPath = credsDto.getIdFrontPath();
+            String idBackName = credsDto.getIdBackName();
+            String idBackPath = credsDto.getIdBackPath();
+            String kraCertName = credsDto.getKraCertName();
+            String kraCertPath = credsDto.getKraCertPath();
+            String passportName = credsDto.getPassportName();
+            String passportPath = credsDto.getPassportPath();
+
+            modelAndView.addObject("idFrontName", idFrontName);
+            modelAndView.addObject("idFrontPath", idFrontPath);
+            modelAndView.addObject("idBackName", idBackName);
+            modelAndView.addObject("idBackPath", idBackPath);
+            modelAndView.addObject("kraCertName", kraCertName);
+            modelAndView.addObject("kraCertPath", kraCertPath);
+            modelAndView.addObject("passportName", passportName);
+            modelAndView.addObject("passportPath", passportPath);
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+        }
         Long totalSavings = savings.getTotal();
-        System.out.print(totalSavings);
         ItemTotalDto shares = contributionService.getMemberTotalShares(id);
         Long totalShares = shares.getTotal();
+        Long totalContribs = null;
+        if(totalSavings == null && totalShares==null){totalContribs=null;}
+        else if(totalSavings!=null && totalShares==null){totalContribs=totalSavings;}
+        else if(totalSavings == null && totalShares!=null){totalContribs=totalShares;}
         modelAndView.addObject("member", memberResponseDto);
         modelAndView.addObject("savings", totalSavings);
         modelAndView.addObject("shares", totalShares);
+        modelAndView.addObject("total", totalContribs);
         return modelAndView;
     }
-
+    //manager -register, credentials,add-credentials, /downloads/**, /add-contributions,members,
+    // /member-details,/add-contribution,/save-contributions,/applied-loans,/rejected-loans,/approved-loans,/approved-loan-details
+    // /repaying-loans, /repaying-loan-details,/approve-loan/**, /reject-loan/**,rejected-loan-details,/completed-loans
+    // /completed-loans-details,contributions, revenue, messages, /read_message, mark-read-message/**
+    ///user apply-loan, /save-loan, /approved-loan-details, /repaying-loan-details, rejected-loan-details
     @GetMapping("/add-contribution")
     public ModelAndView addContributionForm(){
         ModelAndView modelAndView = new ModelAndView("add-contribution");
@@ -125,7 +231,6 @@ public class HomepageController {
     }
 
 
-
     @GetMapping("/apply-loan")
     public ModelAndView addLoanForm(){
         ModelAndView modelAndView = new ModelAndView("apply-loan");
@@ -144,21 +249,30 @@ public class HomepageController {
     public ModelAndView listAppliedLoans(){
         ModelAndView modelAndView = new ModelAndView("applied-loans");
         List<MemberLoansResponseDto> loanResponseDtos = loanService.getAppliedLoans();
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
         modelAndView.addObject("loans", loanResponseDtos);
+        modelAndView.addObject("unread", unread);
         return modelAndView;
     }
     @GetMapping("/rejected-loans")
     public ModelAndView listRejectedLoans(){
         ModelAndView modelAndView = new ModelAndView("rejected-loans");
         List<MemberLoansResponseDto> rejectedLoans = loanService.getRejectedLoans();
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
         modelAndView.addObject("rejectedLoans", rejectedLoans);
+        modelAndView.addObject("unread", unread);
         return modelAndView;
     }
     @GetMapping("/approved-loans")
     public ModelAndView listApprovedLoans(){
         ModelAndView modelAndView = new ModelAndView("approved-loans");
         List<MemberLoansResponseDto> rejectedLoans = loanService.getApprovedLoans();
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
         modelAndView.addObject("approvedLoans", rejectedLoans);
+        modelAndView.addObject("unread", unread);
         return modelAndView;
     }
 
@@ -190,7 +304,10 @@ public class HomepageController {
     public ModelAndView listRepayingLoans(){
         ModelAndView modelAndView = new ModelAndView("repaying-loans");
         List<MemberLoansResponseDto> repayingLoans = loanService.findRepayingLoans();
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
         modelAndView.addObject("repayingLoans", repayingLoans);
+        modelAndView.addObject("unread", unread);
         return modelAndView;
     }
     @GetMapping("/repaying-loan-details")
@@ -251,7 +368,10 @@ public class HomepageController {
     public ModelAndView listCompletedLoans(){
         ModelAndView modelAndView = new ModelAndView("completed-loans");
         List<MemberLoansResponseDto> completedLoans = loanService.getCompletedLoans();
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
         modelAndView.addObject("completedLoans", completedLoans);
+        modelAndView.addObject("unread", unread);
         return modelAndView;
     }
 
@@ -285,32 +405,166 @@ public class HomepageController {
         Long total_shares = shares.getTotal();
         ItemTotalDto savings = contributionService.getTotalSavings();
         Long total_savings = savings.getTotal();
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
         modelAndView.addObject("total_contributions", totalContributions);
         modelAndView.addObject("contributions", memberContributionsResponseDtos);
         modelAndView.addObject("shares", total_shares);
         modelAndView.addObject("savings", total_savings);
+        modelAndView.addObject("unread", unread);
         return modelAndView;
     }
 
     @GetMapping("/revenue")
     public ModelAndView getRevenue(){
+        LocalDateTime endDate = LocalDateTime.now();
+        LocalDateTime startDate = endDate.minusYears(1);
+        LocalDateTime startMonth = endDate.minusMonths(1);
         ModelAndView modelAndView = new ModelAndView("/revenue");
         List<LoanResponseDto> loanResponseDtos = loanService.getLoans();
         double tDisbursed = loanResponseDtos.stream()
-                .filter(loan -> "COMPLETE".equals(loan.getLoanStatus()) || "APPROVED".equals(loan.getLoanStatus()))
+                .filter(loan -> "COMPLETED".equals(loan.getLoanStatus()) || "APPROVED".equals(loan.getLoanStatus()))
                 .mapToDouble(LoanResponseDto::getPrincipal)
                 .sum();
         double expectedAmount = loanResponseDtos.stream()
-                .filter(loan -> "COMPLETE".equals(loan.getLoanStatus()) || "APPROVED".equals(loan.getLoanStatus()))
+                .filter(loan -> "COMPLETED".equals(loan.getLoanStatus()) || "APPROVED".equals(loan.getLoanStatus()))
                 .mapToDouble(LoanResponseDto::getAmount)
                 .sum();
+        double collectedAmount = loanResponseDtos.stream()
+                .filter(loan -> "COMPLETED".equals(loan.getLoanStatus()))
+                .mapToDouble(LoanResponseDto::getAmount)
+                .sum();
+        ItemTotalDto monthlyTotal = loanService.getMonthlyDisbursement();
+        ItemTotalDto annualTotal = loanService.getAnnualDisbursement();
+        Long monthlyDisburse = monthlyTotal.getTotal();
+        Long annualDisburse = annualTotal.getTotal();
+        List<KeyValueDto> keyValueDtoList = loanService.totalMonthlyDisbursements();
         List<RepaymentResponseDto> repaymentResponseDtos = repaymentService.getRepayments();
-        double tRepaid = repaymentResponseDtos.stream().mapToDouble(RepaymentResponseDto::getAmount).sum();
-        modelAndView.addObject("totalDisbursed", tDisbursed);
-        modelAndView.addObject("totalAmount", expectedAmount);
-        modelAndView.addObject("repaid", tRepaid);
+        double tRepaid = repaymentResponseDtos.stream().mapToDouble(RepaymentResponseDto::getAmount).sum();//sum of all repaid amount
+        List<KeyValueDto> totalPerCategory = loanService.totalPerLoanCategory();
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
+        modelAndView.addObject("unread", unread);
+        try {
+            modelAndView.addObject("totalDisbursed", df.format(tDisbursed));
+            modelAndView.addObject("totalAmount", df.format(expectedAmount));
+            modelAndView.addObject("repaid", df.format(tRepaid));
+            modelAndView.addObject("completed", df.format(collectedAmount));
+            modelAndView.addObject("annualDisbursement", df.format(annualDisburse));
+            modelAndView.addObject("monthlyDisburse", df.format(monthlyDisburse));
+            modelAndView.addObject("totalMonthly", keyValueDtoList);
+            modelAndView.addObject("totalPerCategiry", totalPerCategory);
+
+        }
+        catch (IllegalArgumentException e){
+            new IllegalArgumentException("null values");
+        }
         return modelAndView;
     }
+
+    @GetMapping("/about-us")
+    public String aboutUs(){return "about-us";}
+
+    @GetMapping("/membership")
+    public String membership(){return "membership";}
+
+    @GetMapping("/services")
+    public String loanProducts(){return "services";}
+
+    @GetMapping("/contact-us")
+    public String contactUs(){return "contact-us";}
+
+    @GetMapping("/blogs")
+    public String blogs(){return "blogs";}
+
+    @GetMapping("/downloads")
+    public ModelAndView downloads(){
+        ModelAndView modelAndView = new ModelAndView("downloads");
+        List<UploadedFilesDto> dtos = fileUploadService.getAllFiles();
+        modelAndView.addObject("downloads", dtos);
+        return modelAndView;
+    }
+    @PostMapping("/send-message")
+    public ResponseEntity<?> addContact(@RequestBody ContactRequestDto contactRequestDto){
+        try {
+            contactService.addContact(contactRequestDto);
+            // Return a JSON response with success message
+            return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Message sent successfully.\"}");
+        } catch (Exception e) {
+            // Return a JSON response with error message
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"status\": \"error\", \"message\": \"Error sending message.\"}");
+        }
+    }
+
+    @GetMapping("/messages")
+    public ModelAndView getContactMessages(){
+        ModelAndView modelAndView = new ModelAndView("messages");
+        List<ContactResponseDto> contactResponseDtos = contactService.getAllContacts();
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
+        modelAndView.addObject("messages", contactResponseDtos);
+        modelAndView.addObject("unread", unread);
+        return modelAndView;
+    }
+
+    @GetMapping("/read_message")
+    public ModelAndView readMessage(@RequestParam Long id){
+        ModelAndView modelAndView = new ModelAndView("read_message");
+        ContactResponseDto contactResponseDto = contactService.getContact(id);
+        ItemCountDto countUnread = contactService.countUnreadMessages();
+        Long unread = countUnread.getCount();
+        modelAndView.addObject("message", contactResponseDto);
+        modelAndView.addObject("unread", unread);
+        return modelAndView;
+    }
+
+    @PostMapping("/mark-read-message/{id}")
+    public String markRead(@PathVariable Long id){
+        contactService.updateToRead(id);
+        return "redirect:/messages";
+    }
+
+    @GetMapping("/file-upload")
+    public String fileUploads(){return "file-upload";}
+
+    @GetMapping("/create-account")
+    public String createAccount(){return "create-account";}
+
+    @PostMapping("/create-account")
+    public ResponseEntity<?> signup(@RequestBody RegistrationRequestDto registrationRequestDto, HttpServletRequest request){
+        String siteURl = getSiteURL(request);
+        try {
+            userService.addUser(registrationRequestDto,siteURl);
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "success");
+            response.put("message", "Registered Successfully. \nPlease check your email to verify your account.");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "error");
+            response.put("message", "Error creating user");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(response);
+        }
+    }
+
+    private String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
+    }
+    @GetMapping("/verify")
+    public String verifyUser(@RequestParam("code") String code) {
+        if (userService.verifyUser(code)) {
+            return "verify_success";
+        } else {
+            return "verify_fail";
+        }
+    }
+    @GetMapping("/login")
+    public String loginForm(){return "login";}
+
 
 
 }

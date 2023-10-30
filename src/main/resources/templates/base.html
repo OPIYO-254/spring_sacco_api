@@ -18,9 +18,9 @@
           <div class="container-fluid">
               <div class="navbar-brand d-flex">
                   <img class="img bg-light" src="images/logo.png" alt="Logo" height="36px" style="border-radius: 18px;">
-                  <a class="text-light px-2" th:href="@{/dashboard}">Sojrel Sacco</a>
+                  <a class="text-light px-2" th:href="@{/home}">Sojrel Sacco</a>
               </div>
-              <div class="menu-toggler" onclick="showSideBar()">
+              <div id="menu-toggler" class="menu-toggler" onclick="showSideBar()">
                   <span class="menu-item"></span>
                   <span class="menu-item"></span>
                   <span class="menu-item"></span>
@@ -45,7 +45,7 @@
         <ul class="p-0">
             <li class="list-group-item p-0">
                 <div class="container-fluid sidebar-item d-flex flex-row">
-                    <a th:href="@{/dashboard}" class=" container-fluid text-decoration-none text-light">
+                    <a th:href="@{/home}" class=" container-fluid text-decoration-none text-light">
                         <div class="col d-flex">
                             <div class="card-icon pt-3">
                                 <i class="fa fa-tachometer text-light" aria-hidden="true"></i>
@@ -71,43 +71,64 @@
                     </a>
                 </div>
             </li>
+
             <li class="list-group-item p-0">
                 <div class="container-fluid sidebar-item d-flex">
-                    <a th:href="@{/add-contributions}" class="container-fluid text-decoration-none text-light">
+                    <a th:href="@{/credentials}" class="container-fluid text-decoration-none text-light">
                         <div class="col d-flex">
                             <div class="card-icon pt-3">
-                                <i class="fa fa-money text-light" aria-hidden="true"></i>
+                                <i class="fa fa-refresh" aria-hidden="true"></i>
                             </div>
                             <div class="card-title px-2 pt-3">
-                                <p>Add Contributions</p>
+                                <p>Members Documents</p>
                             </div>
                         </div>
                     </a>
                 </div>
             </li>
-<!--            <li class="list-group-item p-0">-->
-<!--                <div class="container-fluid sidebar-item d-flex">-->
-<!--                    <a href="#" class="container-fluid text-decoration-none text-light">-->
-<!--                        <div class="col d-flex">-->
-<!--                            <div class="card-icon pt-3">-->
-<!--                                <i class="fa fa-refresh" aria-hidden="true"></i>-->
-<!--                            </div>-->
-<!--                            <div class="card-title px-2 pt-3">-->
-<!--                                <p>Loan Repayment</p>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--            </li>-->
             <li class="list-group-item p-0">
                 <div class="container-fluid sidebar-item d-flex">
-                    <a href="#" class="container-fluid text-decoration-none text-light">
+                    <a th:href="@{/file-upload}" class="container-fluid text-decoration-none text-light">
                         <div class="click-container col d-flex">
                             <div class="card-icon pt-3">
-                                <i class="fa fa-pie-chart text-light" aria-hidden="true"></i>
+                                <i class="fa fa-paperclip" aria-hidden="true"></i>
                             </div>
                             <div class="card-title px-2 pt-3">
-                                <p>Reports</p>
+                                <p>File Uploads</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </li>
+            <li class="list-group-item p-0">
+                <div class="container-fluid sidebar-item d-flex">
+                    <a th:href="@{/messages}" class="container-fluid text-decoration-none text-light">
+                        <div class="click-container col d-flex">
+                            <div class="card-icon pt-3">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </div>
+                            <div class="card-title px-2 pt-3">
+                                <p>Messages<sup>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                      th:text="${unread} != null ? ${unread} : 0">
+                                <span class="visually-hidden">unread messages</span>
+                              </span>
+                            </sup></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </li>
+
+            <li class="list-group-item p-0" style="position:absolute; bottom:2px;">
+                <div class="container-fluid sidebar-item d-flex">
+                    <a th:href="@{/logout}" class="container-fluid text-decoration-none text-light">
+                        <div class="click-container col d-flex">
+                            <div class="card-icon pt-3">
+                                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                            </div>
+                            <div class="card-title px-2 pt-3">
+                                <p>Logout</p>
                             </div>
                         </div>
                     </a>

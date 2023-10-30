@@ -6,8 +6,10 @@ import com.sojrel.saccoapi.dto.responses.*;
 import com.sojrel.saccoapi.model.Loan;
 import com.sojrel.saccoapi.model.LoanGuarantor;
 import com.sojrel.saccoapi.model.LoanGuarantorId;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -46,5 +48,9 @@ public interface LoanService {
     public RepaymentResponseDto addLoanRepayment(RepaymentRequestDto repaymentRequestDto);
     public List<RepaymentResponseDto> getLoanRepayments(Long loanId);
     public TotalDoubleItem getTotalRepaid(Long loanId);
+    public ItemTotalDto getMonthlyDisbursement();
+    public ItemTotalDto getAnnualDisbursement();
 
+    public List<KeyValueDto> totalMonthlyDisbursements();
+    public List<KeyValueDto> totalPerLoanCategory();
 }

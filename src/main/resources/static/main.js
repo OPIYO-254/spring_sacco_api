@@ -35,6 +35,19 @@ function showSideBar() {
 }
 
 
+function showMenu() {
+    var x = document.getElementById("navbarSupportedContent");
+    var nav = document.getElementById("navbar");
+
+    if (x.style.display === "none") {
+        x.style.display = "block";
+        nav.style.transition= "height 7s";
+        nav.style.height ="auto";
+
+    } else {
+        x.style.display = "none";
+    }
+}
 
 //function for adding contribution
 $(document).ready(function (){
@@ -108,17 +121,22 @@ $(document).ready( function () {
     });
 });
 
+$(document).ready( function () {
+    new DataTable("#downloads-table", {
+        processing:true,
+        pagingType:'simple_numbers'
+    });
+});
+
 //member table as datatable
 $(document).ready( function () {
-//    var table = $("#member-table").DataTable(
-//
-//    );
-
     new DataTable("#member-table", {
         processing: true,
         pagingType: "simple_numbers"
     });
 });
+
+
 
 $(document).ready(function(){
     new DataTable("#member-contributions-table", {
@@ -155,3 +173,8 @@ $(document).ready( function () {
     });
 
 });
+
+
+
+
+

@@ -3,11 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Sojrel Sacco List is a registered sacco under the Kenyan Law. The sacco serves all types of members
+        across the country helping them not only in financial aid but also in financial advice.</title>
     <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js" type="text/javascript"></script>
 </head>
 <body>
-    <a th:href="@{/add-contributions}"><button>Register</button></a>
+    <div id="navbar-container" th:insert="~{client_base :: navbar}"></div>
+    <section class="mysection">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="container-fluid" style="background-color: rgba(9, 170, 92, 0.6);">
+            <div class="carousel-inner">
+                <div class="carousel-item container active">
+                    <img src="images/sacco.png" class="d-block w-100" alt="money-image">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Welcome to Sojrel Sacco</h1>
+                        <h2>Empowering the Society</h2>
+                        <p>Through provision of affordable financial services.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="col">
+                        <img src="images/interest.png" class="d-block w-100" alt="interest-image">
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Low Interest</h1>
+                        <h2>Empowering the Society</h2>
+                        <p>Benefit from the many products available at the lowest <br>interest rates in the market.</p>
+                    </div>
+                </div>
+                <div class="carousel-item container">
+                    <img src="images/time.png" class="d-block w-100" alt="time-image">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Convenient Services</h1>
+                        <h2>Empowering the Society</h2>
+                        <p>Some representative placeholder content for the third slide.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+    </section>
+    <main class="information-section mt-3">
+        <div class="infor-section">
+            <div class="heading">Our Services</div>
+            <div class="container services-section">
+                <div class="services-pair">
+                    <div class="card" style="width: 18rem;">
+                        <img src="images/savings.png" class="card-img-top" alt="savings image">
+                        <div class="card-body">
+                            <h5 class="card-title">Savings</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">More</a>
+                        </div>
+                    </div>
+                    <div class="card" style="width: 18rem;">
+                        <img src="images/loans.png" class="card-img-top" alt="loans image">
+                        <div class="card-body">
+                            <h5 class="card-title">Loans</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="services-pair">
+                    <div class="card" style="width: 18rem;">
+                        <img src="images/advice.png" class="card-img-top" alt="financial-advice image">
+                        <div class="card-body">
+                            <h5 class="card-title">Financial Advice</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">More</a>
+                        </div>
+                    </div>
+                    <div class="card" style="width: 18rem;">
+                        <img src="images/csr.png" class="card-img-top" alt="csr image">
+                        <div class="card-body">
+                            <h5 class="card-title">Social Development</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-2 mt-2 why-section">
+            <div class="heading">Why You should join Sojrel Sacco</div>
+            <div class="container why-container">
+
+                <img src="images/why_us.png" alt="person-image">
+
+                <div class="why-list-container">
+                    <ul>
+                        <li>Convenience: experience fast and efficient loan processing.</li>
+                        <li>Short qualification time: Access to loans after 3 months for the checkoff members.</li>
+                        <li>Low interest rates: Get loans with as low as 2% interest per month.</li>
+                        <li>Flexibility: you can save in instalment within the month.</li>
+                        <li>Loan waivers: get waiver from the society on early repayment of normal loans.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="reviews-section p2 mt-2">
+            <div class="heading">What other members are saying.</div>
+            <div class="container">
+                <div class="container services-section">
+                    <div class="services-pair">
+                        <div class="card" style="width: 18rem;">
+                            <div></div>
+                            <div class="card-body">
+                                <h5 class="card-title">James</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                            </div>
+                        </div>
+                        <div class="card" style="width: 18rem;">
+                            <div></div>
+                            <div class="card-body">
+                                <h5 class="card-title">Martha</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="services-pair">
+                        <div class="card" style="width: 18rem;">
+                            <div></div>
+                            <div class="card-body">
+                                <h5 class="card-title">Johnson</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                            </div>
+                        </div>
+                        <div class="card" style="width: 18rem;">
+                            <div></div>
+                            <div class="card-body">
+                                <h5 class="card-title">Harris</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div th:insert="~{client_base :: footer}"></div>
 </body>
 </html>

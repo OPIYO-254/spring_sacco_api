@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sojrel Sacco List is a registered sacco under the Kenyan Law. The sacco serves all types of members
+      across the country helping them not only in financial aid but also in financial advice.</title>
+    <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js" type="text/javascript"></script>
+</head>
+<body>
+    <div th:insert="~{client_base :: navbar}"></div>
+    <section class="container-fluid members-section">
+        <div class="title text-light">
+          <h2>Membership at Sojrel Sacco: Join the Financial Family</h2>
+        </div>
+    </section>
+    <main>
+        <div class="container-fluid information mt-3 m-0 p-0">
+            <div class="container">
+                <div class="heading">Membership</div>
+                <p>
+                    At Sojrel Sacco, we believe in the strength of community, and our diverse membership options reflect this commitment.
+                    Whether you're an individual looking to secure your financial future, a group seeking collective prosperity,
+                    or a corporation aiming to empower your employees, we have tailored membership plans to suit your needs.
+                    Join us today and unlock a world of financial possibilities.
+                </p>
+            </div>
+            <div class="container-fluid" style="background-color: rgba(9, 170, 92, 0.1); margin:0; padding: 12px 0;">
+                <div class="container individual-container">
+<!--                    <div class="membership-image-container">-->
+<!--                        <img src="images/individual.png" alt="individual image">-->
+<!--                    </div>-->
+                    <div>
+                        <div>
+                            <h6>Individual Membership</h6>
+                            <p>Joining as an individual member empowers you to access a wide range of financial services, from savings and loans to investment opportunities.
+                                Your journey towards financial security begins here.</p>
+                        </div>
+                        Requirements:
+                        <div class="">
+                            <div class="membership-container">
+                                <div class="d-flex requirement-container">
+                                    <div class="icon-container">
+                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Age</h6>
+                                        <p>To become an individual member, you must be 18 years of age or above. This ensures that you have the legal capacity to enter
+                                            into financial agreements independently.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex requirement-container">
+                                    <div class="icon-container">
+                                        <i class="fa fa-id-badge" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Identification</h6>
+                                        <p>We require a copy of your national identification card. This is a standard practice to verify your identity
+                                            and eligibility for membership.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="membership-container">
+                                <div class="d-flex requirement-container">
+                                    <div class="icon-container">
+                                        <i class="fa fa-percent" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Tax Compliance</h6>
+                                        <p>To contribute to your financial well-being, we ask for a copy of your KRA PIN certificate.
+                                            This helps us in managing your financial transactions efficiently.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex requirement-container">
+                                    <div class="icon-container">
+                                        <i class="fa fa-file-text" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Application Form</h6>
+                                        <p>A duly completed membership application form is the first step towards securing your membership.
+                                            It provides us with essential information to initiate your membership process.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="container group-container mt-3">
+<!--                <div class="membership-image-container">-->
+<!--                    <img src="images/group.png" alt="individual image">-->
+<!--                </div>-->
+                <div>
+                    <div>
+                        <h6>Group Membership</h6>
+                        <p>Group membership at Sojrel Sacco fosters collective growth. You and your fellow group members can leverage
+                            financial services to achieve shared goals and aspirations.</p>
+                    </div>
+                    Requirements:
+                    <div class="group">
+                        <div class="membership-container">
+                            <div class="d-flex requirement-container">
+                                <div class="icon-container">
+                                    <i class="fa fa-file-text" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h6>Application Form</h6>
+                                    <p>A completed group membership application form is essential. This form acts as the formal request
+                                        for your group to join our Sacco.</p>
+                                </div>
+                            </div>
+                            <div class="d-flex requirement-container">
+                                <div class="icon-container">
+                                    <i class="fa fa-certificate" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h6>Registration Certificate</h6>
+                                    <p>We require a copy of your group's registration certificate. This document substantiates the legality and
+                                        existence of your group.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="membership-container">
+                            <div class="d-flex requirement-container">
+                                <div class="icon-container">
+                                    <i class="fa fa-book" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h6>Group Meeting Minutes</h6>
+                                    <p>A record of the group meeting where the decision to join Sojrel Sacco was made is necessary.
+                                        It helps us understand your group's commitment to this partnership.</p>
+                                </div>
+                            </div>
+                            <div class="d-flex requirement-container">
+                                <div class="icon-container">
+                                    <i class="fa fa-users" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h6>Identification and Tax Compliance</h6>
+                                    <p>Each member of your group who will be authorized to conduct transactions should provide copies
+                                        of their national identification cards, KRA PIN certificates, and passport photos.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="membership-container">
+                            <div class="d-flex requirement-container">
+                                <div class="icon-container">
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h6>Member List</h6>
+                                    <p>A comprehensive list of your group members ensures that everyone who should have access to Sacco services is included.</p>
+                                </div>
+                            </div>
+                            <div class="d-flex w-50 requirement-container border-0">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid" style="background-color: rgba(9, 170, 92, 0.1); padding:12px 0;">
+                <div class="container corporate-container">
+<!--                    <div class="membership-image-container">-->
+<!--                        <img src="images/corporate.png" alt="individual image">-->
+<!--                    </div>-->
+                    <div class="">
+                        <div>
+                            <h6>Corporate Membership</h6>
+                            <p>
+                                Corporate membership at Sojrel Sacco offers your organization an array of financial benefits, including employee financial wellness programs and corporate savings solutions.
+                                Join the Sojrel Sacco family today and embark on a journey of financial growth and security. We're here to empower your financial aspirations, whether as an individual, group, or corporation.
+                                Together, we'll build a stronger financial future.
+                            </p>
+                        </div>
+                        Requirements:
+                        <div>
+                            <div class="membership-container">
+                                <div class="d-flex requirement-container">
+                                    <div class="icon-container">
+                                        <i class="fa fa-file-text" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Application Form</h6>
+                                        <p>Begin your corporate journey with us by filling out the corporate membership application form.
+                                            This form outlines your intent to establish a financial partnership with Sojrel Sacco.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex requirement-container">
+                                    <div class="icon-container">
+                                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Directors' Resolution</h6>
+                                        <p>A resolution passed by your board of directors, indicating the decision to open an account with us, is crucial.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="membership-container">
+                                <div class="d-flex requirement-container">
+                                    <div class="icon-container">
+                                        <i class="fa fa-certificate" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Certificate of Incorporation</h6>
+                                        <p>Provide us with a copy of your certificate of incorporation to validate your corporate identity.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex requirement-container">
+                                    <div class="icon-container">
+                                        <i class="fa fa-file-text" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Application Form</h6>
+                                        <p>Begin your corporate journey with us by filling out the corporate membership application form.
+                                            This form outlines your intent to establish a financial partnership with Sojrel Sacco.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="membership-container">
+                                <div class="d-flex requirement-container">
+                                    <div class="icon-container">
+                                        <i class="fa fa-id-badge" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Identification</h6>
+                                        <p>We'll need the identification details and passport photos of the authorized signatories for your
+                                            corporate account.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex requirement-container">
+                                    <div class="icon-container">
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Memorandum and Articles of Association</h6>
+                                        <p>Share your organization's memorandum and articles of association with us.
+                                            This document helps us understand your corporate structure and objectives.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="membership-container">
+                                <div class="d-flex requirement-container">
+                                    <div class="icon-container">
+                                        <i class="fa fa-certificate" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h6>KRA Corporate PIN Certificate</h6>
+                                        <p>To ensure tax compliance, furnish us with a copy of your KRA corporate PIN certificate.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex requirement-container border-0"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div th:insert="~{client_base :: footer}"></div>
+</body>
+</html>

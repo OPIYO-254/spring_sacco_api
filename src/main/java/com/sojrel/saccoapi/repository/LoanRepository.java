@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface LoanRepository extends JpaRepository<Loan, Long> {
 
@@ -43,11 +45,26 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     TotalDoubleItem getTotalRepaid(@Param("loanId") Long loanId);
 
     /**
-     * get total guaranteed by each member
-     *
+     * get disbursements done for a specified period.
+     * @return
      */
-//    @Query("SELECT new com.sojrel.saccoapi.dto.responses.TotalDoubleItem(SUM(l.amount)) FROM Loan l WHERE l.loanStatus = 'COMPLETE' OR l.loanStatus = 'APPROVED'")
-//    TotalDoubleItem getTotalDisbursed();
+    @Query(value = "SELECT SUM(principal) AS total FROM Loan WHERE loan_status = 'COMPLETED' OR loan_status = 'APPROVED' " +
+            "AND application_date LIKE ?1", nativeQuery = true)
+    Long getTotalDisbursement(String period);
+
+    /**
+     * get total monthly disbursements
+     * @return
+     */
+    @Query(value = "SELECT DATE_FORMAT(application_date, '%Y-%m') AS month, SUM(principal) AS total_principal\n" +
+            "FROM Loan WHERE application_date BETWEEN ?1 AND ?2 GROUP BY month;", nativeQuery = true)
+    List<Object[]> getTotalMonthlyDisbursements(String start, String end);
+
+
+    @Query(value = "SELECT loan_type, SUM(principal) FROM Loan group by loan_type", nativeQuery = true)
+    List<Object[]> getTotalPerLoanCategory();
+
+
 }
 
 

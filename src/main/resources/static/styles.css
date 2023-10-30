@@ -9,21 +9,242 @@ body{
     min-height:100vh;
     display: flex;
     flex-direction: column;
+    background-color: #EBECF0;
+}
+.card-img-top{
+    height: 10rem;
 }
 
 .navbar{
     background-color:#4C4E52;
 }
-/*
-.mycontainer {
-    flex-grow: 1;
-    display: flex;
-    overflow: hidden; /* Hide overflow content from main and sidebar */
-}*/
+.nav-item:hover{
+    background-color: rgba(9, 170, 92, 0.5)
+}
 
+.mysection{
+    background-image:url("images/money.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.about-section{
+    background-image:url("images/money.jpeg");
+    background-size: cover;
+    text-align:center;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height:300px;
+}
+.upper-section{
+    background-image:url("images/money.jpeg");
+    background-size: cover;
+    text-align:center;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height:300px;
+}
+.members-section{
+    background-image:url("images/money.jpeg");
+    background-size: cover;
+    text-align:center;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height:300px;
+}
+.membership-services-section{
+    background-image:url("images/money.jpeg");
+    background-size: cover;
+    text-align:center;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height:300px;
+}
+.location-container{
+    display:flex;
+
+}
+.downloads-main-container{
+    display:flex;
+}
+.downloads-container{
+    width: 60%;
+    margin:12px;
+}
+
+.join-container{
+    width: 40%;
+    background-color: rgba(9, 170, 92, 0.1);
+    margin:12px;
+    padding: 12px;
+}
+.location-section{
+    background-color: rgba(9, 170, 92, 0.1);
+    padding: 12px 0;
+}
+
+.mission-container{
+    display: flex;
+
+}
+
+.mission-img {
+    margin-right: 12px;
+}
+.beginings-container{
+    background-color: rgba(9, 170, 92, 0.1);
+    padding: 12px;
+}
+.mission-img img{
+    width: 100%;
+}
+.beginings-container .container p{
+    font-size: 18px;
+
+}
+.location-info p{
+    font-size:18px;
+}
+
+.img-container{
+    margin-right: 12px;
+}
+.img-container img{
+    width: 100%;
+}
+.about-section h2{
+    text-align:center;
+
+}
+.container-fluid. carousel-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Horizontally center align items */
+    justify-content: center; /* Vertically center align items */
+    text-align: center; /* Center-align text within the div */
+}
+.why-section{
+    background-color: rgba(9, 170, 92, 0.1);
+    height: 400px;
+}
+.reviews-section{
+    height:300px;
+}
+.why-container{
+    padding:12px;
+    margin: 12px auto;
+    display:flex;
+}
+.why-container img{
+    width: 40%;
+    height: 300px;
+}
+.why-list-container ul li{
+    text-align: left;
+    font-weight: 600;
+    font-size: 18px;
+    list-style-type: '✅';
+    padding-inline-start: 1ch;
+}
+.carousel-inner {
+    width:40%;
+    position: relative;
+    left:30%;
+    height: 480px;
+}
+
+.carousel-inner .carousel-item{
+    height: 480px;
+}
+.carousel-item img{
+    height:400px;
+}
+.carousel-inner .title{
+    display:flex;
+    justify-content:center;
+}
+.carousel-inner .carousel-item .img{
+    display:flex;
+    justify-content:center;
+}
+.carousel-inner .subheading{
+    display:flex;
+    justify-content:center;
+}
+.title{
+    display:flex;
+    justify-content:center;
+    padding:80px 12px;
+
+}
+.title h2{
+    text-transform: uppercase;
+    font-weight:bold;
+    font-size:36px;
+    text-align:center;
+
+}
+.subheading p{
+    font-size:24px;
+}
+.information-section{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    text-align: center;
+}
+.heading {
+    text-transform:uppercase;
+    font-weight:bold;
+    font-size:18px;
+    color:#09AA5C;
+}
+.information{
+    text-align:justify;
+}
+.information h6{
+    font-weight:bold;
+    color:#09AA5C;
+}
+.card{
+    width:18rem;
+}
+.card-body .card-text{
+    text-align:justify;
+}
+
+.services-section{
+    margin: 24px auto;
+    display:flex;
+}
+.services-pair{
+    width:50%;
+    display:flex;
+}
+.services-section .card{
+    margin: 6px 12px;
+}
+.account-container{
+    width: 40%;
+    position:relative;
+    left:30%;
+    top: 80px;
+    /*border: solid 1px black;*/
+    border-radius:10px;
+    padding: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
+}
+.forgot-btn{
+    background-color:white;
+    color: #09AA5C;
+    border: solid 1px #09AA5C;
+    border-radius: 4px;
+    padding: 2px 16px;
+    font-size:14px;
+    font-weight:bold;
+}
 /* Style the sidebar */
-.sidebar-container {
-    min-height: calc(100vh - 80px); /* Minimum height calculation */
+.sidebar-container { /* Minimum height calculation */
     /*flex-basis: 20%; /* Set a fixed width for the sidebar */
     background-color:#198754;
     /*padding: 20px;*/
@@ -65,6 +286,24 @@ body{
     padding: 8px;
 
 }
+.mycards-section{
+    width:100%;
+    margin-top: 8px;
+}
+.myrow{
+    display:flex;
+}
+.item{
+    background-color:#09AA5C;
+    padding: 6px 10px;
+    border-radius:6px;
+    display:flex;
+    flex-direction:column;
+    margin:8px;
+}
+.item span{
+    font-size:12px;
+}
 .repayment-container .btn{
     margin:0 12px;
     border-radius: 24px;
@@ -79,10 +318,11 @@ body{
 .navbar{
     height: 80px;
 }
+
 .menu-toggler{
     display:none;
     height:24px;
-    transition:all 0.5s;
+
 }
 
 .menu-item{
@@ -94,21 +334,25 @@ body{
 }
 .totals{
     display:flex;
-    justify-content:space-between;
+    justify-content:center;
 }
 .contribution-box{
     margin: 12px;
-    padding:20px 12px;
-    border-radius: 6px;
+    padding: 8px 12px;
+    border-radius: 8px;
     background-color:#09AA5C;
-    width: 30%;
-    display:flex;
     justify-content:space-around;
 }
 .contribution-box span{
+    margin:2px;
     color:white;
     font-size: 16px;
     font-weight:bold;
+}
+.contribution-btn .contrib-btn{
+    background-color:white;
+    color:#09AA5C;
+    border-radius:20px;
 }
 .footer{
     position:sticky;
@@ -218,6 +462,144 @@ body{
 .details-main-section{
     height:auto;
 }
+.charts-row{
+    display:flex
+}
+.heading-box{
+    text-align:center;
+}
+.term-container h3{
+    text-align:center;
+}
+.loan-item-container{
+    display:flex;
+    justify-content: center;
+}
+.loan-item-container .sub-loan-item-container{
+    display:flex;
+    justify-content: space-between;
+}
+.loan-item{
+    width: 120px;
+    margin: 12px;
+    text-align:center;
+}
+.loan-item p{
+    font-size: 18px;
+    font-weight:bold;
+    color: #09AA5C;
+}
+.loan-item .icon{
+    height:120px;
+    border-radius: 60px;
+    background-color:#09AA5C;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+.loan-item .icon i{
+    font-size: 64px;
+    color:white;
+}
+.individual-container, .group-container, .corporate-container{
+    display:flex;
+}
+.membership-container{
+    display: flex;
+}
+.membership-image-container img{
+    width:400px;
+}
+.membership-image-container{
+    margin-right: 12px;
+}
+
+.requirement-container{
+    margin: 12px;
+    display:flex;
+    width:50%;
+    border: solid 1px;
+    border-color:#09AA5C;
+    border-radius: 12px;
+    padding: 6px;
+}
+
+.group .requirement-container:nth-child(6){
+    border:none;
+}
+
+
+.icon-container{
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+}
+.icon-container i{
+    font-size: 120px;
+    color:#09AA5C;
+}
+.short-term-loans{
+    display:flex;
+}
+.loan-type-container{
+    display:flex;
+    margin-right: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
+    border-radius:12px;
+    background-color: rgba(9, 170, 92, 0.1);
+    color:#09AA5C;
+    padding:8px;
+    width:100%;
+    height: 180px;
+}
+.loan-type-container .icon{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+}
+.loan-type-container  ul li{
+    list-style-type: '✅';
+    padding-inline-start: 1ch;
+}
+.loan-type-container .icon i{
+    font-size: 120px;
+}
+.loan-type-container p{
+    font-size: 16px;
+    font-weight: bold;
+}
+.contact-form-container{
+    display:flex;
+}
+.contact-form-container h2{
+    text-transform:uppercase;
+    font-weight: 700;
+    font-size: 24px;
+}
+.contact-form-container h3{
+    font-size: 20px;
+    font-weight: 600;
+}
+.main-contact-container{
+    display-flex;
+    margin-bottom:24px;
+}
+.contact-input-pair{
+    display:flex;
+}
+.contact-info-container{
+    width: 40%;
+    display:flex;
+    flex-direction:column;
+}
+.contact-info-container a{
+    text-decoration:none;
+    color: #09AA5C;
+}
+.contact-input-pair .form-group{
+    margin: 12px;
+    width: 100%;
+}
 @media only screen and (max-width:480px){
     .contribution-card{
         margin: 6px;
@@ -229,16 +611,19 @@ body{
     .card-holder{
         padding:0 10px;
     }
-    .modal-dialog{
-       width:80%;
-       margin: auto;
-       position:relative;
-       top:30%;
+
+   .card-img-top {
+      height: 8rem;
    }
+   .carousel-inner {
+        width:60%;
+        position: relative;
+        left:20%;
+    }
+
 }
 
 @media only screen and (max-width:576px){
-
     .navbar-brand a{
          text-decoration:none;
     }
@@ -358,26 +743,60 @@ body{
     .reg-form-container{
          width:100%;
      }
+     .totals {
+         display: flex;
+         flex-direction:column;
+         justify-content: center;
+     }
+     .services-section{
+        margin: 24px auto;
+        display:flex;
+    }
+    .services-pair{
+        width:100%;
+        display:flex;
+    }
+    .carousel-inner {
+         width:60%;
+         position: relative;
+         left:20%;
+    }
+    .loan-type-container{
+        height:200px;
+    }
+
 }
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .contribution-box{
-        margin: 12px;
-        padding:12px 12px;
+        margin: 4px;
+        padding: 10px 4px
         border-radius: 6px;
         background-color:#09AA5C;
-        width: 30%;
         display:flex;
-        flex-direction:column;
         text-transform:uppercase;
+        justify-content: space-between;
     }
     .contribution-box span{
-        font-size:12px;
+        font-size:14px;
+    }
+    .contribution-btn .contrib-btn {
+        background-color: white;
+        color: #09AA5C;
+        border-radius: 20px;
+        width:100%;
+        margin-top:4px;
+    }
+    .contribution-btn{
+        padding: 0 5px;
     }
     .menu-toggler{
         display:block;
-        transition:all 0.5s;
+        transition: 0.5s;
+        position: absolute;
+        right: 12px;
+        top: 12px;
     }
     #registration-form{
         justify-content:center;
@@ -415,7 +834,11 @@ body{
         margin: 8px;
         padding: 8px;
     }
-
+    .account-container {
+        width:90%;
+        position:relative;
+        left:5%;
+    }
     .contribution-card span{
         font-size: 12px;
     }
@@ -498,7 +921,7 @@ body{
         width:100%;
     }
     .modal-dialog{
-       width:60%;
+       width:80%;
        margin: auto;
        position:relative;
        top:30%;
@@ -507,35 +930,179 @@ body{
       display:flex;
       flex-direction:column;
       justify-content:space-between;
-  }
-  .repayment-item{
+   }
+   .repayment-item{
       margin: 6px 0;
-  }
-  .repayment-btn{
+   }
+   .repayment-btn{
       margin-top:6px;
       padding:0
-  }
-  .repayment-btn .btn{
-    width:100%;
-
-  }
-  .reg-form-container{
+   }
+   .repayment-btn .btn{
        width:100%;
    }
+   .reg-form-container{
+       width:100%;
+    }
+   .mycards-section{
+      display:flex;
+      margin-top: 0;
+   }
+   .myrow{
+      display: flex;
+      flex-direction:column;
+      width: 100%;
+      margin: 8px 0;
+   }
+   .charts-row{
+      display:flex;
+      flex-direction:column;
 
+   }
+   .services-section{
+     margin: 24px auto;
+     display:flex;
+     flex-direction:column;
+     justify-content:center;
+   }
+   .services-pair{
+
+     display:flex;
+   }
+   .card{
+     width:14rem;
+   }
+   .carousel-inner {
+      width:90%;
+      position: relative;
+      left:5%;
+   }
+
+   .why-container{
+       display:flex;
+       flex-direction:column;
+   }
+   .why-section{
+        height:auto;
+   }
+   .reviews-section{
+        height:auto;
+   }
+   .why-container img {
+       width: 90%;
+       position:relative;
+       left:5%;
+       margin-bottom: 12px;
+       height: 300px;
+   }
+   .mission-container {
+        display: flex;
+        flex-direction:column;
+   }
+   .location-container {
+       display: flex;
+       flex-direction:column;
+   }
+   .loan-item-container{
+       display:flex;
+       flex-direction:column;
+       justify-content: center;
+   }
+   .loan-item {
+       width: 120px;
+       margin: 12px;
+       text-align: center;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+   }
+   .loan-item p {
+      font-size: 14px;
+      font-weight: bold;
+      color: #09AA5C;
+   }
+   .loan-item .icon {
+       width: 80px;
+       height:80px;
+       border-radius: 40px;
+   }
+   .loan-item .icon i {
+     font-size: 48px;
+   }
+   .individual-container, .group-container, .corporate-container{
+       display:flex;
+       flex-direction:column;
+   }
+   .membership-image-container {
+      display: flex;
+      justify-content: center;
+   }
+   .membership-container{
+       display:flex;
+       flex-direction:column;
+  }
+   .requirement-container{
+       width: auto;
+   }
+   /*.icon-container i {
+        font-size: 64px;
+   }
+   .requirement-container p{
+        font-size: 12px;
+   }
+   .requirement-container h6{
+        font-size: 14px;
+   }*/
+    .short-term-loans{
+       display:flex;
+       flex-direction:column;
+    }
+    .loan-type-container {
+        margin-top: 12px;
+
+    }
+    .loan-type-container .icon i {
+        font-size: 80px;
+    }
+    .contact-form-container{
+        display-flex;
+        flex-direction:column;
+    }
+    .contact-info-container {
+        width: 100%;
+    }
+    .contact-input-pair {
+        display: flex;
+        flex-direction:column;
+        margin-right: 1rem;
+    }
+    .downloads-main-container{
+        display:flex;
+        flex-direction: column;
+    }
+    .downloads-container {
+        width:auto;
+    }
+    .join-container {
+        width:auto;
+    }
 }
 
 @media only screen and (min-width: 576px) and (max-width:600px){
     .contribution-box{
-        margin: 12px;
-        padding:12px 12px;
+        margin:4px;
+        padding:4px;
         border-radius: 6px;
         background-color:#09AA5C;
-        width: 30%;
         display:flex;
         flex-direction:column;
-        text-transform:uppercase;
-
+    }
+    .contribution-box span {
+        margin: 2px;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
     }
     .add-contribution-main{
          height:81vh;
@@ -562,22 +1129,98 @@ body{
         margin-top: 10px;
         margin-bottom: 10px;
     }
+    .mycards-section{
+        display:flex;
+        margin-top: 0;
+    }
+    .myrow{
+        display: flex;
+        flex-direction:column;
+        width: 100%;
+        margin: 8px 0;
+    }
+    .services-section{
+       margin: 24px auto;
+       display:flex;
+   }
+   .services-pair{
+        width:100%;
+       display:flex;
+   }
+    .mission-container {
+       display: flex;
+       flex-direction:column;
+   }
+   .location-container {
+       display: flex;
+       flex-direction:column;
+   }
+   .loan-item-container{
+       display:flex;
+       flex-direction:column;
+       justify-content: center;
+   }
+   .loan-item {
+      width: 120px;
+      margin: 12px;
+      text-align: center;
+      display: flex;
+      flex-direction:column;
+      justify-content: center;
+      align-items: center;
+   }
+   .loan-item p {
+      font-size: 14px;
+      font-weight: bold;
+      color: #09AA5C;
+   }
+   .loan-item .icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+   }
+   .loan-item .icon i {
+     font-size: 48px;
+   }
+
+    .contact-form-container{
+        display-flex;
+        flex-direction:column;
+    }
+    .contact-info-container {
+        width: 100%;
+    }
+    .downloads-main-container{
+        display:flex;
+        flex-direction: column;
+    }
+    .downloads-container {
+        width:auto;
+    }
+    .join-container {
+        width:auto;
+    }
 
 }
 
 @media only screen and (min-width: 600px) and (max-width:768px){
     .menu-toggler{
         display:block;
+        transition: 0.5s;
+        position: absolute;
+        right: 12px;
+        top: 12px;
     }
     .contribution-box{
-        margin: 12px;
-        padding:12px 12px;
+        margin:4px;
+        padding:4px;
         border-radius: 6px;
         background-color:#09AA5C;
-        width: 30%;
         display:flex;
         flex-direction:column;
-        text-transform:uppercase;
     }
     .sidebar-container{
             display:none;
@@ -590,6 +1233,21 @@ body{
         margin-top:1rem;
         margin-bottom:1rem;
         display:flex;
+    }
+    .account-container {
+        width:70%;
+        position:relative;
+        left:15%;
+    }
+    .mycards-section{
+        display:flex;
+        margin-top: 0;
+    }
+    .myrow{
+        display: flex;
+        flex-direction:column;
+        width: 100%;
+        margin: 8px 0;
     }
     .hide-md{
          display: none;
@@ -676,22 +1334,120 @@ body{
    .repayment-item span{
         font-size:16px;
    }
-
+   .services-section{
+      margin: 24px auto;
+      display:block;
+   }
+   .services-pair{
+      width:100%;
+      display:flex;
+   }
+   .carousel-inner {
+     width:60%;
+     position: relative;
+     left:20%;
+   }
+   .why-container{
+    display:flex;
+    flex-direction:column;
+   }
+   .why-section{
+    height:auto;
+   }
+   .reviews-section{
+     height:auto;
+   }
+    .why-container img {
+         width: 90%;
+         position:relative;
+         left:5%;
+         margin-bottom: 12px;
+         height: 300px;
+    }
+    .mission-container {
+        display: flex;
+        flex-direction:column;
+    }
+    .location-container {
+        display: flex;
+        flex-direction:column;
+    }
+    .loan-item-container{
+        display:flex;
+        flex-direction:column;
+        justify-content: center;
+    }
+    .loan-item {
+       width: 120px;
+       margin: 12px;
+       text-align: center;
+   }
+   .loan-item p {
+       font-size: 18px;
+       font-weight: bold;
+       color: #09AA5C;
+   }
+   .loan-item .icon {
+       width: 120px;
+       border-radius: 60px;
+   }
+   .loan-item .icon i {
+      font-size: 64px;
+   }
+   .individual-container, .group-container, .corporate-container{
+      display:flex;
+      flex-direction:column;
+   }
+   .membership-image-container {
+       display: flex;
+       justify-content: center;
+   }
+   .membership-container{
+        display:flex;
+        flex-direction:column;
+   }
+   .requirement-container{
+        width: 100%;
+   }
+    .short-term-loans{
+       display:flex;
+       flex-direction:column;
+   }
+   .loan-type-container {
+        margin-top: 12px;
+        height:200px;
+   }
+   .contact-form-container{
+        display-flex;
+        flex-direction:column;
+   }
+    .contact-info-container {
+        width: 100%;
+    }
+    .downloads-main-container{
+        display:flex;
+        flex-direction: column;
+    }
+    .downloads-container {
+        width:auto;
+    }
+    .join-container {
+        width:auto;
+    }
 }
 
 @media only screen and (min-width:768px) and (max-width:992px){
     .menu-toggler{
         display:block;
+        transition: 0.5s;
+        position: absolute;
+        right: 12px;
+        top: 12px;
     }
-    .contribution-box{
-        margin: 12px;
-        padding:12px 12px;
-        border-radius: 6px;
-        background-color:#09AA5C;
-        width: 30%;
-        display:flex;
-        flex-direction:column;
-        text-transform:uppercase;
+    .account-container {
+        width:60%;
+        position:relative;
+        left:20%;
     }
     .sidebar-container{
         width:100%;
@@ -715,14 +1471,11 @@ body{
 
     }
     .contribution-box{
-        margin: 12px;
-        padding:12px 12px;
+        margin:4px;
+        padding:4px;
         border-radius: 6px;
         background-color:#09AA5C;
-        width: 30%;
         display:flex;
-        flex-direction:column;
-
     }
     .card-title{
         font-size: 16px;
@@ -756,9 +1509,7 @@ body{
     .one-row-item{
          padding:10px 0;
      }
-    .card-section{
-        padding: 1rem 0;
-    }
+
     .cards-row{
         margin: 1rem 0;
     }
@@ -808,6 +1559,66 @@ body{
        display:flex;
        justify-content:space-between;
    }
+   .services-section{
+       margin: 24px auto;
+       display:block;
+   }
+   .services-pair{
+       width:100%;
+       display:flex;
+   }
+   .carousel-inner {
+       width:50%;
+       position: relative;
+       left:25%;
+   }
+   .mission-container {
+       display: flex;
+       flex-direction:column;
+   }
+   .location-container {
+       display: flex;
+       flex-direction:column;
+   }
+   .loan-item-container{
+       display:flex;
+       flex-direction:column;
+       justify-content: center;
+   }
+   .loan-item {
+      width: 120px;
+      margin: 12px;
+      text-align: center;
+  }
+  .loan-item p {
+      font-size: 18px;
+      font-weight: bold;
+      color: #09AA5C;
+  }
+  .loan-item .icon {
+      width: 120px;
+      border-radius: 60px;
+  }
+  .loan-item .icon i {
+     font-size: 64px;
+  }
+  .membership-image-container img {
+      width: 240px;
+  }
+  .icon-container i {
+      font-size: 80px;
+  }
+  .requirement-container p{
+      font-size: 14px;
+  }
+  .short-term-loans{
+       display:flex;
+       flex-direction:column;
+   }
+   .loan-type-container {
+    margin-top: 12px;
+   }
+
 }
 
 @media only screen and (min-width:992px) and (max-width:1200px){
@@ -822,9 +1633,9 @@ body{
         background-color:#198754;
         width:10%;
     }
+
     .sidebar{
         width:10%;
-        height:100%
     }
     .main-section{
         width:90%;
@@ -912,6 +1723,11 @@ body{
        display:flex;
        justify-content:space-between;
    }
+   .item span {
+       font-size: 16px;
+   }
+
+
 }
 
 
@@ -1016,6 +1832,15 @@ body{
         position:relative;
         top:30%;
     }
+    .item span {
+        font-size: 16px;
+    }
+    .account-container{
+        width: 30%;
+        position:relative;
+        left:35%;
+    }
+
 }
 
 @media only screen and (max-width:1360px){
@@ -1048,7 +1873,12 @@ body{
     }
     .reg-form-container{
          width:40%;
-     }
+    }
+    .account-container{
+        width: 30%;
+        position:relative;
+        left:35%;
+    }
 
 }
 
@@ -1056,6 +1886,11 @@ body{
     /*.table-area{
         height: 70vh;
     }*/
+    .account-container{
+        width: 30%;
+        position:relative;
+        left:35%;
+    }
     .members-table-area{
          height:74vh;
     }

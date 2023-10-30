@@ -19,50 +19,61 @@
             <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-3 col-lg-2 p-0" id="sidebar-container"></div>
             <div class="col-md-10 main-section">
                 <span id="results"></span>
-                <div class="page-title d-flex justify-content-center align-items-center pt-2 pb-2 mt-4 mx-2">
-                    <span class="text-light">Member Registration</span>
-                </div>
+
+                <div style="height:60px;"></div>
                 <div class="container-fluid pt-2 mt-2 mb-3 reg-form-container">
+                    <div class="d-flex justify-content-center align-items-center py-1">
+                        <h3 style="color:#09AA5C;">Member Registration</h3>
+                    </div>
                     <form id="registration-form" method="post">
+                        <hr>
                         <div class="row input-container">
                             <div class="col sub-container">
                                 <div class="mb-3">
                                     <label for="firstName" class="form-label">First Name:</label>
                                     <input type="text" class="form-control" id="firstName">
-
+                                    <span id="fnameMsg"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="midName" class="form-label">Middle Name:</label>
                                     <input type="text" class="form-control" id="midName">
+                                    <span id="mnameMsg"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="lastName" class="form-label">Last Name:</label>
                                     <input type="text" class="form-control" id="lastName">
+                                    <span id="lnameMsg"></span>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email:</label>
                                     <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                                    <span id="emailMsg"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="dob" class="form-label">Date of Birth:</label>
                                     <input type="date" class="form-control" id="dob">
+                                    <span id="dobMsg"></span>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="idNo" class="form-label">ID Number:</label>
                                     <input type="number" class="form-control" id="idNo">
+                                    <span id="idNoMsg"></span>
                                 </div>
+
                             </div>
                             <div class="col sub-container">
                                 <div class="mb-3">
                                     <label for="kraPin" class="form-label">Kra Pin:</label>
                                     <input type="text" class="form-control" id="kraPin">
+                                    <span id="kraPinMsg"></span>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">Phone Number:</label>
                                     <input type="text" class="form-control" id="phone">
+                                    <span id="phoneMsg"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="gender" class="form-label">Gender</label>
@@ -71,22 +82,24 @@
                                         <option value="MALE">MALE</option>
                                         <option value="FEMALE">FEMALE</option>
                                     </select>
+                                    <span id="genderMsg"></span>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="address" class="form-label">Address:</label>
+                                    <label for="address" class="form-label">Postal Address:</label>
                                     <input type="text" class="form-control" id="address">
+                                    <span id="addressMsg"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="residence" class="form-label">Residence:</label>
-                                    <input type="email" class="form-control" id="residence">
-                                </div>
-                                <div class="mb-3">
-                                    <!--                                    <label for="exampleInputPassword1" class="form-label">Password</label>-->
-                                    <!--                                <input type="password" class="form-control" id="exampleInputPassword1">-->
+                                    <input type="text" class="form-control" id="residence">
+                                    <span id="residenceMsg"></span>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn submitBtn">Submit</button>
+                        <hr>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" id="submitBtn" style="width:auto; margin-bottom:24px;" class="btn submitBtn">Submit</button>
+                        </div>
 
                     </form>
                 </div>
@@ -101,34 +114,44 @@
             $("#registration-form").submit(function (event) {
                 event.preventDefault();
                 if($("#firstName").val()==""){
-                    alert("Enter first name");
+                    $("#fnameMsg").html('<p style="font-size:12px; color:red;">Enter first name</p>');
+
                 }
                 else if($("#lastName").val()==""){
-                    alert("Enter last name");
+                    $("#lnameMsg").html('<p style="font-size:12px; color:red;">Enter last name</p>');
+
                 }
                 else if($("#email").val()==""){
-                    alert("Enter email");
+                    $("#emailMsg").html('<p style="font-size:12px; color:red;">Enter email</p>');
+
                 }
                 else if($("#dob").val()==""){
-                    alert("Enter date of birth");
+                    $("#dobMsg").html('<p style="font-size:12px; color:red;">Enter date of birth</p>');
+
                 }
                 else if($("#idNo").val()==""||$("#idNo").val()==null || $("#idNo").val()==0){
-                    alert("Enter ID No.");
+                    $("#idNoMsg").html('<p style="font-size:12px; color:red;">Enter ID No.</p>');
+
                 }
                 else if($("#kraPin").val()==""){
-                    alert("Enter KRA PIN");
+                    $("#kraPinMsg").html('<p style="font-size:12px; color:red;">Enter KRA PIN</p>');
+
                 }
                 else if($("#phone").val()==""){
-                    alert("Enter phone number");
+                    $("#phoneMsg").html('<p style="font-size:12px; color:red;">Enter phone number</p>');
+
                 }
                 else if($("#gender").val()=="" || $("#gender").val()==null){
-                    alert("Select gender");
+                    $("#genderMsg").html('<p style="font-size:12px; color:red;">Select gender</p>');
+
                 }
                 else if($("#address").val()==""){
-                    alert("Enter address");
+                    $("#addressMsg").html('<p style="font-size:12px; color:red;">Enter address</p>');
+
                 }
                 else if($("#residence").val()==""){
-                    alert("Enter residence");
+                    $("#residenceMsg").html('<p style="font-size:12px; color:red;">Enter residence</p>');
+
                 }
                 else{
                    var originalButtonText = $("#submitBtn").html();
@@ -158,13 +181,13 @@
                         success: function (response) {
                             if(response.status=="success"){
                                 $("#submitBtn").html(originalButtonText);
-                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;"><p>Member registered successfully</p></div>');
+                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>Member registered successfully</p></div>');
                                 $("#results").fadeToggle(3000);
                                 $("#registration-form")[0].reset();
                             }
                             else{
                                 $("#submitBtn").html(originalButtonText);
-                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;"><p>Failed!</p></div>');
+                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>Failed!</p></div>');
                                 $("#results").fadeToggle(3000);
                                 $("#registration-form")[0].reset();
 
@@ -173,7 +196,7 @@
                         error: function (error) {
                             console.log("Error:", error);
                             $("#submitBtn").html(originalButtonText);
-                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;"><p>Error!</p></div>');
+                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>Error!</p></div>');
                             $("#results").fadeToggle(3000);
                             $("#registration-form")[0].reset();
                         }

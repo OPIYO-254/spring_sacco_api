@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sojrel Sacco List is a registered sacco under the Kenyan Law. The sacco serves all types of members
+      across the country helping them not only in financial aid but also in financial advice.</title>
+    <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="styles.css"  rel="stylesheet">
+    <script src="main.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="navbar-container" th:insert="~{client_base :: navbar}"></div>
+    <section class="container-fluid about-section">
+        <div class="title text-light">
+            <h2>Who We Are</h2>
+        </div>
+    </section>
+    <main>
+        <div class="container-fluid information mt-3 p-0">
+            <div class="container mission-container">
+                <div class="mission-img">
+                    <img src="images/mission.png" alt="mission-img" style="">
+                    <strong>Our Vision:</strong>
+                    <p>To be Kenya’s most society-oriented financial provider.</p>
+                    <strong>Our Mission:</strong>
+                    <p> To uplift life in the society through provision of affordable financial services and ideas.</p>
+                </div>
+                <div>
+                    <h6>Our Core Values</h6>
+                    <p>At Sojrel Sacco, we are guided by a set of core values that define who we are and how we operate.
+                        These values are not just words; they are the principles that guide us in every interaction and decision.
+                        We are dedicated to upholding these values as we work together to achieve success.</p>
+                    <ol>
+                        <li><strong>Integrity:</strong> We uphold the highest standards of ethics and transparency in all our dealings.</li>
+                        <li><strong>Accountability:</strong> We take responsibility for our actions and decisions. We're dedicated to delivering on our promises and being answerable for the results.</li>
+                        <li><strong>Transparency:</strong> We operate with a commitment to transparency, ensuring that you have clear insight into our processes and practices.</li>
+                        <li><strong>Customer Focus:</strong> Your satisfaction is our driving force. We prioritize your needs, always striving to exceed your expectations.</li>
+                        <li><strong>Objectivity:</strong> We approach challenges with an objective perspective, fostering an environment where informed decisions are made.</li>
+                        <li><strong>Proactivity:</strong> Anticipating your needs and proactively seeking solutions is our way of ensuring your peace of mind.</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="container-fluid beginings-container">
+                <div class="container">
+                    <h6>Our Beginnings</h6>
+                    <p>Sojrel Sacco, is your trusted partner on the path to financial success. Established in 2021, we are a member-owned
+                        financial institution dedicated to helping individuals like you achieve your financial goals. The society was founded with a clear
+                        mission in mind: To uplift life in the society through provision of affordable financial services and ideas. What sets us apart is our commitment to inclusivity. Although initiated by employees of Sojrel Traders,
+                        we are open to all members of the public. We believe that everyone deserves access to financial support and advice,
+                        regardless of their background or affiliations.</p>
+                </div>
+            </div>
+            <div class="container-fluid location-section">
+                <div class="container location-container">
+                    <div class="img-container">
+                        <img src="images/riria-hub.png" alt="house-img">
+                    </div>
+                    <div class="location-info">
+                        <h6>Our Location</h6>
+                        <p>Our headquarters are nestled in the heart of Nakuru, a city known for its vibrant economy and rich culture.
+                            You can find us in the prestigious Jennifer Riria Hub building, where our dedicated team operates from the second floor.
+                            This central location ensures that we are easily accessible to all our members and allows us to serve the Nakuru and entire
+                            Kenyan community effectively.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h6>Our Services</h6>
+                <p>Sojrel Sacco offers a wide range of financial services and products designed to help you achieve financial stability and success.
+                  Our key offerings include:</p>
+                <ul>
+                  <li><strong>Loans:</strong> Whether you're looking to start or expand a business, buy a home, or meet personal expenses, our flexible loan options
+                    can be tailored to your specific needs.</li>
+                  <li><strong>Savings and Investments:</strong> We provide secure savings accounts and investment opportunities to help you grow your wealth over time.</li>
+                  <li><strong>Financial Advice:</strong> Our team of financial experts is here to offer you guidance and advice on making sound financial decisions.</li>
+                  <li><strong>Member Benefits:</strong> As a member-owned institution, our success is your success. We offer various benefits, including profit-sharing and voting rights,
+                    so you have a say in our operations.</li>
+                </ul>
+                <h6>Our Commitment to You</h6>
+                <p>When you choose Sojrel Sacco, you're not just a customer; you're a valued member of our community. We are committed to building long-term
+                  relationships with our members, supporting you on every step of your financial journey. Our dedicated team is always ready to assist
+                  you with a smile, providing personalized solutions that align with your aspirations.
+                  Join us today and experience the Sojrel Sacco difference. Together, we'll turn your financial dreams into a reality.</p>
+            </div>
+<!--            <h6>Get in Touch</h6>-->
+<!--            <p>-->
+<!--              Have questions or ready to get started? Visit us at our Nakuru headquarters in the Jennifer Riria Hub building, 2nd floor.-->
+<!--              You can also contact us via phone or email,-->
+<!--              and our friendly team will be delighted to assist you.-->
+<!--              Thank you for considering Sojrel Sacco as your financial partner. We look forward to serving you and helping you achieve your financial goals.-->
+<!--            </p>-->
+        </div>
+    </main>
+    <div th:insert="~{client_base :: footer}"></div>
+
+</body>
+</html>

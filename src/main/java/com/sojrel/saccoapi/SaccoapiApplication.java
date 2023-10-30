@@ -1,20 +1,40 @@
 package com.sojrel.saccoapi;
 
+import com.sojrel.saccoapi.model.Role;
+import com.sojrel.saccoapi.repository.RoleRepository;
+import com.sojrel.saccoapi.service.StorageProperties;
+import com.sojrel.saccoapi.service.StorageService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 
 
 @SpringBootApplication
+@EnableConfigurationProperties(StorageProperties.class)
 public class SaccoapiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SaccoapiApplication.class, args);
 
 	}
 
-//	@Bean
-//	public Docket productApi() {
-//		return new Docket(DocumentationType.SWAGGER_2).select()
-//				.apis(RequestHandlerSelectors.basePackage("com.sojrel.saccoapi")).build();
-//	}
+	@Bean
+	CommandLineRunner init(StorageService storageService) {
+		return (args) -> {
+//			storageService.deleteAll();
+			storageService.init();
+		};
+	}
+	@Bean
+	CommandLineRunner run(RoleRepository roleRepository){
+		return args ->{
+			if(roleRepository.findByAuthority("ADMIN").isPresent()) return;//To check whether the table is populated already
+			roleRepository.save(new Role("USER"));
+			Role adminRole = roleRepository.save(new Role("MANAGER"));
+			roleRepository.save(new Role("ADMIN"));
+
+		};
+	}
 
 }

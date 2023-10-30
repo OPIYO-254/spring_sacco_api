@@ -27,7 +27,4 @@ public class MemberRequestDto {
     private String gender;
     private String address;
     private String residence;
-//    private List<Long> contributionIds;
-//    private List<Long> loansTakenIds;
-//    private List<Long> loansGuaranteedIds;
 }

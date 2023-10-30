@@ -1,14 +1,11 @@
 package com.sojrel.saccoapi.dto.responses;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sojrel.saccoapi.model.Contribution;
 import com.sojrel.saccoapi.model.Loan;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;

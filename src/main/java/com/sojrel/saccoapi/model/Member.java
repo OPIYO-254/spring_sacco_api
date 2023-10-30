@@ -1,7 +1,5 @@
 package com.sojrel.saccoapi.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sojrel.saccoapi.flashapi.model.FlashLoan;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -77,6 +75,12 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<FlashLoan> flashLoans;
 
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "credentials_id")
+    private Credentials credentials;
+
+
     public enum Gender{
         MALE,FEMALE
     }
@@ -103,6 +107,9 @@ public class Member {
     public void removeLoanGuaranteed(Loan loan){
         loansGuaranteed.remove(loan);
     }
+
+    public void addCredentials(Credentials credentials){this.setCredentials(credentials);}
+
 
     @PrePersist
     public void prePersist(){

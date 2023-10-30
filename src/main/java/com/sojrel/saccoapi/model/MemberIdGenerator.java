@@ -12,7 +12,7 @@ import org.hibernate.jdbc.ReturningWork;
 public class MemberIdGenerator implements IdentifierGenerator{
 	@Override
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-		String prefix = "SJL";
+		String prefix = "SJS";
 		int suffix;
 		String formatted_suffix = "";
 		try {
