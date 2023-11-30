@@ -22,6 +22,7 @@ public class MemberRequestDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
     private String phone;
+    private String alternativePhone;
     private Long idNo;
     private String kraPin;
     private String gender;

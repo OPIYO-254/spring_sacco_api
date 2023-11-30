@@ -21,30 +21,32 @@
     <div class="col-md-10 main-section">
       <span class="d-flex justify-content-center mt-3 text-success fw-bold fs-3">Message Details</span>
       <hr class="border-2 border-success">
-      <table class="table" id="details-table">
-        <tbody>
-        <tr>
-          <th scope="row row-scoped">Date:</th>
-          <td th:text="${#temporals.format(message.contactDate, 'dd MMM yyyy')}"></td>
-        </tr>
-        <tr>
-          <th scope="row row-scoped">Time:</th>
-          <td th:text="${#temporals.format(message.contactDate, 'HH:MM:ss')}"></td>
-        </tr>
-        <tr>
-          <th scope="row row-scoped">Name</th>
-          <td th:text="${message.firstName}+' '+${message.lastName}"></td>
-        </tr>
-        <tr>
-          <th scope="row row-scoped">Email</th>
-          <td><a th:text="${message.email}" th:href="'mailto:'+${message.email}" style="text-decoration:none; color:black;"></a></td>
-        </tr>
-        <tr>
-          <th scope="row row-scoped">Phone Number:</th>
-          <td><a th:text="${message.phone}" th:href="'tel:'+${message.phone}" style="text-decoration:none; color:black;"></a></td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="container">
+        <table class="table" id="details-table">
+          <tbody>
+          <tr>
+            <th scope="row row-scoped">Date:</th>
+            <td th:text="${#temporals.format(message.contactDate, 'dd MMM yyyy')}"></td>
+          </tr>
+          <tr>
+            <th scope="row row-scoped">Time:</th>
+            <td th:text="${#temporals.format(message.contactDate, 'HH:MM:ss')}"></td>
+          </tr>
+          <tr>
+            <th scope="row row-scoped">Name</th>
+            <td th:text="${message.firstName}+' '+${message.lastName}"></td>
+          </tr>
+          <tr>
+            <th scope="row row-scoped">Email</th>
+            <td><a th:text="${message.email}" th:href="'mailto:'+${message.email}" style="text-decoration:none; color:black;"></a></td>
+          </tr>
+          <tr>
+            <th scope="row row-scoped">Phone Number:</th>
+            <td><a th:text="${message.phone}" th:href="'tel:'+${message.phone}" style="text-decoration:none; color:black;"></a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
       <div class="container my-3">
         <p class="my-2 fw-bold">Message</p>
         <textarea disabled th:text="${message.message}" rows="10" style="width:100%;"></textarea>

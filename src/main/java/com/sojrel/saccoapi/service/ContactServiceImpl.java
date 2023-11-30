@@ -34,10 +34,16 @@ public class ContactServiceImpl implements ContactService{
     }
 
     @Override
-    public List<ContactResponseDto> getAllContacts() {
-        List<Contact> contacts = StreamSupport.stream(contactRepository.getUnreadMessages().spliterator(), false).collect(Collectors.toList());
-        return Mapper.contactsToContactResponseDtoList(contacts);
+    public List<ContactResponseDto> getUnreadMessages() {
+        List<Contact> read=StreamSupport.stream(contactRepository.findByIsRead(false).spliterator(), false).collect(Collectors.toList());
+        return Mapper.contactsToContactResponseDtoList(read);
 
+    }
+
+    @Override
+    public List<ContactResponseDto> getAllReadMessages() {
+        List<Contact> read=StreamSupport.stream(contactRepository.findByIsRead(true).spliterator(), false).collect(Collectors.toList());
+        return Mapper.contactsToContactResponseDtoList(read);
     }
 
     @Override

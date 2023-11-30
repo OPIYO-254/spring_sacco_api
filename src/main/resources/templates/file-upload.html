@@ -29,12 +29,10 @@
                             <div class="mb-3">
                                 <label for="description" class="form-label">File description:</label>
                                 <input type="text" class="form-control" id="description" name="fileDescription" required>
-<!--                                <span id="front_msg"></span>-->
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 file-uploader">
                                 <label for="file" class="form-label">File:</label>
                                 <input type="file" class="form-control" id="file" name="file" required>
-<!--                                <span id="back_msg"></span>-->
                             </div>
 
                             <div class="progress mb-3" id="progress" hidden>
@@ -81,7 +79,7 @@
             },
             type : "POST",
             enctype: 'multipart/form-data',
-            url : "/api/files/upload-file",
+            url : "/upload-file",
             data : data,
             processData: false,
             cache:false,
@@ -101,7 +99,7 @@
                 $("#results").fadeToggle(3000);
                 $("#submitBtn").html(originalButtonText);
                 $("#fileupload-form")[0].reset();
-                location.reload();
+                //location.reload();
             }
         });
     }

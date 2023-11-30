@@ -21,20 +21,25 @@ body{
 .nav-item:hover{
     background-color: rgba(9, 170, 92, 0.5)
 }
-
+.section-cover{
+    background-color: rgba(9, 170, 92, 0.5);
+    height: 300px;
+}
 .mysection{
-    background-image:url("images/money.jpeg");
+    background-image:url("images/home.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
+    padding:0;
 }
 .about-section{
-    background-image:url("images/money.jpeg");
+    background-image:url("images/vision.jpeg");
     background-size: cover;
     text-align:center;
     background-repeat: no-repeat;
     background-position: center center;
     height:300px;
+    padding:0;
 }
 .upper-section{
     background-image:url("images/money.jpeg");
@@ -43,25 +48,57 @@ body{
     background-repeat: no-repeat;
     background-position: center center;
     height:300px;
+    padding:0;
+}
+.downloads-upper-section{
+    background-image:url("images/forms.jpeg");
+    background-size: cover;
+    text-align:center;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height:300px;
+    padding:0;
 }
 .members-section{
-    background-image:url("images/money.jpeg");
+    background-image:url("images/members.jpeg");
     background-size: cover;
     text-align:center;
     background-repeat: no-repeat;
     background-position: center center;
     height:300px;
+    padding:0;
+}
+.contact-section{
+    background-image:url("images/contact.jpeg");
+    background-size: cover;
+    text-align:center;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height:300px;
+    padding:0;
 }
 .membership-services-section{
-    background-image:url("images/money.jpeg");
+    background-image:url("images/service.jpeg");
     background-size: cover;
     text-align:center;
     background-repeat: no-repeat;
     background-position: center center;
     height:300px;
+    padding:0;
 }
 .location-container{
     display:flex;
+
+}
+.file-uploader{
+    height: 120px;
+    background-color: rgba(9, 170, 92, 0.2);
+    border: dashed 1px rgba(9, 170, 92, 1);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding: 12px;
+    border-radius: 8px;
 
 }
 .downloads-main-container{
@@ -83,24 +120,17 @@ body{
     padding: 12px 0;
 }
 
-.mission-container{
-    display: flex;
-
-}
-
-.mission-img {
-    margin-right: 12px;
-}
 .beginings-container{
     background-color: rgba(9, 170, 92, 0.1);
     padding: 12px;
 }
-.mission-img img{
-    width: 100%;
+.mission-img{
+    display:flex;
+    align-items: center;
 }
-.beginings-container .container p{
-    font-size: 18px;
-
+.mission-img img{
+    height:360px;
+    margin-right:12px;
 }
 .location-info p{
     font-size:18px;
@@ -110,7 +140,7 @@ body{
     margin-right: 12px;
 }
 .img-container img{
-    width: 100%;
+    height:240px;
 }
 .about-section h2{
     text-align:center;
@@ -125,7 +155,7 @@ body{
 }
 .why-section{
     background-color: rgba(9, 170, 92, 0.1);
-    height: 400px;
+    height: auto;
 }
 .reviews-section{
     height:300px;
@@ -134,14 +164,19 @@ body{
     padding:12px;
     margin: 12px auto;
     display:flex;
+    justify-content:center;
 }
 .why-container img{
     width: 40%;
-    height: 300px;
+    height: 240px;
+}
+.why-list-container{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
 }
 .why-list-container ul li{
     text-align: left;
-    font-weight: 600;
     font-size: 18px;
     list-style-type: '✅';
     padding-inline-start: 1ch;
@@ -155,6 +190,12 @@ body{
 
 .carousel-inner .carousel-item{
     height: 480px;
+}
+#carouselExampleDark .carousel-inner{
+    height:280px;
+}
+#carouselExampleDark .carousel-inner .carousel-item{
+    height: 240px;
 }
 .carousel-item img{
     height:400px;
@@ -193,6 +234,12 @@ body{
     justify-content:center;
     text-align: center;
 }
+.carousel-caption p{
+    text-align:justify;
+}
+.client-footer{
+    background-color:#012b17;
+}
 .heading {
     text-transform:uppercase;
     font-weight:bold;
@@ -206,8 +253,13 @@ body{
     font-weight:bold;
     color:#09AA5C;
 }
+.fa-question-circle-o{
+    font-size:128px;
+    color:#09AA5C;
+}
 .card{
     width:18rem;
+    padding:12px;
 }
 .card-body .card-text{
     text-align:justify;
@@ -223,6 +275,10 @@ body{
 }
 .services-section .card{
     margin: 6px 12px;
+}
+.services-section .card i{
+    font-size:80px;
+    color: #09AA5C;
 }
 .account-container{
     width: 40%;
@@ -295,11 +351,27 @@ body{
 }
 .item{
     background-color:#09AA5C;
-    padding: 6px 10px;
+    padding: 8px;
     border-radius:6px;
-    display:flex;
-    flex-direction:column;
     margin:8px;
+    height:100px;
+    width: -webkit-fill-available;
+    display:flex;
+    justify-content:space-between
+}
+.item .col{
+    display:flex;
+    flex-direction: column;
+    justify-content:space-between;
+}
+.item-icon{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.item i{
+    font-size: 48px;
+    color: rgba(1,1,1,.2);
 }
 .item span{
     font-size:12px;
@@ -374,15 +446,40 @@ body{
 .navbar-brand a{
     text-decoration:none;
 }
-
+.reg-form-container{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
+}
 .page-title {
-    background-color:#09AA5C;
-    border-radius: 8px;
+    background-color:rgba(9, 170, 92, 1);
+    border-radius: 6px;
+    height: 80px;
+    display:flex;
+    justify-content:center;
+    margin:12px;
+    margin-top:16px;
+}
+.page-title span{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    color:white;
 }
 .contribution-card{
-    background-color:#09AA5C;
-    display:flex;
-    justify-content: space-around;
+    background-color: #09AA5C;
+    display: flex;
+    margin: 8px;
+    padding: 12px;
+    height: 120px;
+    align-items: center;
+}
+.contribution-card i{
+    font-size: 64px;
+}
+.contribution-detail{
+    display: flex;
+    flex-direction:column;
+    justify-content: space-between;
+    height:100%;
 }
 .detail-table-area{
     height:auto;
@@ -394,6 +491,7 @@ body{
 .sidebar{
     height:100vh;
 }
+
 .sidebar-item{
     background-color: #198754;
 }
@@ -403,6 +501,11 @@ body{
 }
 .sidebar-item px-2{
     align-items:center;
+}
+.logoutBtn{
+    position:absolute;
+    bottom:2px;
+    width:20%;
 }
 .left-icon{
     width:36px;
@@ -445,7 +548,7 @@ body{
 }
 .card-holder{
     display:flex;
-    flex-direction-row;
+    padding:0 4px;
 }
 .table{
     width:100%;
@@ -608,10 +711,13 @@ body{
     .contribution-card span{
         font-size: 12px;
     }
-    .card-holder{
-        padding:0 10px;
-    }
 
+    .services-pair {
+        padding-right: 18px;
+    }
+    .card{
+        width:100%;
+    }
    .card-img-top {
       height: 8rem;
    }
@@ -619,6 +725,11 @@ body{
         width:60%;
         position: relative;
         left:20%;
+    }
+
+    .services-pair {
+        display: flex;
+        flex-direction:column;
     }
 
 }
@@ -730,19 +841,23 @@ body{
     .page-title p{
         font-size: 24px;
     }
-    .contribution-card{
+    /*.contribution-card{
         margin: 8px;
         padding: 8px;
     }
     .contribution-card span{
         font-size: 16px;
-    }
-    .card-holder{
-        padding:0 10px;
-    }
+    }*/
+
     .reg-form-container{
          width:100%;
+         display:flex;
+         flex-direction:column;
+         justify-content:center;
+         box-shadow:none;
+
      }
+
      .totals {
          display: flex;
          flex-direction:column;
@@ -793,14 +908,20 @@ body{
     }
     .menu-toggler{
         display:block;
-        transition: 0.5s;
         position: absolute;
         right: 12px;
-        top: 12px;
+        top: 22px;
     }
     #registration-form{
         justify-content:center;
     }
+    .contribution-card{
+        height: 80px;
+    }
+    .contribution-card i {
+        display:none;
+    }
+
     .col-md-9{
         margin-top: 12px;
     }
@@ -827,13 +948,13 @@ body{
         height:22px;
     }
 
-    .contribution-card{
+    /*.contribution-card{
         background-color:#09AA5C;
         display:flex;
         flex-direction:column;
         margin: 8px;
         padding: 8px;
-    }
+    }*/
     .account-container {
         width:90%;
         position:relative;
@@ -842,9 +963,7 @@ body{
     .contribution-card span{
         font-size: 12px;
     }
-    .card-holder{
-        padding:0 10px;
-    }
+
 
     .card-item{
         margin-top: 0.2rem;
@@ -858,7 +977,9 @@ body{
         padding-bottom:.5rem;
     }
 
-
+    .navbar{
+        transition: height 1s;
+    }
     .table-responsive-sm {
         width:100%;
         display: block;
@@ -943,6 +1064,7 @@ body{
    }
    .reg-form-container{
        width:100%;
+       box-shadow:none;
     }
    .mycards-section{
       display:flex;
@@ -970,7 +1092,7 @@ body{
      display:flex;
    }
    .card{
-     width:14rem;
+     width: 100%;
    }
    .carousel-inner {
       width:90%;
@@ -1002,6 +1124,9 @@ body{
    .location-container {
        display: flex;
        flex-direction:column;
+   }
+   .img-container img {
+       width: 100%;
    }
    .loan-item-container{
        display:flex;
@@ -1045,6 +1170,15 @@ body{
    .requirement-container{
        width: auto;
    }
+   .mission-img{
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+   }
+   .mission-img img {
+    margin-right:0;
+    display:none;
+   }
    /*.icon-container i {
         font-size: 64px;
    }
@@ -1087,6 +1221,19 @@ body{
     .join-container {
         width:auto;
     }
+    .logoutBtn{
+       position: absolute;
+       top: 80px;
+       right: 1px;
+       height: 60px;
+    }
+   /*.collapse .card-title{
+        display:none;
+   }*/
+   .dropdown-toggle i{
+        display:none;
+   }
+
 }
 
 @media only screen and (min-width: 576px) and (max-width:600px){
@@ -1155,6 +1302,9 @@ body{
        display: flex;
        flex-direction:column;
    }
+   .img-container img {
+       width: 100%;
+   }
    .loan-item-container{
        display:flex;
        flex-direction:column;
@@ -1204,6 +1354,8 @@ body{
         width:auto;
     }
 
+
+
 }
 
 @media only screen and (min-width: 600px) and (max-width:768px){
@@ -1212,7 +1364,7 @@ body{
         transition: 0.5s;
         position: absolute;
         right: 12px;
-        top: 12px;
+        top: 22px;
     }
     .contribution-box{
         margin:4px;
@@ -1221,6 +1373,9 @@ body{
         background-color:#09AA5C;
         display:flex;
         flex-direction:column;
+    }
+    .contribution-card i {
+        font-size: 36px;
     }
     .sidebar-container{
             display:none;
@@ -1259,7 +1414,15 @@ body{
     .add-contribution-main{
         height:81vh;
     }
-
+    .mission-img{
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+   }
+   .mission-img img {
+    margin-right:0;
+    display:none;
+   }
     .cards-row{
         margin: 1rem 0;
         display: flex;
@@ -1298,22 +1461,20 @@ body{
     .details-main-section{
         height:84vh;
     }
-    .contribution-card{
+    /*.contribution-card{
         background-color:#09AA5C;
         display:flex;
         flex-direction:column;
         margin: 8px;
         padding: 8px;
-    }
+    }*/
     .form-container{
         width: 60%;
     }
     .contribution-card span{
         font-size: 16px;
     }
-    .card-holder{
-        padding:0 10px;
-    }
+
     .submitBtn{
         width:100%;
     }
@@ -1369,8 +1530,12 @@ body{
         flex-direction:column;
     }
     .location-container {
-        display: flex;
-        flex-direction:column;
+       display: flex;
+       flex-direction:column;
+   }
+
+    .img-container img {
+        width: 100%;
     }
     .loan-item-container{
         display:flex;
@@ -1434,6 +1599,20 @@ body{
     .join-container {
         width:auto;
     }
+    .logoutBtn{
+       position: absolute;
+       top: 80px;
+       right: 1px;
+       height: 60px;
+    }
+   .logoutBtn .card-title{
+        display:none;
+   }
+   .collapse:not(.show) {
+          display: block;
+          position: absolute;
+          right: 10%;
+      }
 }
 
 @media only screen and (min-width:768px) and (max-width:992px){
@@ -1442,7 +1621,15 @@ body{
         transition: 0.5s;
         position: absolute;
         right: 12px;
-        top: 12px;
+        top: 22px;
+    }
+    .mission-img {
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+    }
+    .mission-img img{
+        display:none;
     }
     .account-container {
         width:60%;
@@ -1532,20 +1719,18 @@ body{
         height:84vh;
     }
 
-    .contribution-card{
+    /*.contribution-card{
         background-color:#09AA5C;
         display:flex;
         flex-direction:column;
         margin: 8px;
         padding: 8px;
-    }
+    }*/
 
     .contribution-card span{
         font-size: 16px;
     }
-    .card-holder{
-        padding:0 10px;
-    }
+
     .submitBtn{
         width:100%;
     }
@@ -1576,10 +1761,7 @@ body{
        display: flex;
        flex-direction:column;
    }
-   .location-container {
-       display: flex;
-       flex-direction:column;
-   }
+
    .loan-item-container{
        display:flex;
        flex-direction:column;
@@ -1618,10 +1800,25 @@ body{
    .loan-type-container {
     margin-top: 12px;
    }
+   .logoutBtn{
+       position: absolute;
+       top: 80px;
+       right: 1px;
+       height: 60px;
+   }
+   .logoutBtn .card-title{
+        display:none;
+   }
+   .collapse:not(.show) {
+       display: block;
+       position: absolute;
+       right: 10%;
+   }
 
 }
 
 @media only screen and (min-width:992px) and (max-width:1200px){
+
     .card-title{
         visibility:hidden;
     }
@@ -1657,7 +1854,7 @@ body{
     }
 
     .form-container{
-        width: 30%;
+        width: 40%;
     }
     .reg-form-container{
              width:50%;
@@ -1692,24 +1889,21 @@ body{
    .details-main-section{
        height:84vh;
    }
-   .guarantor-table-area{
-       height:50vh;
-   }
 
-   .contribution-card{
+
+
+   /*.contribution-card{
        background-color:#09AA5C;
        display:flex;
        flex-direction:column;
        margin: 8px;
        padding: 12px;
-   }
+   }*/
 
    .contribution-card span{
        font-size: 16px;
    }
-   .card-holder{
-       padding:0 10px;
-   }
+
    .submitBtn{
        width:100%;
    }
@@ -1725,6 +1919,11 @@ body{
    }
    .item span {
        font-size: 16px;
+   }
+   .logoutBtn{
+       position:absolute;
+       bottom:2px;
+       width:10%;
    }
 
 
@@ -1802,19 +2001,17 @@ body{
     .details-main-section{
         height:84vh;
     }
-    .guarantor-table-area{
-        height:50vh;
-    }
-    .contribution-card{
+
+    /*.contribution-card{
         background-color:#09AA5C;
         display:flex;
         margin: 8px;
         padding: 12px;
         height:80px;
         align-items:center
-    }
+    }*/
     .form-container{
-        width: 25%;
+        width: 35%;
     }
     .reg-form-container{
         width:50%;
@@ -1823,9 +2020,7 @@ body{
         font-size: 20px;
         font-weight: bold;
     }
-    .card-holder{
-        padding: 0 10px;
-    }
+
     .modal-dialog{
         width:20%;
         margin: auto;
@@ -1905,7 +2100,9 @@ body{
         height:78vh;
       }
 
-
+    .form-container{
+        width: 30%;
+    }
 }
 
 

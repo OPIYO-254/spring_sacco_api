@@ -39,7 +39,9 @@ public interface LoanService {
     public ItemCountDto countApprovedLoans();
     public ItemCountDto countRepayingLoans();
     public ItemCountDto countCompletedLoans();
+    public LoanGuarantor findByMemberIdAndLoanId(String memberId, Long loanId);
     public void updateGuaranteedAmount(String memberId, Long loanId, Double amount);
+    public LoanGuarantor findLoanGuarantor(String memberId, Long loanId);
     public List<LoanGuarantorResponseDto> getLoanGuarantors(Long loanId);
     public ItemTotalDto getTotalGuaranteed(Long loanId);
     public void approveLoan(Long loanId);
@@ -50,7 +52,7 @@ public interface LoanService {
     public TotalDoubleItem getTotalRepaid(Long loanId);
     public ItemTotalDto getMonthlyDisbursement();
     public ItemTotalDto getAnnualDisbursement();
-
+    List<LoanResponseDto> findByMember(String memberId);
     public List<KeyValueDto> totalMonthlyDisbursements();
     public List<KeyValueDto> totalPerLoanCategory();
 }

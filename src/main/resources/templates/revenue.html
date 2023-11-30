@@ -33,41 +33,71 @@
 <!--            </div>-->
             <div class="mycards-section">
                 <div class="myrow">
-                    <div class="item col">
-                        <span class="card-text text-light m-0">Total Disbursed</span>
-                        <span class="card-text text-light m-0" th:text="'KES ' +${totalDisbursed}"></span>
+                    <div class="item">
+                        <div class="col">
+                            <span class="card-text text-light m-0">Total Disbursed</span>
+                            <span class="card-text text-light m-0" th:text="'KES ' +${totalDisbursed}"></span>
+                        </div>
+                        <div class="item-icon">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </div>
                     </div>
-                    <div class="item col">
-                        <span class="card-text text-light m-0">Total Amount</span>
-                        <span class="card-text text-light m-0" th:text="'KES '+${totalAmount}"></span>
+                    <div class="item">
+                        <div class="col">
+                            <span class="card-text text-light m-0">Total Amount</span>
+                            <span class="card-text text-light m-0" th:text="'KES '+${totalAmount}"></span>
+                        </div>
+                        <div class="item-icon">
+                            <i class="fa fa-calculator" aria-hidden="true"></i>
+                        </div>
+
                     </div>
-                    <div class="item col">
-                        <span class="card-text text-light m-0">Expected Revenue</span>
-                        <span class="card-text text-light m-0" th:text="'KES '+(${totalAmount}-${totalDisbursed})"></span>
+                    <div class="item">
+                        <div class="col">
+                            <span class="card-text text-light m-0">Expected Revenue</span>
+                            <span class="card-text text-light m-0" th:text="'KES '+(${totalAmount}-${totalDisbursed})"></span>
+                        </div>
+                        <div class="item-icon">
+                            <i class="fa fa-percent" aria-hidden="true"></i>
+                        </div>
+
                     </div>
-                    <div class="item col">
-                        <span class="card-text text-light m-0">Completed Collections</span>
-                        <span class="card-text text-light m-0" th:text="'KES '+${completed}"></span>
+                    <div class="item">
+                        <div class="col">
+                            <span class="card-text text-light m-0">Completed</span>
+                            <span class="card-text text-light m-0" th:text="'KES '+${completed}"></span>
+                        </div>
+                        <div class="item-icon">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="col">
+                            <span class="card-text text-light m-0">Uncollected</span>
+                            <span class="card-text text-light m-0" th:text="'KES '+ (${totalAmount}-${repaid})"></span>
+                        </div>
+                        <div class="item-icon">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        </div>
+
                     </div>
                 </div>
-                <div class="myrow">
-                    <div class="item col">
-                        <span class="card-text text-light m-0">Expected Collections</span>
-                        <span class="card-text text-light m-0" th:text="'KES '+ (${totalAmount}-${repaid})"></span>
-                    </div>
-                    <div class="item col">
-                        <span class="card-text text-light m-0">Monthly Disbursement</span>
-                        <span class="card-text text-light m-0" th:text="'KES '+${totalAmount}"></span>
-                    </div>
-                    <div class="item col">
-                        <span class="card-text text-light m-0">Annual Disbursement</span>
-                        <span class="card-text text-light m-0" th:text="${annualDisbursement}!=null?'KES '+${annualDisbursement}:'KES 0.00'"></span>
-                    </div>
-                    <div class="item col">
-                        <span class="card-text text-light m-0">Monthly Collections</span>
-                        <span class="card-text text-light m-0" th:text="${monthlyDisburse}!=null?'KES '+${monthlyDisburse}:'KES 0.00'"></span>
-                    </div>
-                </div>
+<!--                <div class="myrow">-->
+<!--                    -->
+<!--                    <div class="item col">-->
+<!--                        <span class="card-text text-light m-0">Monthly Disbursement</span>-->
+<!--                        <span class="card-text text-light m-0" th:text="'KES '+${totalAmount}"></span>-->
+<!--                    </div>-->
+<!--                    <div class="item col">-->
+<!--                        <span class="card-text text-light m-0">Annual Disbursement</span>-->
+<!--                        <span class="card-text text-light m-0" th:text="${annualDisbursement}!=null?'KES '+${annualDisbursement}:'KES 0.00'"></span>-->
+<!--                    </div>-->
+<!--                    <div class="item col">-->
+<!--                        <span class="card-text text-light m-0">Monthly Collections</span>-->
+<!--                        <span class="card-text text-light m-0" th:text="${monthlyDisburse}!=null?'KES '+${monthlyDisburse}:'KES 0.00'"></span>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
             <div class="display_charts">
                 <figure style="width:100%; height: 50vh;">
@@ -114,7 +144,7 @@
             }
         },
         series: [{
-            name: 'Total Disbursements per Month',
+            name: 'Total Monthly Disbursements',
             data: chartData.map(function(item) {
                 return item.value;
             }),

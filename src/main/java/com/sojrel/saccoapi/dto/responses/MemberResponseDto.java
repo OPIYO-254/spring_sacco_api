@@ -22,6 +22,7 @@ public class MemberResponseDto {
     private Date dob;
     private String email;
     private String phone;
+    private String alternativePhone;
     private String kraPin;
     private String gender;
     private String residence;

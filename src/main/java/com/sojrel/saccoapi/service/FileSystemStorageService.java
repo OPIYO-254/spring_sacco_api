@@ -62,7 +62,7 @@ public class FileSystemStorageService implements StorageService {
                     .normalize().toAbsolutePath();
 
             url = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("api/files/show/")
+                    .path("files/show/")
                     .path(StringUtils.cleanPath(id+"_"+file.getOriginalFilename()))
                     .toUriString();
             fileDetails.put("url", url);
@@ -105,7 +105,7 @@ public class FileSystemStorageService implements StorageService {
                     .normalize().toAbsolutePath();
 
             url = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("api/files/show/")
+                    .path("files/show/")
                     .path(StringUtils.cleanPath(file.getOriginalFilename()))
                     .toUriString();
             fileDetails.put("url", url);
@@ -124,6 +124,8 @@ public class FileSystemStorageService implements StorageService {
         }
         return fileDetails;
     }
+
+
 
 
     @Override

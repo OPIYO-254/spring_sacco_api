@@ -2,25 +2,39 @@ package com.sojrel.saccoapi.controller.WebAppController;
 
 import com.sojrel.saccoapi.dto.requests.*;
 import com.sojrel.saccoapi.dto.responses.*;
-import com.sojrel.saccoapi.model.Loan;
-import com.sojrel.saccoapi.model.User;
+import com.sojrel.saccoapi.exceptions.UserNotFoundException;
+import com.sojrel.saccoapi.model.*;
+import com.sojrel.saccoapi.repository.CredentialsRepository;
+import com.sojrel.saccoapi.repository.FileUploadRepository;
 import com.sojrel.saccoapi.repository.MemberRepository;
 import com.sojrel.saccoapi.service.*;
+import com.sojrel.saccoapi.utils.EmailUtility;
 import com.sojrel.saccoapi.utils.FileUploader;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -50,6 +64,15 @@ public class HomepageController {
     private UserService userService;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
+    private StorageService storageService;
+    @Autowired
+    private FileUploadRepository fileUploadRepository;
+    @Autowired
+    private CredentialsRepository credentialsRepository;
     DecimalFormat df = new DecimalFormat("0.00");
 
     @GetMapping("/home")
@@ -87,12 +110,26 @@ public class HomepageController {
     @GetMapping("/register")
     public ModelAndView addMemberForm(){
         ModelAndView modelAndView = new ModelAndView("register");
-        MemberRequestDto newMember = new MemberRequestDto();
+//        MemberRequestDto newMember = new MemberRequestDto();
         ItemCountDto countUnread = contactService.countUnreadMessages();
         Long unread = countUnread.getCount();
-        modelAndView.addObject("member", newMember);
+//        modelAndView.addObject("member", newMember);
         modelAndView.addObject("unread", unread);
         return  modelAndView;
+    }
+
+    @PostMapping("/register-member")
+    public ResponseEntity<?> saveMember(@RequestBody MemberRequestDto memberRequestDto){
+        try {
+            memberService.addMember(memberRequestDto);
+            // Return a JSON response with success message
+            return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Member registered successfully.\"}");
+        } catch (Exception e) {
+            // Return a JSON response with error message
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"status\": \"error\", \"message\": \"Error registering member.\"}");
+        }
+
     }
     @GetMapping("/credentials")
     public ModelAndView credentials(){
@@ -180,6 +217,7 @@ public class HomepageController {
         }
         catch (NullPointerException e){
             e.printStackTrace();
+//            throw e;
         }
         Long totalSavings = savings.getTotal();
         ItemTotalDto shares = contributionService.getMemberTotalShares(id);
@@ -188,17 +226,14 @@ public class HomepageController {
         if(totalSavings == null && totalShares==null){totalContribs=null;}
         else if(totalSavings!=null && totalShares==null){totalContribs=totalSavings;}
         else if(totalSavings == null && totalShares!=null){totalContribs=totalShares;}
+        else{totalContribs = totalShares + totalSavings;}
         modelAndView.addObject("member", memberResponseDto);
         modelAndView.addObject("savings", totalSavings);
         modelAndView.addObject("shares", totalShares);
         modelAndView.addObject("total", totalContribs);
         return modelAndView;
     }
-    //manager -register, credentials,add-credentials, /downloads/**, /add-contributions,members,
-    // /member-details,/add-contribution,/save-contributions,/applied-loans,/rejected-loans,/approved-loans,/approved-loan-details
-    // /repaying-loans, /repaying-loan-details,/approve-loan/**, /reject-loan/**,rejected-loan-details,/completed-loans
-    // /completed-loans-details,contributions, revenue, messages, /read_message, mark-read-message/**
-    ///user apply-loan, /save-loan, /approved-loan-details, /repaying-loan-details, rejected-loan-details
+
     @GetMapping("/add-contribution")
     public ModelAndView addContributionForm(){
         ModelAndView modelAndView = new ModelAndView("add-contribution");
@@ -229,7 +264,6 @@ public class HomepageController {
                     .body("{\"status\": \"error\", \"message\": \"Error adding contribution.\"}");
         }
     }
-
 
     @GetMapping("/apply-loan")
     public ModelAndView addLoanForm(){
@@ -310,6 +344,19 @@ public class HomepageController {
         modelAndView.addObject("unread", unread);
         return modelAndView;
     }
+
+    @PostMapping("/repay-loan")
+    public ResponseEntity<?> addRepayment(@RequestBody RepaymentRequestDto repaymentRequestDto){
+        try {
+            RepaymentResponseDto repaymentResponseDto = repaymentService.addRepayment(repaymentRequestDto);
+            return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Loan repayment successful.\"}");
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"status\": \"error\", \"message\": \"Error adding repayment.\"}");
+        }
+    }
+
     @GetMapping("/repaying-loan-details")
     public ModelAndView repayingLoanDetails(@RequestParam Long id){
         ModelAndView modelAndView = new ModelAndView("repaying-loan-details");
@@ -329,6 +376,7 @@ public class HomepageController {
         modelAndView.addObject("repayments", repayments);;
         modelAndView.addObject("repaid", totalRepaid);
         return modelAndView;
+
     }
 
     @PostMapping("/approve-loan/{id}")
@@ -500,10 +548,12 @@ public class HomepageController {
     @GetMapping("/messages")
     public ModelAndView getContactMessages(){
         ModelAndView modelAndView = new ModelAndView("messages");
-        List<ContactResponseDto> contactResponseDtos = contactService.getAllContacts();
+        List<ContactResponseDto> contactResponseDtos = contactService.getUnreadMessages();
+        List<ContactResponseDto> read = contactService.getAllReadMessages();
         ItemCountDto countUnread = contactService.countUnreadMessages();
         Long unread = countUnread.getCount();
         modelAndView.addObject("messages", contactResponseDtos);
+        modelAndView.addObject("read", read);
         modelAndView.addObject("unread", unread);
         return modelAndView;
     }
@@ -525,8 +575,72 @@ public class HomepageController {
         return "redirect:/messages";
     }
 
+    @PostMapping("/upload")
+    public ResponseEntity<?> handleFileUpload(@RequestParam("memberId") String memberId,
+                                              @RequestParam("idFrontPath") MultipartFile idFrontPath,
+                                              @RequestParam("idBackPath") MultipartFile idBackPath,
+                                              @RequestParam("kraCertPath") MultipartFile kraCertPath,
+                                              @RequestParam("passportPath") MultipartFile passportPath) {
+
+        Map<String, String> frontDetails = storageService.store(idFrontPath, memberId);
+        Map<String, String> backDetails = storageService.store(idBackPath, memberId);
+        Map<String, String> certDetails = storageService.store(kraCertPath, memberId);
+        Map<String, String> passDetails = storageService.store(passportPath, memberId);
+
+        Credentials credentials = new Credentials();
+        credentials.setIdFrontName(frontDetails.get("fileName"));
+        credentials.setIdFrontPath(frontDetails.get("url"));
+        credentials.setIdBackName(backDetails.get("fileName"));
+        credentials.setIdBackPath(backDetails.get("url"));
+        credentials.setKraCertName(certDetails.get("fileName"));
+        credentials.setKraCertPath(certDetails.get("url"));
+        credentials.setPassportName(passDetails.get("fileName"));
+        credentials.setPassportPath(passDetails.get("url"));
+        Credentials savedCredential = credentialsRepository.save(credentials);
+        Member member = memberService.getMemberById(memberId);
+        member.setCredentials(savedCredential);
+        memberRepository.save(member);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
     @GetMapping("/file-upload")
-    public String fileUploads(){return "file-upload";}
+    public String fileUploads(@RequestHeader Map<String, String> headers){
+        return "file-upload";}
+
+    @PostMapping("/upload-file")
+    public ResponseEntity<?> handleFileUpload(@RequestParam("fileDescription") String fileDescription, @RequestParam("file") MultipartFile file){
+        Map<String, String> fileDetails = storageService.storeFile(file);
+        FileUploads fileUploads = new FileUploads();
+        fileUploads.setFileDescription(fileDescription);
+        fileUploads.setFileName(fileDetails.get("fileName"));
+        fileUploads.setFilePath(fileDetails.get("url"));
+        fileUploadRepository.save(fileUploads);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/files/show/{fileName}")
+    ResponseEntity<Resource> downloadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
+
+        Resource resource = storageService.loadAsResource(fileName);
+
+//        MediaType contentType = MediaType.APPLICATION_PDF;
+
+        String mimeType;
+
+        try {
+            mimeType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+
+        } catch (IOException e) {
+            mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+        }
+        mimeType = mimeType == null ? MediaType.APPLICATION_OCTET_STREAM_VALUE : mimeType;
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(mimeType))
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName="+resource.getFilename())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + resource.getFilename())
+                .body(resource);
+    }
 
     @GetMapping("/create-account")
     public String createAccount(){return "create-account";}
@@ -550,10 +664,7 @@ public class HomepageController {
         }
     }
 
-    private String getSiteURL(HttpServletRequest request) {
-        String siteURL = request.getRequestURL().toString();
-        return siteURL.replace(request.getServletPath(), "");
-    }
+
     @GetMapping("/verify")
     public String verifyUser(@RequestParam("code") String code) {
         if (userService.verifyUser(code)) {
@@ -566,5 +677,61 @@ public class HomepageController {
     public String loginForm(){return "login";}
 
 
+    @GetMapping("/forgot-password")
+    public String forgotPasswordForm() { return "forgot-password"; }
 
+
+    @PostMapping("/forgot-password")
+    public String processForgotPassword(HttpServletRequest request, Model model) throws UserNotFoundException {
+        String email = request.getParameter("email");
+        String token = RandomString.make(30);
+        try {
+            userService.setResetPasswordToken(email, token);
+            String resetPasswordLink = getSiteURL(request) + "/reset-password?token=" + token;
+            userService.sendResetEmail(email, resetPasswordLink);
+            model.addAttribute("message", "We have sent a reset password link to your email. Please check.");
+        }catch (UserNotFoundException e){
+            model.addAttribute("error", e.getMessage());
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return "forgot-password";
+    }
+
+    @GetMapping("/reset-password")
+    public String showResetPasswordForm(@Param(value = "token") String token, Model model) {
+        User user = userService.getUserByToken(token);
+        model.addAttribute("token", token);
+        if (user == null) {
+            model.addAttribute("message", "Invalid Token");
+            return "message";
+        }
+        return "reset-password";
+    }
+
+    @PostMapping("/reset-password")
+    public String processResetPassword(HttpServletRequest request, Model model) {
+        String token = request.getParameter("token");
+        String password = request.getParameter("password");
+
+        User user = userService.getUserByToken(token);
+        model.addAttribute("title", "Reset your password");
+
+        if (user == null) {
+            model.addAttribute("message", "Invalid Token");
+//			return "message";
+        } else {
+            userService.resetPassword(user, password);
+            model.addAttribute("message", "Password reset successful");
+        }
+
+        return "reset-password";
+    }
+
+    public String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
+    }
 }

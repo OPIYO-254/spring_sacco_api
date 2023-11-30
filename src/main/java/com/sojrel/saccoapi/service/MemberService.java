@@ -26,8 +26,10 @@ public interface MemberService {
     public List<Member> listMembers();
     List<MemberTotalSavingsDto> findMemberSavings();
     List<NewMemberResponseDto> findNewMembers();
-    public void saveMember(MemberRequestDto member);
+//    public void saveMember(MemberRequestDto member);
     public List<MemberTotalSavingsDto> membersTotalShares();
     public ItemCountDto getMemberCount();
+
+    Member getMemberByEmail(String email);
 //    public MemberResponseDto updateCredentials(String memberId, Long credentialsId);
 }

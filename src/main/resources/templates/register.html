@@ -19,89 +19,95 @@
             <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-3 col-lg-2 p-0" id="sidebar-container"></div>
             <div class="col-md-10 main-section">
                 <span id="results"></span>
-
                 <div style="height:60px;"></div>
                 <div class="container-fluid pt-2 mt-2 mb-3 reg-form-container">
-                    <div class="d-flex justify-content-center align-items-center py-1">
-                        <h3 style="color:#09AA5C;">Member Registration</h3>
+                    <div class="reg-container">
+                        <div class="d-flex justify-content-center align-items-center py-1">
+                            <h3 style="color:#09AA5C;">Member Registration</h3>
+                        </div>
+                        <form id="registration-form" method="post">
+                            <hr>
+                            <div class="row input-container">
+                                <div class="col sub-container">
+                                    <div class="mb-3">
+                                        <label for="firstName" class="form-label">First Name:</label>
+                                        <input type="text" class="form-control" id="firstName">
+                                        <span id="fnameMsg"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="midName" class="form-label">Middle Name:</label>
+                                        <input type="text" class="form-control" id="midName">
+                                        <span id="mnameMsg"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="lastName" class="form-label">Last Name:</label>
+                                        <input type="text" class="form-control" id="lastName">
+                                        <span id="lnameMsg"></span>
+
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email:</label>
+                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                                        <span id="emailMsg"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="dob" class="form-label">Date of Birth:</label>
+                                        <input type="date" class="form-control" id="dob">
+                                        <span id="dobMsg"></span>
+
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="idNo" class="form-label">ID Number:</label>
+                                        <input type="number" class="form-control" id="idNo">
+                                        <span id="idNoMsg"></span>
+                                    </div>
+
+                                </div>
+                                <div class="col sub-container">
+                                    <div class="mb-3">
+                                        <label for="kraPin" class="form-label">Kra Pin:</label>
+                                        <input type="text" class="form-control" id="kraPin">
+                                        <span id="kraPinMsg"></span>
+
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phone" class="form-label">Phone Number:</label>
+                                        <input type="text" class="form-control" id="phone">
+                                        <span id="phoneMsg"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phone1" class="form-label">Alternative Contact:</label>
+                                        <input type="text" class="form-control" id="phone1">
+                                        <span id="phone1Msg"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="gender" class="form-label">Gender</label>
+                                        <select id="gender" class="form-control">
+                                            <option align="center" value="">Select Gender</option>
+                                            <option value="MALE">MALE</option>
+                                            <option value="FEMALE">FEMALE</option>
+                                        </select>
+                                        <span id="genderMsg"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Postal Address:</label>
+                                        <input type="text" class="form-control" id="address">
+                                        <span id="addressMsg"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="residence" class="form-label">Residence:</label>
+                                        <input type="text" class="form-control" id="residence">
+                                        <span id="residenceMsg"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" id="submitBtn" style="width:auto; margin-bottom:24px;" class="btn submitBtn">Submit</button>
+                            </div>
+
+                        </form>
                     </div>
-                    <form id="registration-form" method="post">
-                        <hr>
-                        <div class="row input-container">
-                            <div class="col sub-container">
-                                <div class="mb-3">
-                                    <label for="firstName" class="form-label">First Name:</label>
-                                    <input type="text" class="form-control" id="firstName">
-                                    <span id="fnameMsg"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="midName" class="form-label">Middle Name:</label>
-                                    <input type="text" class="form-control" id="midName">
-                                    <span id="mnameMsg"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="lastName" class="form-label">Last Name:</label>
-                                    <input type="text" class="form-control" id="lastName">
-                                    <span id="lnameMsg"></span>
-
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email:</label>
-                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
-                                    <span id="emailMsg"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="dob" class="form-label">Date of Birth:</label>
-                                    <input type="date" class="form-control" id="dob">
-                                    <span id="dobMsg"></span>
-
-                                </div>
-                                <div class="mb-3">
-                                    <label for="idNo" class="form-label">ID Number:</label>
-                                    <input type="number" class="form-control" id="idNo">
-                                    <span id="idNoMsg"></span>
-                                </div>
-
-                            </div>
-                            <div class="col sub-container">
-                                <div class="mb-3">
-                                    <label for="kraPin" class="form-label">Kra Pin:</label>
-                                    <input type="text" class="form-control" id="kraPin">
-                                    <span id="kraPinMsg"></span>
-
-                                </div>
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">Phone Number:</label>
-                                    <input type="text" class="form-control" id="phone">
-                                    <span id="phoneMsg"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="gender" class="form-label">Gender</label>
-                                    <select id="gender" class="form-control">
-                                        <option align="center" value="">Select Gender</option>
-                                        <option value="MALE">MALE</option>
-                                        <option value="FEMALE">FEMALE</option>
-                                    </select>
-                                    <span id="genderMsg"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="address" class="form-label">Postal Address:</label>
-                                    <input type="text" class="form-control" id="address">
-                                    <span id="addressMsg"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="residence" class="form-label">Residence:</label>
-                                    <input type="text" class="form-control" id="residence">
-                                    <span id="residenceMsg"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-center">
-                            <button type="submit" id="submitBtn" style="width:auto; margin-bottom:24px;" class="btn submitBtn">Submit</button>
-                        </div>
-
-                    </form>
                 </div>
             </div>
         </div>
@@ -168,26 +174,29 @@
                         idNo: $("#idNo").val(),
                         kraPin: $("#kraPin").val(),
                         phone: $("#phone").val(),
+                        alternativePhone: $("#phone1").val(),
                         gender: $("#gender").val(),
                         address: $("#address").val(),
                         residence: $("#residence").val(),
                    }
+                    console.log(formData);
                     $.ajax({
                         contentType : "application/json",
                         dataType : 'json',
                         type: "POST",
-                        url: "api/member/save-member",
+                        url: "/register-member",
                         data: JSON.stringify(formData),
                         success: function (response) {
                             if(response.status=="success"){
                                 $("#submitBtn").html(originalButtonText);
-                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>Member registered successfully</p></div>');
+                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;margin;0;"><p>'+response.message+'</p></div>');
                                 $("#results").fadeToggle(3000);
                                 $("#registration-form")[0].reset();
+
                             }
                             else{
                                 $("#submitBtn").html(originalButtonText);
-                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>Failed!</p></div>');
+                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>'+response.message+'</p></div>');
                                 $("#results").fadeToggle(3000);
                                 $("#registration-form")[0].reset();
 

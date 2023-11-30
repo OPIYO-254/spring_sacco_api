@@ -239,14 +239,24 @@ public class LoanServiceImpl implements LoanService{
         return loanCount;
     }
 
-
-    @Override
-    public void updateGuaranteedAmount(String memberId, Long loanId, Double amount) {
+    public LoanGuarantor findByMemberIdAndLoanId(String memberId, Long loanId){
         LoanGuarantor loanGuarantor = loanGuarantorRepository.findByMemberIdAndLoanId(memberId, loanId)
                 .orElseThrow(() -> new EntityNotFoundException("Loan guarantor not found"));
+        return loanGuarantor;
+    }
+    @Override
+    public void updateGuaranteedAmount(String memberId, Long loanId, Double amount) {
+        LoanGuarantor loanGuarantor = findByMemberIdAndLoanId(memberId, loanId);
         loanGuarantor.setAmount(amount);
         loanGuarantorRepository.save(loanGuarantor);
+
     }
+
+    @Override
+    public LoanGuarantor findLoanGuarantor(String memberId, Long loanId) {
+        return null;
+    }
+
 
     @Override
     public List<LoanGuarantorResponseDto> getLoanGuarantors(Long loanId) {
@@ -311,10 +321,10 @@ public class LoanServiceImpl implements LoanService{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
         String formattedDate = now.format(formatter);
         Long monthlyTotal = loanRepository.getTotalDisbursement(formattedDate+'%');
-        System.out.println(formattedDate);
+//        System.out.println(formattedDate);
         ItemTotalDto total = new ItemTotalDto();
         total.setTotal(monthlyTotal);
-        System.out.println(total);
+//        System.out.println(total);
         return  total;
     }
 
@@ -328,6 +338,14 @@ public class LoanServiceImpl implements LoanService{
         total.setTotal(monthlyTotal);
         return  total;
     }
+
+    @Override
+    public List<LoanResponseDto> findByMember(String memberId){
+        Member member = memberService.getMemberById(memberId);
+        List<Loan>loans = loanRepository.findByBorrower(member);
+        return Mapper.loanToLoanResponseDtos(loans);
+    }
+
     @Override
     public List<KeyValueDto> totalMonthlyDisbursements(){
         LocalDateTime now = LocalDateTime.now();

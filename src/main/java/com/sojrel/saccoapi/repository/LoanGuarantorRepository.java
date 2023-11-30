@@ -16,9 +16,7 @@ import java.util.Optional;
 @Repository
 public interface LoanGuarantorRepository extends JpaRepository<LoanGuarantor, LoanGuarantorId> {
     Optional<LoanGuarantor> findByMemberIdAndLoanId(String memberId, Long loanId);
-    //SELECT loan.id, member.id, member.first_name, member.mid_name, loan_guarantors.amount from
-    //loan_guarantors inner join loan on loan_guarantors.loan_id = loan.id
-    //inner join member on loan_guarantors.member_id = member.id where loan.id=1;
+
     @Query("SELECT new com.sojrel.saccoapi.dto.responses.LoanGuarantorResponseDto(m.id, l.id, m.firstName, m.midName, g.amount, m.phone, m.email) FROM LoanGuarantor g " +
             "join Member m on g.member = m join Loan l on g.loan=l WHERE l.id =:loanId")
     List<LoanGuarantorResponseDto> findLoanGuarantorById(@Param("loanId") Long loanId);

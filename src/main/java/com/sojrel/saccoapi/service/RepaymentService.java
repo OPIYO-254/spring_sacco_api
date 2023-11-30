@@ -12,6 +12,7 @@ public interface RepaymentService {
     public RepaymentResponseDto addRepayment(RepaymentRequestDto repaymentRequestDto);
     public Repayment getRepaymentById(Long repaymentId);
     public RepaymentResponseDto getRepayment(Long repaymentId);
+    public List<RepaymentResponseDto> getLoanRepayments(Long loanId);
     public List<RepaymentResponseDto> getRepayments();
     public RepaymentResponseDto editRepayment(Long repaymentId, RepaymentRequestDto repaymentRequestDto);
     public RepaymentResponseDto deleteRepayment(Long repaymentId);

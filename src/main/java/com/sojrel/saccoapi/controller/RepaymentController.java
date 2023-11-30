@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins={"http://10.0.2.2:8080"})
 @RestController
 @RequestMapping("/api/repayment")
 public class RepaymentController {
@@ -42,6 +42,11 @@ public class RepaymentController {
         return new ResponseEntity<>(repaymentResponseDto, HttpStatus.OK);
     }
 
+    @GetMapping("/loan-repayments/{loanId}")
+    public ResponseEntity<List<RepaymentResponseDto>> getLoanRepayments(@PathVariable Long loanId){
+        List<RepaymentResponseDto> responseDtos = repaymentService.getLoanRepayments(loanId);
+        return  new ResponseEntity<>(responseDtos, HttpStatus.OK);
+    }
     @PostMapping("/add-loan/{repaymentId}/{loanId}")
     public ResponseEntity<RepaymentResponseDto> addLoan(@PathVariable Long repaymentId, @PathVariable Long loanId){
         RepaymentResponseDto repaymentResponseDto = repaymentService.addLoanToRepayment(repaymentId, loanId);

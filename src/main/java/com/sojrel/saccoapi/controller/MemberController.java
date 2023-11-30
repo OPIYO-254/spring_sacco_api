@@ -1,8 +1,13 @@
 package com.sojrel.saccoapi.controller;
 
 import com.sojrel.saccoapi.dto.requests.MemberRequestDto;
+import com.sojrel.saccoapi.dto.responses.CredentialsResponseDto;
+import com.sojrel.saccoapi.dto.responses.ItemTotalDto;
 import com.sojrel.saccoapi.dto.responses.MemberResponseDto;
+import com.sojrel.saccoapi.dto.responses.MemberTotalContributionsDto;
 import com.sojrel.saccoapi.model.Member;
+import com.sojrel.saccoapi.service.ContributionService;
+import com.sojrel.saccoapi.service.CredentialsService;
 import com.sojrel.saccoapi.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,42 +16,72 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-
+@CrossOrigin(origins={"http://10.0.2.2:8080"})
 @RestController
 @RequestMapping("api/member")
 public class MemberController {
     @Autowired
     private MemberService memberService;
-
+    @Autowired
+    private ContributionService contributionService;
+    @Autowired
+    private CredentialsService credentialsService;
     @PostMapping("/add")
     public ResponseEntity<MemberResponseDto> addMember(@RequestBody MemberRequestDto memberRequestDto) {
         MemberResponseDto memberResponseDto = memberService.addMember(memberRequestDto);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
     }
-    @PostMapping("/save-member")
-    public ResponseEntity<?> saveMember(@RequestBody MemberRequestDto memberRequestDto){
-        try {
-            memberService.saveMember(memberRequestDto);
-            // Return a JSON response with success message
-            return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Member added successfully.\"}");
-        } catch (Exception e) {
-            // Return a JSON response with error message
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"status\": \"error\", \"message\": \"Error adding member.\"}");
-        }
 
-    }
 
     @GetMapping("/get-one/{id}")
     public ResponseEntity<MemberResponseDto> getMember(@PathVariable String id) {
         MemberResponseDto memberResponseDto = memberService.getMember(id);
-        return new ResponseEntity<>(memberResponseDto, HttpStatus.FOUND);
+        return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
+
+    @GetMapping("get/{id}")
+    public ResponseEntity<MemberTotalContributionsDto> memberDetails(@PathVariable String id){
+        MemberTotalContributionsDto dto = new MemberTotalContributionsDto();
+        MemberResponseDto memberResponseDto = memberService.getMember(id);
+        dto.setMember(memberResponseDto);
+        ItemTotalDto savings = contributionService.getMemberTotalSavings(id);
+        CredentialsResponseDto credsDto = credentialsService.getMemberCredentials(id);
+        try{
+            String passportPath = credsDto.getPassportPath();
+            dto.setPassportUrl(passportPath);
+//            System.out.println(passportPath);
+        Long totalSavings = savings.getTotal();
+        ItemTotalDto shares = contributionService.getMemberTotalShares(id);
+        Long totalShares = shares.getTotal();
+        Long totalContribs = null;
+        if(totalSavings == null && totalShares==null){
+            totalContribs=null;
+        }
+        else if(totalSavings!=null && totalShares==null){
+            totalContribs=totalSavings;
+        }
+        else if(totalSavings == null && totalShares!=null){
+            totalContribs=totalShares;
+        }
+        else{
+            totalContribs=totalSavings + totalShares;
+        }
+        dto.setTotalSavings(totalSavings);
+        dto.setTotalShares(totalShares);
+        dto.setTotalContributions(totalContribs);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 
     @GetMapping("/get-all")
     public ResponseEntity<List<MemberResponseDto>> getMembers() {
         List<MemberResponseDto> memberResponseDtos = memberService.getAllMembers();
-        return new ResponseEntity<>(memberResponseDtos, HttpStatus.FOUND);
+        return new ResponseEntity<>(memberResponseDtos, HttpStatus.OK);
     }
 
 

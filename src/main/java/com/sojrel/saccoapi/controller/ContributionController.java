@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins={"http://10.0.2.2:8080"})
 @RestController
 @RequestMapping("api/contribution")
 public class ContributionController {

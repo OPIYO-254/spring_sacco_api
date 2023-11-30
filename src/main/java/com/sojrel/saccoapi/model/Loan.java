@@ -68,11 +68,11 @@ public class Loan {
         DecimalFormat decimalFormat = new DecimalFormat("#");
         String formattedNumber = decimalFormat.format(amount);
         double formatteAmount = Double.parseDouble(formattedNumber);
-        return formatteAmount;
+        return Math.round(formatteAmount/100f)*100;
     }
 
     public enum LoanType {
-        EMERGENCY,NORMAL,BUSINESS,DEVELOPMENT,JIJENGE,ASSET
+        EMERGENCY,NORMAL,BUSINESS,DEVELOPMENT,JIJENGE,ASSET, SCHOOL_FEES,CORPORATE
     }
     public enum LoanStatus {
         REVIEW,APPROVED,REJECTED,COMPLETED

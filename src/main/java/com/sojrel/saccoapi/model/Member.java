@@ -49,6 +49,8 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String phone;
 
+    private String alternativePhone;
+
     @Column(nullable = false,unique = true, updatable = false)
     private String kraPin;
 
@@ -68,18 +70,15 @@ public class Member {
     @OneToMany(mappedBy = "borrower", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Loan> loansTaken;
 
-
     @ManyToMany(mappedBy = "guarantors", fetch = FetchType.LAZY)
     private List<Loan> loansGuaranteed;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<FlashLoan> flashLoans;
 
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "credentials_id")
     private Credentials credentials;
-
 
     public enum Gender{
         MALE,FEMALE

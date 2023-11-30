@@ -15,9 +15,11 @@
 </head>
 <body>
   <div th:insert="~{client_base :: navbar}"></div>
-  <section class="container-fluid upper-section">
-    <div class="title text-light">
-      <h2>Download Files For more Information</h2>
+  <section class="container-fluid downloads-upper-section">
+    <div class="section-cover">
+      <div class="title text-light">
+        <h2>Download Files For more Information</h2>
+      </div>
     </div>
   </section>
   <main>
@@ -35,10 +37,10 @@
       <div class="join-container">
         <h2>Become a Member</h2>
         <p>While everyone is eligible to join Sojrel Sacco, it is only members who meet the requirements stated
-          <a th:href="@{/membership}">here</a> that qualify to become members.</p>
+          <a class="text-decoration-none text-success" th:href="@{/membership}">here</a> that qualify to become members.</p>
         <h3>Ready to join?</h3>
         <p>Download the application form shown fill and send it to
-          <a class="text-decoration-none text-success" href="mailto:sojrelsacco@gmail.com">sojrelsacco@gmail.com</a> together with other required documents as stated below.</p>
+          <a class="text-decoration-none text-success" href="mailto:sojrelsaccomanager@gmail.com">sojrelsaccomanager@gmail.com</a> together with other required documents as stated below.</p>
         <ul>
           <li>A copy of National ID Card/Passport.</li>
           <li>A Passport size photograph.</li>
@@ -83,6 +85,13 @@
     </div>
   </main>
 <div th:insert="~{client_base :: footer}"></div>
-
+  <script>
+    $(document).ready( function () {
+        new DataTable("#downloads-table", {
+            processing:true,
+            pagingType:'simple_numbers'
+        });
+    });
+  </script>
 </body>
 </html>

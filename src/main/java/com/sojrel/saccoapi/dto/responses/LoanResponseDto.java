@@ -25,6 +25,9 @@ public class LoanResponseDto {
     private String loanStatus;
     private List<Repayment> repayments;
     private String memberId;
-    private List<Member> guarantors;
+    private String borrowerFname;
+    private String borrowerMname;
+    private String borrowerLname;
+//    private List<Member> guarantors;
 
 }

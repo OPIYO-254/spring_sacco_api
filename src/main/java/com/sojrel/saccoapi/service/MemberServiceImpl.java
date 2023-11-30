@@ -31,6 +31,7 @@ public class MemberServiceImpl implements MemberService{
         member.setLastName(memberRequestDto.getLastName());
         member.setEmail(memberRequestDto.getEmail());
         member.setPhone(memberRequestDto.getPhone());
+        member.setAlternativePhone(memberRequestDto.getAlternativePhone());
         member.setDob(memberRequestDto.getDob());
         member.setIdNo(memberRequestDto.getIdNo());
         member.setKraPin(memberRequestDto.getKraPin());
@@ -215,22 +216,22 @@ public class MemberServiceImpl implements MemberService{
     }
 
 
-    @Override
-    public void saveMember(MemberRequestDto memberRequestDto) {
-        Member member = new Member();
-        member.setFirstName(memberRequestDto.getFirstName());
-        member.setMidName(memberRequestDto.getMidName());
-        member.setLastName(memberRequestDto.getLastName());
-        member.setEmail(memberRequestDto.getEmail());
-        member.setPhone(memberRequestDto.getPhone());
-        member.setDob(memberRequestDto.getDob());
-        member.setIdNo(memberRequestDto.getIdNo());
-        member.setKraPin(memberRequestDto.getKraPin());
-        member.setGender(Member.Gender.valueOf(memberRequestDto.getGender()));
-        member.setAddress(memberRequestDto.getAddress());
-        member.setResidence(memberRequestDto.getResidence());
-        memberRepository.save(member);
-    }
+//    @Override
+//    public void saveMember(MemberRequestDto memberRequestDto) {
+//        Member member = new Member();
+//        member.setFirstName(memberRequestDto.getFirstName());
+//        member.setMidName(memberRequestDto.getMidName());
+//        member.setLastName(memberRequestDto.getLastName());
+//        member.setEmail(memberRequestDto.getEmail());
+//        member.setPhone(memberRequestDto.getPhone());
+//        member.setDob(memberRequestDto.getDob());
+//        member.setIdNo(memberRequestDto.getIdNo());
+//        member.setKraPin(memberRequestDto.getKraPin());
+//        member.setGender(Member.Gender.valueOf(memberRequestDto.getGender()));
+//        member.setAddress(memberRequestDto.getAddress());
+//        member.setResidence(memberRequestDto.getResidence());
+//        memberRepository.save(member);
+//    }
 
     @Override
     public List<MemberTotalSavingsDto> membersTotalShares() {
@@ -241,6 +242,11 @@ public class MemberServiceImpl implements MemberService{
     public ItemCountDto getMemberCount(){
         ItemCountDto itemCountDto = memberRepository.findMemberCount();
         return itemCountDto;
+    }
+
+    @Override
+    public Member getMemberByEmail(String email) {
+        return memberRepository.findByEmail(email);
     }
 
 //    @Override

@@ -92,7 +92,7 @@
                         <th scope="row row-scoped">Residence:</th>
                         <td th:text="${member.residence}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${idFrontPath} !=null">
                         <th scope="row row-scoped">Id Front Image:</th>
                         <td>
                             <a th:href="${idFrontPath}" download>
@@ -100,7 +100,7 @@
                             </a>
                         </td>
                     </tr>
-                    <tr>
+                    <tr th:if="${idBackPath}!=null">
                         <th scope="row row-scoped">ID Back Image:</th>
                         <td>
                             <a th:href="${idBackPath}" download>
@@ -108,7 +108,7 @@
                             </a>
                         </td>
                     </tr>
-                    <tr>
+                    <tr th:if="${kraCertPath} != null">
                         <th scope="row row-scoped">Kra Certificate:</th>
                         <td>
                             <i class="fa fa-paperclip mx-1" aria-hidden="true"></i><a class="text-decoration-none text-dark" th:href="${kraCertPath}" download th:text="${kraCertName}">
@@ -116,7 +116,7 @@
                             </a>
                         </td>
                     </tr>
-                    <tr>
+                    <tr th:if="${passportPath} != null">
                         <th scope="row row-scoped">Passport:</th>
                         <td>
                             <a th:href="${passportPath}" download>
@@ -268,6 +268,92 @@
     <div th:insert="~{base :: footer}">  </div>
     <script src="main.js" type="text/javascript"></script>
     <script src="jquery.js" type="text/javascript"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            new DataTable("#member-contributions-table", {
+                processing:true,
+                pagingType:'simple_numbers'
+            });
+        });
+
+
+        $(document).ready(function(){
+            new DataTable("#member-guarantee-table", {
+                processing:true,
+                pagingType:'simple_numbers'
+            });
+        });
+
+
+
+
+
+
+        $(document).ready(function (){
+            $("#contrib-form").submit(function(event){
+                event.preventDefault();
+                if($("#id").val()==""){
+                    alert("Enter ID");
+                }
+                else if($("#type").val()==""){
+                    alert("Choose type");
+                }
+                else if($("#amount").val()==""){
+                    alert ("Enter amount");
+                }
+                else{
+                    var originalButtonText = $("#submitBtn").html();
+                    $("#submitBtn").html('<div class="spinner-border" role="status" id="spinner">' +
+                                  '<span class="visually-hidden"></span>' +
+                                  '</div> Please wait...');
+
+                    let formData = {
+                        memberId: $("#id").val(),
+                        contributionType:$("#type").val(),
+                        amount:$("#amount").val()
+                    }
+                    $.ajax({
+                        type : "POST",
+                        contentType : "application/json",
+                        url : "/save-contributions",
+                        data : JSON.stringify(formData),
+                        dataType : 'json',
+                        success: function(result){
+                            if(result.status == "success"){
+                                $("#submitBtn").html(originalButtonText);
+                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;"><p>Contribution added successfully</p></div>');
+                                $("#results").fadeToggle(3000);
+                                $("#contrib-form")[0].reset();
+                            }
+                            else{
+                                $("#submitBtn").html(originalButtonText);
+                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;">Failed</p></div>');
+                                $("#results").fadeToggle(3000);
+                                $("#contrib-form")[0].reset();
+                            }
+
+
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(error)
+                            console.log(status)
+                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;"><p>Error</p></div>');
+                            $("#results").fadeToggle(3000);
+                            $("#sub-form")[0].reset();
+                            $("#submitBtn").html(originalButtonText);
+                            $("#contrib-form")[0].reset();
+                            // Log the error response for inspection
+                            console.log(xhr.responseText);
+                            //close activity indicator here
+                        }
+
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
 

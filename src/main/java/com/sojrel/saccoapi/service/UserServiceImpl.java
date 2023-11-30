@@ -3,6 +3,7 @@ package com.sojrel.saccoapi.service;
 import com.sojrel.saccoapi.dto.requests.LoginRequestDto;
 import com.sojrel.saccoapi.dto.requests.RegistrationRequestDto;
 import com.sojrel.saccoapi.dto.responses.LoginResponseDTO;
+import com.sojrel.saccoapi.exceptions.UserNotFoundException;
 import com.sojrel.saccoapi.model.Role;
 import com.sojrel.saccoapi.model.User;
 import com.sojrel.saccoapi.repository.RoleRepository;
@@ -21,14 +22,15 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
-import java.net.ConnectException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -41,8 +43,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-//    @Autowired
-//    private TokenService tokenService;
+    @Autowired
+    private TokenService tokenService;
     @Autowired
     private JavaMailSender mailSender;
 
@@ -62,7 +64,7 @@ public class UserServiceImpl implements UserService {
         return new ProviderManager(daoProvider);
     }
     @Override
-    public User addUser(RegistrationRequestDto registrationRequestDto, String siteURL) throws MessagingException, UnsupportedEncodingException, ConnectException {
+    public User addUser(RegistrationRequestDto registrationRequestDto, String siteURL) throws MessagingException, UnsupportedEncodingException {
         Role userRole = roleRepository.findByAuthority("USER").get();
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);
@@ -75,47 +77,47 @@ public class UserServiceImpl implements UserService {
         // generate verification code to use in user activation
         String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
+        //System.out.println(randomCode);
 
         // save user
         userRepository.save(user);
-
         // send verification email to user
-//        sendVerificationEmail(user, siteURL);
+        sendVerificationEmail(user, siteURL);
 //        System.out.println("sending email...");
-
         return user;
     }
 
-//    public LoginResponseDTO loginUser(LoginRequestDto dto){
-//
-//        try{
-//            System.out.println("logging..");
-//            Authentication auth = authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword())
-//            );
-//            String token = tokenService.generateJwt(auth);
-//            System.out.println(token);
-//            User user = userRepository.findByEmail(dto.getEmail());
-//            System.out.println("This is the user "+user.getName());
-//            return new LoginResponseDTO(user, token);
+    public LoginResponseDTO loginUser(LoginRequestDto dto){
 
-//        } catch(AuthenticationException e){
-//            e.printStackTrace();
-//            return new LoginResponseDTO(null, "");
-//        }
-//    }
+        try{
+//            System.out.println("logging..");
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword())
+            );
+            String token = tokenService.generateJwt(auth);
+//            System.out.println(token);
+            User user = userRepository.findByEmail(dto.getEmail());
+//            System.out.println("This is the user "+user.getName());
+            return new LoginResponseDTO(user, token);
+
+        } catch(AuthenticationException e){
+            e.printStackTrace();
+            return new LoginResponseDTO(null, "");
+        }
+    }
 
 
     private void sendVerificationEmail(User user, String siteURL) throws MessagingException, UnsupportedEncodingException {
         String toAddress = user.getEmail();
         String fromAddress = "sojrelsacco@gmail.com";
         String senderName = "Sojrel Sacco";
-        String subject = "Account verification";
-        String content = "Dear [[name]],<br>"
-                            + "Please click the link below to verify your registration:<br>"
-                            + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-                            + "Thank you,<br>"
-                            + "Sojrel Sacco Ltd";
+        String subject = "Account Verification and Activation";
+        String content = "Hello [[name]],<br>"
+                            +"You are receiving this email because you tried to create account with us. "
+                            +"Please click the button below to verify your registration:<br>"
+                            + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3><br><br>"
+                            + "Thank you.<br>"
+                            + "Sojrel Sacco Management.";
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -134,11 +136,57 @@ public class UserServiceImpl implements UserService {
         mailSender.send(message);
     }
 
+    public void setResetPasswordToken(String email, String token) throws UserNotFoundException {
+        User user = userRepository.findByEmail(email);
+        if(user != null){
+            user.setResetPasswordToken(token);
+            userRepository.save(user);
+        }
+        else{
+            throw new UserNotFoundException("Unable to find user with email "+email);
+        }
+    }
+    @Override
+    public User getUserByToken(String token) {
+        return userRepository.findByResetPasswordToken(token);
+    }
+
+    public void resetPassword(User user, String newPassword){
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setResetPasswordToken(null);
+        userRepository.save(user);
+    }
+
+    public void sendResetEmail(String recipientEmail, String link) throws MessagingException, UnsupportedEncodingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom("sojrelsacco@gmail.com", "Sojrel Sacco");
+        helper.setTo(recipientEmail);
+
+        String subject = "Here's the link to reset your password";
+
+        String content = "<p>Hello,</p>"
+                + "<p>You have requested to reset your password.</p>"
+                + "<p>Click the link below to change your password:</p>"
+                + "<h3><a href=\"" + link + "\">Change my password</a></h3>"
+                + "<br>"
+                + "<p>Ignore this email if you do remember your password, "
+                + "or you have not made the request.</p>";
+
+        helper.setSubject(subject);
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+    }
+
+
     public boolean verifyUser(String verificationCode) {
         User user = userRepository.findByVerificationCode(verificationCode);
-        System.out.println(user.getName());
+//        System.out.println(user.getName());
         if (user == null || user.isEnabled()) {
             return false;
+
         } else {
             user.setVerificationCode(null);
             user.setEnabled(true);
@@ -146,7 +194,6 @@ public class UserServiceImpl implements UserService {
             return true;
         }
     }
-
 
 
 }

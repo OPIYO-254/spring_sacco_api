@@ -67,7 +67,7 @@
                                 <th>Guarantor ID.</th>
                                 <th>Guarantor Name</th>
                                 <th>Amount Guaranteed</th>
-                                <th>Oustanding</th>
+<!--                                <th>Oustanding</th>-->
                                 <th>Phone Number</th>
                                 <th class="hide-md">Email</th>
                             </thead>
@@ -76,7 +76,7 @@
                                 <td data-label="Guarantor ID:" th:text="${guarantor.memberId}"></td>
                                 <td data-label="Name:" th:text="${guarantor.firstName}+' '+${guarantor.midName}"></td>
                                 <td data-label="Amount:" th:text="${guarantor.amount != null ? 'KES ' + guarantor.amount : 'Ksh 0'}"></td>
-                                <td data-label="Outstanding:" th:text="'KES '+${guarantor.amount}/${loan.principal}*(${loan.amount}-${repaid})"></td>
+<!--                                <td data-label="Outstanding:" th:text="'KES '+${outstanding})"></td>-->
                                 <td data-label="Phone:" th:text="${guarantor.phone}"></td>
                                 <td data-label="Email:" th:text="${guarantor.email}" class="hide-md"></td>
                             </tr>
@@ -117,7 +117,7 @@
                                             <input hidden id="loanId" th:value="${loan.id}">
                                             <label for="amount" class="form-label">Enter Amount:</label>
                                             <input type="number" class="form-control" id="amount">
-                                            <span id="msg"></span>
+                                            <span id="amount-msg"></span>
                                         </div>
                                         <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
                                         <button type="submit" id="submitBtn" class="btn">Save</button>
@@ -160,5 +160,63 @@
     </script>
     <script src="main.js" type="text/javascript"></script>
     <script src="jquery.js" type="text/javascript"></script>
+    <script>
+
+        $(document).ready(function(){
+            var table = $("#repayments-table").DataTable({});
+        });
+
+        $(document).ready(function () {
+            $("#repayment-form").submit(function (event) {
+                event.preventDefault();
+                if($("#amount").val()==""){
+                    $("#amount-msg").html('<p style="font-size:12px; color:red;">Enter first name</p>');
+                }
+                else{
+                   var originalButtonText = $("#submitBtn").html();
+                   $("#submitBtn").html('<div class="spinner-border" role="status" id="spinner">' +
+                                      '<span class="visually-hidden"></span>' +
+                                      '</div> Wait...');
+
+                   var formData={
+                       loanId:$("#loanId").val(),
+                       amount:$("#amount").val()
+                   }
+                   $.ajax({
+                        contentType : "application/json",
+                        dataType : 'json',
+                        type: "POST",
+                        url: "/repay-loan",
+                        data: JSON.stringify(formData),
+                        success: function (response) {
+                            if(response.status=='success'){
+                                $("#submitBtn").html(originalButtonText);
+                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;margin;0;"><p>'+response.message+'</p></div>');
+                                $("#results").fadeToggle(3000);
+                                $("#repayment-form")[0].reset();
+                            }
+                            else{
+                                $("#submitBtn").html(originalButtonText);
+                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>'+response.message+'</p></div>');
+                                $("#results").fadeToggle(3000);
+                                $("#repayment-form")[0].reset();
+
+                            }
+                        },
+                        error: function (error) {
+                            console.log("Error:", error);
+                            $("#submitBtn").html(originalButtonText);
+                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>Error!</p></div>');
+                            $("#results").fadeToggle(3000);
+                            $("#repayment-form")[0].reset();
+                        }
+
+                   });
+                }
+            });
+         });
+
+
+    </script>
 </body>
 </html>

@@ -20,21 +20,38 @@
     <div class="row">
         <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-3 col-lg-2 p-0" id="sidebar-container"></div>
         <div class="col-md-10 main-section">
-            <div class="page-title d-flex justify-content-center align-items-center p-3 mt-3 mb-2 mx-1">
-                <span class="text-light">Members Contributions</span>
+            <div class="page-title">
+                <span>Members Contributions</span>
             </div>
-            <div class="row mb-3 card-holder">
+            <div class="mb-3 card-holder">
                 <div class="col text-light rounded-2 contribution-card">
-                    <span>TOTAL</span>
-                    <span th:text="${total_contributions}!=null?${'KES '+total_contributions}:'KES 0.00'"></span>
+                    <div class="col d-flex contribution-detail">
+                        <span>TOTAL</span>
+                        <span th:text="${total_contributions}!=null?${'KES '+total_contributions}:'KES 0.00'"></span>
+                    </div>
+                    <div class="text-light">
+                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                    </div>
                 </div>
                 <div class="col contribution-card text-light rounded-2">
-                    <span>SAVINGS</span>
-                    <span th:text="${savings}!=null?${'KES '+savings}:'KES 0.00'"></span>
+                    <div class="col d-flex contribution-detail">
+                        <span>SAVINGS</span>
+                        <span th:text="${savings}!=null?${'KES '+savings}:'KES 0.00'"></span>
+                    </div>
+                    <div class="text-light">
+                        <i class="fa fa-database" aria-hidden="true"></i>
+                    </div>
+
                 </div>
                 <div class="col contribution-card text-light rounded-2">
-                    <span>SHARES</span>
-                    <span th:text="${shares}!=null?${'KES '+shares}: 'KES 0.00'"></span>
+                    <div class="col d-flex contribution-detail">
+                        <span>SHARES</span>
+                        <span th:text="${shares}!=null?${'KES '+shares}: 'KES 0.00'"></span>
+                    </div>
+                    <div class="text-light">
+                        <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                    </div>
+
                 </div>
             </div>
             <div class="container mt-4 contribution-table-area">
@@ -66,5 +83,13 @@
 </div>
 <div th:insert="~{base :: footer}">  </div>
 <script src="main.js" type="text/javascript"></script>
+<script>
+    $(document).ready( function () {
+        new DataTable("#contributions-table", {
+            processing:true,
+            pagingType:'simple_numbers'
+        });
+    });
+</script>
 </body>
 </html>

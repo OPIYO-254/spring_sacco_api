@@ -11,7 +11,8 @@ import java.util.List;
 @Service
 public interface ContactService {
     public ContactResponseDto addContact(ContactRequestDto contactRequestDto);
-    public List<ContactResponseDto> getAllContacts();
+    public List<ContactResponseDto> getUnreadMessages();
+    public List<ContactResponseDto> getAllReadMessages();
 
     public Contact getContactById(Long id);
 

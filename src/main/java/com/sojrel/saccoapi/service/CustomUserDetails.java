@@ -13,7 +13,6 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
     }
 
-
     public String getFullname() {
         return user.getName();
     }

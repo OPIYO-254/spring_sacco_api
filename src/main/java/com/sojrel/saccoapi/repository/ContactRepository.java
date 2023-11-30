@@ -15,8 +15,10 @@ import java.util.List;
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long> {
     @Query("SELECT new com.sojrel.saccoapi.model.Contact(c.id, c.contactDate, c.firstName, " +
-            "c.lastName, c.email, c.phone, c.message, c.isRead) FROM Contact c WHERE c.isRead = FALSE")
-    List<Contact> getUnreadMessages();
+            "c.lastName, c.email, c.phone, c.message, c.isRead) FROM Contact c WHERE c.isRead = :isRead ORDER BY c.contactDate DESC")
+    List<Contact> getAllMessages(@Param("isRead") boolean isRead);
+
+    List<Contact> findByIsRead(boolean isRead);
 
     @Query("SELECT new com.sojrel.saccoapi.dto.responses.ItemCountDto(COUNT(*)) FROM Contact c WHERE c.isRead = FALSE")
     ItemCountDto countUnreadMessages();

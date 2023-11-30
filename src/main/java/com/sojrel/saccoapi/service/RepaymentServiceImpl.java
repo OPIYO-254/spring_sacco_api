@@ -40,6 +40,12 @@ public class RepaymentServiceImpl implements RepaymentService{
     }
 
     @Override
+    public List<RepaymentResponseDto> getLoanRepayments(Long loanId){
+        Loan loan = loanService.getLoanById(loanId);
+        List<Repayment> repayments = repaymentRepository.findByLoan(loan);
+        return Mapper.repaymentToRepaymentResponseDtos(repayments);
+    }
+    @Override
     public RepaymentResponseDto getRepayment(Long repaymentId) {
         Repayment repayment = getRepaymentById(repaymentId);
         return Mapper.repaymentToRepaymentResponseDto(repayment);

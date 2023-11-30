@@ -37,6 +37,9 @@ public class User {
     @JsonIgnore
     private String verificationCode;
 
+    @JsonIgnore
+    private String resetPasswordToken;
+
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
             name="user_role",

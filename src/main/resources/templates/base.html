@@ -12,7 +12,7 @@
     <script src="main.js" type="text/javascript"></script>
     <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
 </head>
-<body>
+<body on_load="loadMessages()">
 <!--    navigation bar-->
     <nav th:fragment="navbar" class="navbar navbar-expand-lg text-light">
           <div class="container-fluid">
@@ -20,24 +20,52 @@
                   <img class="img bg-light" src="images/logo.png" alt="Logo" height="36px" style="border-radius: 18px;">
                   <a class="text-light px-2" th:href="@{/home}">Sojrel Sacco</a>
               </div>
+              <div class="collapse navbar-collapse">
+                  <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="fa fa-user-circle-o mx-2" aria-hidden="true"></i>My Profile
+                          </a>
+                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<!--                              <li class="list-group-item p-0">-->
+<!--                                  <div class="container-fluid sidebar-item d-flex mb-1">-->
+<!--                                      <a href="#" class="container-fluid text-decoration-none text-light">-->
+<!--                                          <div class="click-container col d-flex">-->
+<!--                                              <div class="card-icon pt-2">-->
+<!--                                                  <i class="fa fa-user" aria-hidden="true"></i>-->
+<!--                                              </div>-->
+<!--                                              <div class="card-title px-2 pt-2">-->
+<!--                                                  <p>My Profile</p>-->
+<!--                                              </div>-->
+<!--                                          </div>-->
+<!--                                      </a>-->
+<!--                                  </div>-->
+<!--                              </li>-->
+                              <li class="list-group-item p-0 logout_Btn">
+                                  <div class="container-fluid sidebar-item d-flex">
+                                      <a th:href="@{/logout}" class="container-fluid text-decoration-none text-light">
+                                          <div class="click-container col d-flex">
+                                              <div class="card-icon pt-2">
+                                                  <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                              </div>
+                                              <div class="card-title px-2 pt-2">
+                                                  <p>Logout</p>
+                                              </div>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </li>
+
+                              <!--                            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                          </ul>
+                      </li>
+                  </ul>
+              </div>
               <div id="menu-toggler" class="menu-toggler" onclick="showSideBar()">
                   <span class="menu-item"></span>
                   <span class="menu-item"></span>
                   <span class="menu-item"></span>
               </div>
-<!--              <button class="navbar-toggler" onclick="showSideBar()" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--        &lt;!&ndash;          <span class="navbar-toggler-icon bg-light"></span>&ndash;&gt;-->
-<!--                  <span class="menu-item"></span>-->
-<!--                  <span class="menu-item"></span>-->
-<!--                  <span class="menu-item"></span>-->
-<!--              </button>-->
-    <!--        <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-    <!--          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">-->
-    <!--            <li class="nav-item">-->
-    <!--              <a class="nav-link text-light" href="#">Logout</a>-->
-    <!--            </li>-->
-    <!--          </ul>-->
-    <!--        </div>-->
           </div>
     </nav>
 <!--    Sidebar-->
@@ -108,32 +136,21 @@
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
                             </div>
                             <div class="card-title px-2 pt-3">
-                                <p>Messages<sup>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                      th:text="${unread} != null ? ${unread} : 0">
-                                <span class="visually-hidden">unread messages</span>
-                              </span>
-                            </sup></p>
+                                <p>Messages
+                                    <sup th:if="${unread != 0}">
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                              id="message-count" th:text="${unread}">
+                                            <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                    </sup>
+                                </p>
                             </div>
                         </div>
                     </a>
                 </div>
             </li>
 
-            <li class="list-group-item p-0" style="position:absolute; bottom:2px;">
-                <div class="container-fluid sidebar-item d-flex">
-                    <a th:href="@{/logout}" class="container-fluid text-decoration-none text-light">
-                        <div class="click-container col d-flex">
-                            <div class="card-icon pt-3">
-                                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                            </div>
-                            <div class="card-title px-2 pt-3">
-                                <p>Logout</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </li>
+
         </ul>
     </div>
 <!--    footer-->
@@ -142,6 +159,17 @@
         <p>Copyright <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span> &copy; Sojrel Sacco Ltd. All rights reserved</p>
     </div>
 
-
+<script>
+    function loadMessages(){
+        var unreadMessages = [[${unread}]]
+        const messageCount = document.getElementById("message-count");
+        console.log(unreadMessages);
+        if (unreadMessages > 0) {
+          messageCount.style.display = 'block';
+        } else {
+          messageCount.style.display = 'none';
+        }
+    }
+</script>
 </body>
 </html>
