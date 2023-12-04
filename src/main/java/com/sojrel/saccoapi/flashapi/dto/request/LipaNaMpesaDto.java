@@ -17,6 +17,6 @@ public class LipaNaMpesaDto {
     private Long PartyB;//":"174379",
     private Long PhoneNumber;//":"254708374149",
     private String CallBackURL;//": "https://mydomain.com/pat",the url that will be used to get the response body on payment details and
-    private String AccountReference;//":"Test",
+    private String AccountReference;//company name
     private String TransactionDesc;//flashloanId
 }

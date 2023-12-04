@@ -22,9 +22,15 @@ public class FlashRepayment {
     private FlashLoan loan;
     @Column(nullable = false)
     private double amount;
-    private String mpesaReceiptNumber;
+//    private String mpesaReceiptNumber;
     private LocalDateTime transactionDate;
-    private Long phoneNumber;
+//    private Long phoneNumber;
 
+    @PrePersist
+    public void prePersist(){
+        if(transactionDate==null){
+            transactionDate = LocalDateTime.now();
+        }
+    }
 
 }

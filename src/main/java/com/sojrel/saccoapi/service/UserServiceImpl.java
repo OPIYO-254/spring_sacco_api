@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
 //    @Bean
-    @Autowired
+//    @Autowired
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }

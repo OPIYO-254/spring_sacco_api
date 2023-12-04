@@ -25,6 +25,7 @@ public class Mapper {
         memberResponseDto.setContributions(member.getContributions());
         memberResponseDto.setLoansTaken(member.getLoansTaken());
         memberResponseDto.setLoansGuaranteed(member.getLoansGuaranteed());
+        memberResponseDto.setFlashLoans(member.getFlashLoans());
         return memberResponseDto;
     }
 

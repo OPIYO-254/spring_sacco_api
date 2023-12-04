@@ -1,5 +1,6 @@
 package com.sojrel.saccoapi.model;
 
+//import com.sojrel.saccoapi.flashapi.model.FlashLoan;
 import com.sojrel.saccoapi.flashapi.model.FlashLoan;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -107,7 +108,7 @@ public class Member {
         loansGuaranteed.remove(loan);
     }
 
-    public void addCredentials(Credentials credentials){this.setCredentials(credentials);}
+    public void addCredentials(Credentials credentials){this.addCredentials(credentials);}
 
 
     @PrePersist

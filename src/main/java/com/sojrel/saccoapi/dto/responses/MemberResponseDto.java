@@ -1,5 +1,6 @@
 package com.sojrel.saccoapi.dto.responses;
 
+import com.sojrel.saccoapi.flashapi.model.FlashLoan;
 import com.sojrel.saccoapi.model.Contribution;
 import com.sojrel.saccoapi.model.Loan;
 import lombok.AllArgsConstructor;
@@ -30,4 +31,5 @@ public class MemberResponseDto {
     private List<Contribution> contributions;
     private List<Loan> loansTaken;
     private List<Loan> loansGuaranteed;
+    private List<FlashLoan> flashLoans;
 }

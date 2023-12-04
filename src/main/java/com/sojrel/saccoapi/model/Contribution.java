@@ -21,7 +21,7 @@ public class Contribution {
     private Long id;
 
     @Column(updatable = false)
-    private LocalDateTime contributionDate;
+    private LocalDateTime contributionDate=LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -36,14 +36,14 @@ public class Contribution {
     private Member member;
 
     public enum ContributionType{
-        SHARES, SAVINGS, EMERGENCY_SAVINGS
+        SHARES, SAVINGS
     }
 
 
-    @PrePersist
-    public void prePersist(){
-        if(contributionDate == null){
-            contributionDate = LocalDateTime.now();
-        }
-    }
+//    @PrePersist
+//    public void prePersist(){
+//        if(contributionDate == null){
+//            contributionDate = ;
+//        }
+//    }
 }

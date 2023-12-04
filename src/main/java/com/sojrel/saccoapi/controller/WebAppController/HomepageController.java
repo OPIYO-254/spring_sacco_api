@@ -8,10 +8,8 @@ import com.sojrel.saccoapi.repository.CredentialsRepository;
 import com.sojrel.saccoapi.repository.FileUploadRepository;
 import com.sojrel.saccoapi.repository.MemberRepository;
 import com.sojrel.saccoapi.service.*;
-import com.sojrel.saccoapi.utils.EmailUtility;
 import com.sojrel.saccoapi.utils.FileUploader;
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +20,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -222,7 +216,7 @@ public class HomepageController {
         Long totalSavings = savings.getTotal();
         ItemTotalDto shares = contributionService.getMemberTotalShares(id);
         Long totalShares = shares.getTotal();
-        Long totalContribs = null;
+        Long totalContribs;
         if(totalSavings == null && totalShares==null){totalContribs=null;}
         else if(totalSavings!=null && totalShares==null){totalContribs=totalSavings;}
         else if(totalSavings == null && totalShares!=null){totalContribs=totalShares;}
@@ -373,7 +367,7 @@ public class HomepageController {
         Long total = item.getTotal();
         modelAndView.addObject("total", total);
         List<RepaymentResponseDto> repayments = loanService.getLoanRepayments(id);
-        modelAndView.addObject("repayments", repayments);;
+        modelAndView.addObject("repayments", repayments);
         modelAndView.addObject("repaid", totalRepaid);
         return modelAndView;
 
@@ -439,7 +433,7 @@ public class HomepageController {
         Long total = item.getTotal();
         modelAndView.addObject("total", total);
         List<RepaymentResponseDto> repayments = loanService.getLoanRepayments(id);
-        modelAndView.addObject("repayments", repayments);;
+        modelAndView.addObject("repayments", repayments);
         modelAndView.addObject("repaid", totalRepaid);
         return modelAndView;
     }
@@ -465,9 +459,9 @@ public class HomepageController {
 
     @GetMapping("/revenue")
     public ModelAndView getRevenue(){
-        LocalDateTime endDate = LocalDateTime.now();
-        LocalDateTime startDate = endDate.minusYears(1);
-        LocalDateTime startMonth = endDate.minusMonths(1);
+//        LocalDateTime endDate = LocalDateTime.now();
+//        LocalDateTime startDate = endDate.minusYears(1);
+//        LocalDateTime startMonth = endDate.minusMonths(1);
         ModelAndView modelAndView = new ModelAndView("/revenue");
         List<LoanResponseDto> loanResponseDtos = loanService.getLoans();
         double tDisbursed = loanResponseDtos.stream()
@@ -504,8 +498,8 @@ public class HomepageController {
             modelAndView.addObject("totalPerCategiry", totalPerCategory);
 
         }
-        catch (IllegalArgumentException e){
-            new IllegalArgumentException("null values");
+        catch (Exception e){
+            e.printStackTrace();
         }
         return modelAndView;
     }
