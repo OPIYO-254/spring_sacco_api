@@ -28,7 +28,7 @@ public class FlashRepayment {
 
     @PrePersist
     public void prePersist(){
-        if(transactionDate==null){
+        if(transactionDate == null){
             transactionDate = LocalDateTime.now();
         }
     }

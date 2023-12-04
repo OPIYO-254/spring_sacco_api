@@ -14,7 +14,17 @@ body{
 .card-img-top{
     height: 10rem;
 }
-
+.message{
+    background-color: rgba(9, 170, 92, 0.3);
+    padding: 12px;
+    margin:8px;
+    border: solid 1px rgba(9, 170, 92, 1);
+    border-radius: 6px;
+}
+.remember-class{
+    display: flex;
+    justify-content: space-between;
+}
 .navbar{
     background-color:#4C4E52;
 }
@@ -587,6 +597,7 @@ body{
     margin: 12px;
     text-align:center;
 }
+
 .loan-item p{
     font-size: 18px;
     font-weight:bold;
@@ -1609,9 +1620,9 @@ body{
         display:none;
    }
    .collapse:not(.show) {
-          display: block;
+          /*display: block;*/
           position: absolute;
-          right: 10%;
+          left: 2px;
       }
 }
 
@@ -1810,9 +1821,9 @@ body{
         display:none;
    }
    .collapse:not(.show) {
-       display: block;
+       /*display: block;*/
        position: absolute;
-       right: 10%;
+       left: 2px;
    }
 
 }

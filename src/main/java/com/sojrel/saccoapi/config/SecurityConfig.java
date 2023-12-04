@@ -94,7 +94,7 @@ public class SecurityConfig {
                         "/","/create-account","/api/auth/**","/login","/about-us","/membership","/services",
                         "/contact-us","/downloads","/forgot-password","/reset-password","/files/show/**").permitAll()
                         .anyRequest().authenticated())
-
+                .rememberMe(remember->remember.useSecureCookie(true))
                 .formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
                         .successHandler(customSuccessHandler).permitAll())
 

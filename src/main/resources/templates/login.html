@@ -32,7 +32,10 @@
       <div class="message d-flex justify-content-center text-success" th:if="${param.logout}">
         Logout successful
       </div>
-      <form id="signin-form" method="post" th:action="@{/login}">
+      <div id="spinner" class="d-none d-flex justify-content-center">
+        <span class="spinner-border text-success spinner-border-sm" role="status" aria-hidden="true"></span>
+      </div>
+      <form id="signin-form" method="post" th:action="@{/login}" onsubmit="showSpinner()">
         <div class="m-2">
           <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
@@ -41,11 +44,17 @@
           <div class="mb-3">
             <label for="pass" class="form-label">Password:</label>
             <input type="password" class="form-control" id="pass"  name="password" required>
-            <input type="checkbox" onclick="showPwd()"> show password
+<!--            <input type="checkbox" onclick="showPwd()"> Show password-->
           </div>
 
-          <div class="mb-3">
-            <a class="text-decoration-none text-success fw-bold" th:href="@{/forgot-password}">Forgot password?</a>
+          <div class="mb-3 remember-class">
+            <div>
+              <input type="checkbox" name="remember-me" id="remember-me"> Remember me
+            </div>
+            <div>
+              <a class="text-decoration-none text-success" th:href="@{/forgot-password}">Forgot password?</a>
+            </div>
+
           </div>
           <input type="submit" class="btn submitBtn mb-4" id="submitBtn" value="Login">
 
@@ -55,6 +64,7 @@
           </div>
         </div>
       </form>
+
     </div>
   </div>
 </div>
@@ -73,6 +83,10 @@
     x.type = "password";
   }
 }
+ function showSpinner() {
+    document.getElementById('spinner').classList.remove('d-none'); // Show the spinner
+}
 </script>
+
 </body>
 </html>
