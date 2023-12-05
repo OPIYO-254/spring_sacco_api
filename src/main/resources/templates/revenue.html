@@ -124,7 +124,8 @@
 <script type="text/javascript" th:inline="javascript">
     var chartData = [[${totalMonthly}]];
     //console.log(chartData);
-    Highcharts.chart('chart-area', {
+    if(chartData != null){
+        Highcharts.chart('chart-area', {
         chart: {
             type: 'column'
         },
@@ -152,18 +153,20 @@
             }),
             color: '#84d4ad'
         }]
-    });
+        });
+    }
+
 
     //pie chart for loan categories
     var categoryData = [[${totalPerCategory}]];
-    var categories = categoryData.map(function(item) {
-        return item.key;
-    });
-
-    var dataValues = categoryData.map(function(item) {
-        return { name: item.key, y: item.value };
-    });
-    Highcharts.chart('loan-categories', {
+    if(categoryData!=null){
+        var categories = categoryData.map(function(item) {
+            return item.key;
+        });
+        var dataValues = categoryData.map(function(item) {
+            return { name: item.key, y: item.value };
+        });
+        Highcharts.chart('loan-categories', {
         chart: {
             type: 'pie'
         },
@@ -184,44 +187,50 @@
                 }
             }
         }]
-    });
-
+        });
+    }
 
     //loans in and out
-    var inOutData = [
-        { key: 'Disbursements', value: (parseFloat([[${totalAmount}]])-parseFloat([[${repaid}]])) },
-        { key: 'Collections', value: parseFloat([[${repaid}]]) },
-    ]
-    console.log([[${repaid}]]);
-    var categories = inOutData.map(function(item) {
-        return item.key;
-    });
+    var tAmount = [[${totalAmount}]];
+    var tRepaid = [[${repaid}]];
+    if(tAmount!=0.00 && tRepaid!=0.00){
+        var inOutData = [
+            { key: 'Disbursements', value: (parseFloat(tAmount)-parseFloat(tRepaid)) },
+            { key: 'Collections', value: parseFloat([[${repaid}]]) },
+        ]
+        console.log([[${repaid}]]);
+        var categories = inOutData.map(function(item) {
+            return item.key;
+        });
 
-    var dataValues = inOutData.map(function(item) {
-        return { name: item.key, y: item.value };
-    });
-    Highcharts.chart('in-out-chart', {
-        chart: {
-            type: 'pie'
-        },
-        title: {
-            text: 'Disbursement Vs Collections',
-            style: {
-                fontSize: '14px' // Set the font size to 12px
-            }
-        },
-        series: [{
-            name: 'Values',
-            data: dataValues,
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f}%',
+        var dataValues = inOutData.map(function(item) {
+            return { name: item.key, y: item.value };
+        });
+        Highcharts.chart('in-out-chart', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Disbursement Vs Collections',
                 style: {
-                    fontSize: '10px'
+                    fontSize: '14px' // Set the font size to 12px
                 }
-            }
-        }]
-    });
+            },
+            series: [{
+                name: 'Values',
+                data: dataValues,
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f}%',
+                    style: {
+                        fontSize: '10px'
+                    }
+                }
+            }]
+        });
+    }
+
+
 
 
 </script>
