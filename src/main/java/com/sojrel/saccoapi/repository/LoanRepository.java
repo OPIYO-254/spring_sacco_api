@@ -51,7 +51,7 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
      * get disbursements done for a specified period.
      * @return
      */
-    @Query(value = "SELECT SUM(principal) AS total FROM Loan WHERE loan_status = 'COMPLETED' OR loan_status = 'APPROVED' " +
+    @Query(value = "SELECT SUM(principal) AS total FROM loan WHERE loan_status = 'COMPLETED' OR loan_status = 'APPROVED' " +
             "AND application_date LIKE ?1", nativeQuery = true)
     Long getTotalDisbursement(String period);
 
@@ -60,11 +60,11 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
      * @return
      */
     @Query(value = "SELECT DATE_FORMAT(application_date, '%Y-%m') AS month, SUM(principal) AS total_principal\n" +
-            "FROM Loan WHERE application_date BETWEEN ?1 AND ?2 GROUP BY month;", nativeQuery = true)
+            "FROM loan WHERE application_date BETWEEN ?1 AND ?2 GROUP BY month;", nativeQuery = true)
     List<Object[]> getTotalMonthlyDisbursements(String start, String end);
 
 
-    @Query(value = "SELECT loan_type, SUM(principal) FROM Loan group by loan_type", nativeQuery = true)
+    @Query(value = "SELECT loan_type, SUM(principal) FROM loan group by loan_type", nativeQuery = true)
     List<Object[]> getTotalPerLoanCategory();
 
 
