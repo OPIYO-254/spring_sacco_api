@@ -621,16 +621,11 @@ public class HomepageController {
 
     @GetMapping("/files/show/{fileName}")
     ResponseEntity<Resource> downloadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
-
         Resource resource = storageService.loadAsResource(fileName);
-
 //        MediaType contentType = MediaType.APPLICATION_PDF;
-
         String mimeType;
-
         try {
             mimeType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-
         } catch (IOException e) {
             mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
         }
