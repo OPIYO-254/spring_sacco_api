@@ -36,7 +36,9 @@
                     <div class="item">
                         <div class="col">
                             <span class="card-text text-light m-0">Total Disbursed</span>
-                            <span class="card-text text-light m-0" th:text="'KES ' +${totalDisbursed}"></span>
+<!--                            <span class="card-text text-light m-0" th:text="'KES ' +${totalDisbursed}"></span>-->
+                            <span class="card-text text-light m-0" th:if="${totalDisbursed != null}" th:text="'KES ' + ${totalDisbursed}"></span>
+
                         </div>
                         <div class="item-icon">
                             <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -45,7 +47,7 @@
                     <div class="item">
                         <div class="col">
                             <span class="card-text text-light m-0">Total Amount</span>
-                            <span class="card-text text-light m-0" th:text="'KES '+${totalAmount}"></span>
+                            <span class="card-text text-light m-0" th:if="${totalAmount != null}" th:text="'KES '+${totalAmount}"></span>
                         </div>
                         <div class="item-icon">
                             <i class="fa fa-calculator" aria-hidden="true"></i>
