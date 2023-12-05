@@ -68,7 +68,7 @@ public class SecurityConfig {
         http.csrf(c -> c.disable())
             .securityMatcher("/api/**")
             .authorizeHttpRequests(auth -> {
-                auth.requestMatchers("/api/auth/**").permitAll();
+                auth.requestMatchers("/api/auth/**", "/file/**").permitAll();
                 auth.anyRequest().authenticated();
             });
         http.oauth2ResourceServer(oauth2ResourceServer ->
@@ -89,12 +89,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/admin-page").hasAuthority("ADMIN")
                         .requestMatchers("/home").hasAuthority("MANAGER")
-                        .requestMatchers("/file/**","/styles.css","/main.js","/jquery.js",
+                        .requestMatchers("/styles.css","/main.js","/jquery.js",
                         "/verify","/verify-success","/verify-fail","/images/**","/favicon.ico",
                         "/","/create-account","/api/auth/**","/login","/about-us","/membership","/services",
-                        "/contact-us","/downloads","/forgot-password","/reset-password").permitAll()
+                        "/contact-us","/downloads","/forgot-password","/reset-password","/file/**","/download/**").permitAll()
                         .anyRequest().authenticated())
+
                 .rememberMe(remember->remember.useSecureCookie(true))
+
                 .formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
                         .successHandler(customSuccessHandler).permitAll())
 

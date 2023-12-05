@@ -17,11 +17,9 @@ public interface StorageService {
 
     public Map<String, String> storeFile(MultipartFile file);
     Stream<Path> loadAll();
-
     Path load(String filename);
-
     Resource loadAsResource(String filename);
-
+    Resource loadAsPublicResource(String filename);
     void deleteAll();
 
 }

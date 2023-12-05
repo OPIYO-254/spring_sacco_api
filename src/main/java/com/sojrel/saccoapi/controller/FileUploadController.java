@@ -61,7 +61,7 @@ public class FileUploadController {
 
     @GetMapping("/download/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> saveFile(@PathVariable String filename) {
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
 
         Resource file = storageService.loadAsResource(filename);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
@@ -72,9 +72,7 @@ public class FileUploadController {
     ResponseEntity<Resource> downLoadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
 
         Resource resource = storageService.loadAsResource(fileName);
-
 //        MediaType contentType = MediaType.APPLICATION_PDF;
-
         String mimeType;
 
         try {
@@ -93,7 +91,7 @@ public class FileUploadController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<?> handleFileUpload(@RequestParam("memberId") String memberId,
+    public ResponseEntity<?> handleMultipleFileUpload(@RequestParam("memberId") String memberId,
                                                                    @RequestParam("idFrontPath") MultipartFile idFrontPath,
                                                                    @RequestParam("idBackPath") MultipartFile idBackPath,
                                                                    @RequestParam("kraCertPath") MultipartFile kraCertPath,
@@ -121,16 +119,16 @@ public class FileUploadController {
 
     }
 
-    @PostMapping("/upload-file")
-    public ResponseEntity<?> handleFileUpload(@RequestParam("fileDescription") String fileDescription, @RequestParam("file") MultipartFile file){
-        Map<String, String> fileDetails = storageService.storeFile(file);
-        FileUploads fileUploads = new FileUploads();
-        fileUploads.setFileDescription(fileDescription);
-        fileUploads.setFileName(fileDetails.get("fileName"));
-        fileUploads.setFilePath(fileDetails.get("url"));
-        fileUploadRepository.save(fileUploads);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PostMapping("/upload-file")
+//    public ResponseEntity<?> handleFileUpload(@RequestParam("fileDescription") String fileDescription, @RequestParam("file") MultipartFile file){
+//        Map<String, String> fileDetails = storageService.storeFile(file);
+//        FileUploads fileUploads = new FileUploads();
+//        fileUploads.setFileDescription(fileDescription);
+//        fileUploads.setFileName(fileDetails.get("fileName"));
+//        fileUploads.setFilePath(fileDetails.get("url"));
+//        fileUploadRepository.save(fileUploads);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {

@@ -621,7 +621,7 @@ public class HomepageController {
 
     @GetMapping("/file/{fileName}")
     ResponseEntity<Resource> downloadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
-        Resource resource = storageService.loadAsResource(fileName);
+        Resource resource = storageService.loadAsPublicResource(fileName);
 //        MediaType contentType = MediaType.APPLICATION_PDF;
         String mimeType;
         try {
