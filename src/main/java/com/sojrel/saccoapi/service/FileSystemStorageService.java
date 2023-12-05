@@ -105,7 +105,7 @@ public class FileSystemStorageService implements StorageService {
                     .normalize().toAbsolutePath();
 
             url = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("files/show/")
+                    .path("file/")
                     .path(StringUtils.cleanPath(file.getOriginalFilename()))
                     .toUriString();
             fileDetails.put("url", url);

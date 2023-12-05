@@ -619,7 +619,7 @@ public class HomepageController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/files/show/{fileName}")
+    @GetMapping("/file/{fileName}")
     ResponseEntity<Resource> downloadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = storageService.loadAsResource(fileName);
 //        MediaType contentType = MediaType.APPLICATION_PDF;
