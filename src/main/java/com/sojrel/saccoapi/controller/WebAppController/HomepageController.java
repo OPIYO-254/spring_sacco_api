@@ -464,39 +464,46 @@ public class HomepageController {
 //        LocalDateTime startMonth = endDate.minusMonths(1);
         ModelAndView modelAndView = new ModelAndView("/revenue");
         List<LoanResponseDto> loanResponseDtos = loanService.getLoans();
-        double tDisbursed = loanResponseDtos.stream()
-                .filter(loan -> "COMPLETED".equals(loan.getLoanStatus()) || "APPROVED".equals(loan.getLoanStatus()))
-                .mapToDouble(LoanResponseDto::getPrincipal)
-                .sum();
-        double expectedAmount = loanResponseDtos.stream()
-                .filter(loan -> "COMPLETED".equals(loan.getLoanStatus()) || "APPROVED".equals(loan.getLoanStatus()))
-                .mapToDouble(LoanResponseDto::getAmount)
-                .sum();
-        double collectedAmount = loanResponseDtos.stream()
-                .filter(loan -> "COMPLETED".equals(loan.getLoanStatus()))
-                .mapToDouble(LoanResponseDto::getAmount)
-                .sum();
-        ItemTotalDto monthlyTotal = loanService.getMonthlyDisbursement();
-        ItemTotalDto annualTotal = loanService.getAnnualDisbursement();
-        Long monthlyDisburse = monthlyTotal.getTotal();
-        Long annualDisburse = annualTotal.getTotal();
-        List<KeyValueDto> keyValueDtoList = loanService.totalMonthlyDisbursements();
-        List<RepaymentResponseDto> repaymentResponseDtos = repaymentService.getRepayments();
-        double tRepaid = repaymentResponseDtos.stream().mapToDouble(RepaymentResponseDto::getAmount).sum();//sum of all repaid amount
-        List<KeyValueDto> totalPerCategory = loanService.totalPerLoanCategory();
-        ItemCountDto countUnread = contactService.countUnreadMessages();
-        Long unread = countUnread.getCount();
-        modelAndView.addObject("unread", unread);
         try {
+            double tDisbursed = loanResponseDtos.stream()
+                    .filter(loan -> "COMPLETED".equals(loan.getLoanStatus()) || "APPROVED".equals(loan.getLoanStatus()))
+                    .mapToDouble(LoanResponseDto::getPrincipal)
+                    .sum();
+            double expectedAmount = loanResponseDtos.stream()
+                    .filter(loan -> "COMPLETED".equals(loan.getLoanStatus()) || "APPROVED".equals(loan.getLoanStatus()))
+                    .mapToDouble(LoanResponseDto::getAmount)
+                    .sum();
+            double collectedAmount = loanResponseDtos.stream()
+                    .filter(loan -> "COMPLETED".equals(loan.getLoanStatus()))
+                    .mapToDouble(LoanResponseDto::getAmount)
+                    .sum();
+            ItemTotalDto monthlyTotal = loanService.getMonthlyDisbursement();
+            ItemTotalDto annualTotal = loanService.getAnnualDisbursement();
+            Long monthlyDisburse = monthlyTotal.getTotal();
+            Long annualDisburse = annualTotal.getTotal();
+            List<KeyValueDto> keyValueDtoList = loanService.totalMonthlyDisbursements();
+            List<RepaymentResponseDto> repaymentResponseDtos = repaymentService.getRepayments();
+            double tRepaid = repaymentResponseDtos.stream().mapToDouble(RepaymentResponseDto::getAmount).sum();//sum of all repaid amount
+            List<KeyValueDto> totalPerCategory = loanService.totalPerLoanCategory();
+            ItemCountDto countUnread = contactService.countUnreadMessages();
+            Long unread = countUnread.getCount();
+            modelAndView.addObject("unread", unread);
             modelAndView.addObject("totalDisbursed", df.format(tDisbursed));
             modelAndView.addObject("totalAmount", df.format(expectedAmount));
             modelAndView.addObject("repaid", df.format(tRepaid));
             modelAndView.addObject("completed", df.format(collectedAmount));
-            modelAndView.addObject("annualDisbursement", df.format(annualDisburse));
-            modelAndView.addObject("monthlyDisburse", df.format(monthlyDisburse));
-            modelAndView.addObject("totalMonthly", keyValueDtoList);
-            modelAndView.addObject("totalPerCategiry", totalPerCategory);
-
+//            modelAndView.addObject("annualDisbursement", df.format(annualDisburse));
+            if(monthlyDisburse!=null){
+                modelAndView.addObject("monthlyDisburse", df.format(monthlyDisburse));
+            }
+            if(!keyValueDtoList.isEmpty()){
+                modelAndView.addObject("totalMonthly", keyValueDtoList);
+//                System.out.println(keyValueDtoList);
+            }
+            if(!totalPerCategory.isEmpty()){
+                modelAndView.addObject("totalPerCategory", totalPerCategory);
+//                System.out.println(totalPerCategory);
+            }
         }
         catch (Exception e){
             e.printStackTrace();
