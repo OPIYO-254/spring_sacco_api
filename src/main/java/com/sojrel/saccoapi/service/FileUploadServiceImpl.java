@@ -52,6 +52,7 @@ public class FileUploadServiceImpl implements FileUploadService{
             fileUploads.setFileDescription(description);
             fileUploads.setFileName(fileName);
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .scheme("https")
                     .path("/download/")
                     .path(fileUploads.getFileName())
                     .toUriString();
