@@ -104,7 +104,7 @@ body{
     display:flex;
 
 }
-.file-uploader{
+/*.file-uploader{
     height: 120px;
     background-color: rgba(9, 170, 92, 0.2);
     border: dashed 1px rgba(9, 170, 92, 1);
@@ -113,8 +113,7 @@ body{
     align-items:center;
     padding: 12px;
     border-radius: 8px;
-
-}
+}*/
 .downloads-main-container{
     display:flex;
 }
