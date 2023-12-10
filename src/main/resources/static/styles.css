@@ -212,7 +212,7 @@ body{
     height: 240px;
 }
 .carousel-item img{
-    height:400px;
+    /*height:400px;*/
 }
 .carousel-inner .title{
     display:flex;
@@ -638,8 +638,8 @@ body{
     margin: 12px;
     display:flex;
     width:50%;
-    border: solid 1px;
-    border-color:#09AA5C;
+    /*border: solid 1px;
+    border-color:#09AA5C;*/
     border-radius: 12px;
     padding: 6px;
 }
@@ -654,7 +654,7 @@ body{
     display: flex;
     align-items: center;
 }
-.icon-container i{
+.icon-container i, .material-symbols-outlined{
     font-size: 120px;
     color:#09AA5C;
 }
@@ -664,7 +664,7 @@ body{
 .loan-type-container{
     display:flex;
     margin-right: 12px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19);*/
     border-radius:12px;
     background-color: rgba(9, 170, 92, 0.1);
     color:#09AA5C;
@@ -981,7 +981,9 @@ body{
         font-size: 12px;
     }
 
-
+    .carousel-caption p{
+        font-size: 12px;
+    }
     .card-item{
         margin-top: 0.2rem;
     }
@@ -1804,7 +1806,7 @@ body{
   .membership-image-container img {
       width: 240px;
   }
-  .icon-container i {
+  .icon-container i, .material-symbols-outlined {
       font-size: 80px;
   }
   .requirement-container p{

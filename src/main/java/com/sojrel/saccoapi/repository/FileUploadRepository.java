@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FileUploadRepository extends JpaRepository<FileUploads, Long> {
-
+    FileUploads findByFileName(String fileName);
 }

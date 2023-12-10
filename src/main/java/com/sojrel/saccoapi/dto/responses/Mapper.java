@@ -26,6 +26,7 @@ public class Mapper {
         memberResponseDto.setLoansTaken(member.getLoansTaken());
         memberResponseDto.setLoansGuaranteed(member.getLoansGuaranteed());
         memberResponseDto.setFlashLoans(member.getFlashLoans());
+        memberResponseDto.setUserFiles(member.getUserFiles());
         return memberResponseDto;
     }
 
@@ -139,22 +140,40 @@ public class Mapper {
         return contactResponseDtoList;
     }
 
-    public static UploadedFilesDto fileToUploadedFileDto(FileUploads fileUploads){
-        UploadedFilesDto uploadedFilesDto = new UploadedFilesDto();
+    public static FileUploadResponseDto fileToUploadedFileDto(FileUploads fileUploads){
+        FileUploadResponseDto uploadedFilesDto = new FileUploadResponseDto();
         uploadedFilesDto.setId(fileUploads.getId());
         uploadedFilesDto.setFileDescription(fileUploads.getFileDescription());
         uploadedFilesDto.setFileName(fileUploads.getFileName());
-        uploadedFilesDto.setFilePath(fileUploads.getFilePath());
+        uploadedFilesDto.setFileType(fileUploads.getFileType());
+        uploadedFilesDto.setFileUrl(fileUploads.getFileUrl());
         return uploadedFilesDto;
     }
 
-    public static List<UploadedFilesDto> filesToUPloadedFilesDtos(List<FileUploads> fileUploads){
-        List<UploadedFilesDto> dtos = new ArrayList<>();
+    public static List<FileUploadResponseDto> filesToUploadedFilesDtos(List<FileUploads> fileUploads){
+        List<FileUploadResponseDto> dtos = new ArrayList<>();
         for(FileUploads file : fileUploads){
             dtos.add(fileToUploadedFileDto(file));
         }
         return dtos;
     }
 
+    public static UserFilesResponseDto userFileToUserFileResponseDto(UserFiles files){
+        UserFilesResponseDto dto = new UserFilesResponseDto();
+        dto.setId(files.getId());
+        dto.setFileType(files.getFileType());
+        dto.setFileUrl(files.getFileUrl());
+        dto.setFileName(files.getFileName());
+        dto.setMemberId(files.getMember().getId());
+        return dto;
+    }
+
+    public static List<UserFilesResponseDto> userFileToUserFilesResponseDtos(List<UserFiles> files){
+        List<UserFilesResponseDto> dtos = new ArrayList<>();
+        for(UserFiles file : files){
+            dtos.add(userFileToUserFileResponseDto(file));
+        }
+        return dtos;
+    }
 
 }

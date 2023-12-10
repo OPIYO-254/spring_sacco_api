@@ -10,16 +10,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FileUploads {
+public class UserFiles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String fileDescription;
+    private String fileUrl;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
     @Column(nullable = false)
     private String fileName;
-    @Column(nullable = false)
-    private String fileUrl;
     @Column(nullable = false)
     private String fileType;
     @JsonIgnore

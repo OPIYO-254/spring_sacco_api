@@ -1,20 +1,18 @@
 package com.sojrel.saccoapi.service;
 
-import com.sojrel.saccoapi.dto.responses.CredentialsResponseDto;
-import com.sojrel.saccoapi.dto.responses.Mapper;
-import com.sojrel.saccoapi.dto.responses.UploadedFilesDto;
-import com.sojrel.saccoapi.model.Credentials;
+import com.sojrel.saccoapi.dto.responses.FileUploadResponseDto;
 import com.sojrel.saccoapi.model.FileUploads;
-import com.sojrel.saccoapi.repository.FileUploadRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public interface FileUploadService {
-    public List<UploadedFilesDto> getAllFiles();
+    public List<FileUploadResponseDto> getAllFiles();
+
+    public FileUploads getFileByName(String fileName);
+
+    public FileUploadResponseDto uploadFile(String description, MultipartFile file);
+
 }

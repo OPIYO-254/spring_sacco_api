@@ -43,16 +43,8 @@ public class SecurityConfig {
         this.keys = keys;
     }
 
-//    @Bean
-//    public AuthenticationManager authManager(UserDetailsService detailsService){
-//        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
-//        daoProvider.setUserDetailsService(detailsService);
-//        daoProvider.setPasswordEncoder(passwordEncoder());
-//        return new ProviderManager(daoProvider);
-//    }
     @Autowired
     CustomSuccessHandler customSuccessHandler;
-
 
     @Autowired
     CustomUserDetailsService customUserDetailsService;
@@ -92,7 +84,8 @@ public class SecurityConfig {
                         .requestMatchers("/styles.css","/main.js","/jquery.js",
                         "/verify","/verify-success","/verify-fail","/images/**","/favicon.ico",
                         "/","/create-account","/api/auth/**","/login","/about-us","/membership","/services",
-                        "/contact-us","/downloads","/forgot-password","/reset-password","/file/**","/download/**").permitAll()
+                        "/contact-us","/downloads","/forgot-password","/reset-password","/file/**",
+                        "/download/**","/payments/**","/downloadFile/**").permitAll()
                         .anyRequest().authenticated())
 
                 .rememberMe(remember->remember.useSecureCookie(true))

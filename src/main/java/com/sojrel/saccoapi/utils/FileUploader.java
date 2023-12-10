@@ -52,7 +52,6 @@ public class FileUploader {
         try {
             Path path = Paths.get(fileStorageLocation).toAbsolutePath().resolve(fileName);
 
-
             Resource resource;
 
             resource = new UrlResource(path.toUri());

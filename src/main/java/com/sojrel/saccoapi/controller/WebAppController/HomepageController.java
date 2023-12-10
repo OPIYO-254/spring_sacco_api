@@ -11,8 +11,10 @@ import com.sojrel.saccoapi.service.*;
 import com.sojrel.saccoapi.utils.FileUploader;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
@@ -30,11 +32,9 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@Slf4j
 @CrossOrigin
 @Controller
 public class HomepageController {
@@ -60,7 +60,8 @@ public class HomepageController {
     private UserDetailsService userDetailsService;
     @Autowired
     private JavaMailSender mailSender;
-
+    @Autowired
+    private UserFilesService userFilesService;
     @Autowired
     private StorageService storageService;
     @Autowired
@@ -144,28 +145,28 @@ public class HomepageController {
         return  modelAndView;
     }
 
-    @GetMapping("/downloads/{fileName}")
-    ResponseEntity<Resource> downLoadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
-
-        Resource resource = FileUploader.downloadFile(fileName);
-
-//        MediaType contentType = MediaType.APPLICATION_PDF;
-
-        String mimeType;
-
-        try {
-            mimeType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException e) {
-            mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
-        }
-        mimeType = mimeType == null ? MediaType.APPLICATION_OCTET_STREAM_VALUE : mimeType;
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(mimeType))
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName="+resource.getFilename())
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + resource.getFilename())
-                .body(resource);
-    }
+//    @GetMapping("/downloads/{fileName}")
+//    ResponseEntity<Resource> downLoadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
+//
+//        Resource resource = FileUploader.downloadFile(fileName);
+//
+////        MediaType contentType = MediaType.APPLICATION_PDF;
+//
+//        String mimeType;
+//
+//        try {
+//            mimeType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+//        } catch (IOException e) {
+//            mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+//        }
+//        mimeType = mimeType == null ? MediaType.APPLICATION_OCTET_STREAM_VALUE : mimeType;
+//
+//        return ResponseEntity.ok()
+//                .contentType(MediaType.parseMediaType(mimeType))
+////                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName="+resource.getFilename())
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + resource.getFilename())
+//                .body(resource);
+//    }
 
     @GetMapping("/add-contributions")
     public String contributionForm(){
@@ -189,29 +190,30 @@ public class HomepageController {
         ModelAndView modelAndView = new ModelAndView("member-details");
         MemberResponseDto memberResponseDto = memberService.getMember(id);
         ItemTotalDto savings = contributionService.getMemberTotalSavings(id);
-        CredentialsResponseDto credsDto = credentialsService.getMemberCredentials(id);
-        try{
-            String idFrontName = credsDto.getIdFrontName();
-            String idFrontPath = credsDto.getIdFrontPath();
-            String idBackName = credsDto.getIdBackName();
-            String idBackPath = credsDto.getIdBackPath();
-            String kraCertName = credsDto.getKraCertName();
-            String kraCertPath = credsDto.getKraCertPath();
-            String passportName = credsDto.getPassportName();
-            String passportPath = credsDto.getPassportPath();
+        try {
+            List<UserFiles> files = userFilesService.getUserFilesByMember(id);
+            List<String > urls = new ArrayList<>();
+            List<String> names = new ArrayList<>();
+            for (UserFiles file : files) {
+                urls.add(file.getFileUrl());
+                names.add(file.getFileName());
 
-            modelAndView.addObject("idFrontName", idFrontName);
-            modelAndView.addObject("idFrontPath", idFrontPath);
-            modelAndView.addObject("idBackName", idBackName);
-            modelAndView.addObject("idBackPath", idBackPath);
-            modelAndView.addObject("kraCertName", kraCertName);
-            modelAndView.addObject("kraCertPath", kraCertPath);
-            modelAndView.addObject("passportName", passportName);
-            modelAndView.addObject("passportPath", passportPath);
+            }
+            modelAndView.addObject("idFrontName", names.get(0));
+            modelAndView.addObject("idFrontPath", urls.get(0));
+            modelAndView.addObject("idBackName", names.get(1));
+            modelAndView.addObject("idBackPath", urls.get(1));
+            modelAndView.addObject("kraCertName", names.get(2));
+            modelAndView.addObject("kraCertPath", urls.get(2));
+            modelAndView.addObject("passportName", names.get(3));
+            modelAndView.addObject("passportPath", urls.get(3));
         }
         catch (NullPointerException e){
-            e.printStackTrace();
+            log.info("No files found for this member");
 //            throw e;
+        }
+        catch (IndexOutOfBoundsException ex){
+            log.info("Files not found for this member");
         }
         Long totalSavings = savings.getTotal();
         ItemTotalDto shares = contributionService.getMemberTotalShares(id);
@@ -529,7 +531,8 @@ public class HomepageController {
     @GetMapping("/downloads")
     public ModelAndView downloads(){
         ModelAndView modelAndView = new ModelAndView("downloads");
-        List<UploadedFilesDto> dtos = fileUploadService.getAllFiles();
+        List<FileUploadResponseDto> dtos = fileUploadService.getAllFiles();
+
         modelAndView.addObject("downloads", dtos);
         return modelAndView;
     }
@@ -576,46 +579,81 @@ public class HomepageController {
         return "redirect:/messages";
     }
 
+//    @PostMapping("/filupload")
+//    public ResponseEntity<?> handleFileUpload(@RequestParam("memberId") String memberId,
+//                                              @RequestParam("idFrontPath") MultipartFile idFrontPath,
+//                                              @RequestParam("idBackPath") MultipartFile idBackPath,
+//                                              @RequestParam("kraCertPath") MultipartFile kraCertPath,
+//                                              @RequestParam("passportPath") MultipartFile passportPath) {
+//
+//        Map<String, String> frontDetails = storageService.store(idFrontPath, memberId);
+//        Map<String, String> backDetails = storageService.store(idBackPath, memberId);
+//        Map<String, String> certDetails = storageService.store(kraCertPath, memberId);
+//        Map<String, String> passDetails = storageService.store(passportPath, memberId);
+//
+//        Credentials credentials = new Credentials();
+//        credentials.setIdFrontName(frontDetails.get("fileName"));
+//        credentials.setIdFrontPath(frontDetails.get("url"));
+//        credentials.setIdBackName(backDetails.get("fileName"));
+//        credentials.setIdBackPath(backDetails.get("url"));
+//        credentials.setKraCertName(certDetails.get("fileName"));
+//        credentials.setKraCertPath(certDetails.get("url"));
+//        credentials.setPassportName(passDetails.get("fileName"));
+//        credentials.setPassportPath(passDetails.get("url"));
+//        Credentials savedCredential = credentialsRepository.save(credentials);
+//        Member member = memberService.getMemberById(memberId);
+//        member.setCredentials(savedCredential);
+//        memberRepository.save(member);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//
+//    }
     @PostMapping("/upload")
-    public ResponseEntity<?> handleFileUpload(@RequestParam("memberId") String memberId,
-                                              @RequestParam("idFrontPath") MultipartFile idFrontPath,
-                                              @RequestParam("idBackPath") MultipartFile idBackPath,
-                                              @RequestParam("kraCertPath") MultipartFile kraCertPath,
-                                              @RequestParam("passportPath") MultipartFile passportPath) {
+    public ResponseEntity<?> uploadFile(@RequestParam("memberId") String memberId,
+                                        @RequestParam("idFrontPath") MultipartFile idFrontPath,
+                                        @RequestParam("idBackPath") MultipartFile idBackPath,
+                                        @RequestParam("kraCertPath") MultipartFile kraCertPath,
+                                        @RequestParam("passportPath") MultipartFile passportPath) {
+        List<MultipartFile> files = new ArrayList<>();
+        files.add(idFrontPath);
+        files.add(idBackPath);
+        files.add(kraCertPath);
+        files.add(passportPath);
 
-        Map<String, String> frontDetails = storageService.store(idFrontPath, memberId);
-        Map<String, String> backDetails = storageService.store(idBackPath, memberId);
-        Map<String, String> certDetails = storageService.store(kraCertPath, memberId);
-        Map<String, String> passDetails = storageService.store(passportPath, memberId);
+        Iterator<MultipartFile> iterator = files.iterator();
+        while (iterator.hasNext()) {
+            MultipartFile item = iterator.next();
+            userFilesService.storeFile(memberId, item);
+        }
 
-        Credentials credentials = new Credentials();
-        credentials.setIdFrontName(frontDetails.get("fileName"));
-        credentials.setIdFrontPath(frontDetails.get("url"));
-        credentials.setIdBackName(backDetails.get("fileName"));
-        credentials.setIdBackPath(backDetails.get("url"));
-        credentials.setKraCertName(certDetails.get("fileName"));
-        credentials.setKraCertPath(certDetails.get("url"));
-        credentials.setPassportName(passDetails.get("fileName"));
-        credentials.setPassportPath(passDetails.get("url"));
-        Credentials savedCredential = credentialsRepository.save(credentials);
-        Member member = memberService.getMemberById(memberId);
-        member.setCredentials(savedCredential);
-        memberRepository.save(member);
         return new ResponseEntity<>(HttpStatus.OK);
-
     }
+
+    @GetMapping("/downloadFile/{memberId}/{fileName:.+}")
+    public ResponseEntity <ByteArrayResource> downloadFile(@PathVariable String fileName, @PathVariable String memberId, HttpServletRequest request) {
+        // Load file as Resource
+        UserFiles file = userFilesService.getMemberFileByName(memberId, fileName);
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(file.getFileType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFileName() + "\"")
+                .body(new ByteArrayResource(file.getFile()));
+    }
+    @GetMapping("/download/{fileName:.+}")
+    public ResponseEntity <ByteArrayResource> showFile(@PathVariable String fileName,HttpServletRequest request) {
+        // Load file as Resource
+        FileUploads fileUploads = fileUploadService.getFileByName(fileName);
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(fileUploads.getFileType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileUploads.getFileName() + "\"")
+                .body(new ByteArrayResource(fileUploads.getFile()));
+    }
+
     @GetMapping("/file-upload")
     public String fileUploads(@RequestHeader Map<String, String> headers){
         return "file-upload";}
 
     @PostMapping("/upload-file")
     public ResponseEntity<?> handleFileUpload(@RequestParam("fileDescription") String fileDescription, @RequestParam("file") MultipartFile file){
-        Map<String, String> fileDetails = storageService.storeFile(file);
-        FileUploads fileUploads = new FileUploads();
-        fileUploads.setFileDescription(fileDescription);
-        fileUploads.setFileName(fileDetails.get("fileName"));
-        fileUploads.setFilePath(fileDetails.get("url"));
-        fileUploadRepository.save(fileUploads);
+        FileUploadResponseDto fileUploadResponseDto = fileUploadService.uploadFile(fileDescription, file);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

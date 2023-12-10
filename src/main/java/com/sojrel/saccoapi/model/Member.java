@@ -81,6 +81,9 @@ public class Member {
     @JoinColumn(name = "credentials_id")
     private Credentials credentials;
 
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<UserFiles> userFiles;
+
     public enum Gender{
         MALE,FEMALE
     }

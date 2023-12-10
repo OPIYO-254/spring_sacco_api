@@ -29,7 +29,7 @@
         <table class="table table-responsive" id="downloads-table">
           <tbody>
             <tr th:each = "download : ${downloads}">
-              <td data-label="FileName"><a class="text-decoration-none text-dark text-uppercase" th:text="${download.fileDescription}" th:href="${download.filePath}" download></a></td>
+              <td data-label="FileName"><a class="text-decoration-none text-dark text-uppercase" th:text="${download.fileDescription}" th:href="${download.fileUrl}" download></a></td>
             </tr>
           </tbody>
         </table>
@@ -54,8 +54,8 @@
           <li>Go Mpesa</li>
           <li>Lipa Na Mpesa</li>
           <li>Select Pay Bill</li>
-          <li>Enter Business Number: 972970</li>
-          <li>Enter Account Number: 08102850001</li>
+          <li>Enter Business Number: 972901</li>
+          <li>Enter Account Number: SOJ</li>
           <li>Enter Amount: Ksh 1600.</li>
           <li>Enter your pin and confirm.</li>
         </ol>

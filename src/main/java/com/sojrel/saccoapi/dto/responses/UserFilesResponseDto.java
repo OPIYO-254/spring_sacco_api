@@ -1,6 +1,5 @@
 package com.sojrel.saccoapi.dto.responses;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UploadedFilesDto {
+public class UserFilesResponseDto {
     private Long id;
-    private String fileDescription;
+    private String memberId;
     private String fileName;
-    private String filePath;
+    private String fileType;
+    private String fileUrl;
 }
