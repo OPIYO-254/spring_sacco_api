@@ -1,11 +1,16 @@
 html{
     height:-webkit-fill-available
 }
+*{
+    font-family: 'Mina', sans-serif;
+}
 body{
     margin:0;
     padding:0;
     height:-webkit-fill-available
-    font-family: 'Poppins', sans-serif;
+    /*font-family: 'Poppins', sans-serif;*/
+    /*font-family: Poiret_One;*/
+
     min-height:100vh;
     display: flex;
     flex-direction: column;
@@ -249,6 +254,7 @@ body{
 }
 .carousel-caption p{
     text-align:justify;
+    font-family: 'Mina', sans-serif;
 }
 .client-footer{
     background-color:#012b17;
