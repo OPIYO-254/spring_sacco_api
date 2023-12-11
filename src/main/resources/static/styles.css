@@ -758,6 +758,9 @@ body{
         display: flex;
         flex-direction:column;
     }
+    .loan-type-container .icon i{
+        display:none;
+    }
 
 }
 
