@@ -44,6 +44,10 @@ body{
     background-color: rgba(9, 170, 92, 0.5);
     height: 300px;
 }
+.term-container h3{
+   color:#09AA5C;
+   font-weight:bold;
+}
 .mysection{
     background-image:url("images/home.jpeg");
     background-size: cover;
