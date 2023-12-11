@@ -691,7 +691,7 @@ body{
     list-style-type: '✅';
     padding-inline-start: 1ch;
 }
-.loan-type-container .icon i{
+.loan-type-container .icon i, material-symbols-outlined{
     font-size: 120px;
 }
 .loan-type-container p{
@@ -758,7 +758,7 @@ body{
         display: flex;
         flex-direction:column;
     }
-    .loan-type-container .icon i{
+    .icon-container i, .material-symbols-outlined{
         display:none;
     }
 
@@ -1819,9 +1819,9 @@ body{
   .membership-image-container img {
       width: 240px;
   }
-  .icon-container i, .material-symbols-outlined {
-      font-size: 80px;
-  }
+  /*.icon-container i, .material-symbols-outlined {
+      font-size: 120px;
+  }*/
   .requirement-container p{
       font-size: 14px;
   }
