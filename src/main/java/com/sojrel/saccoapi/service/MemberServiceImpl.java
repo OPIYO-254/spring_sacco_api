@@ -5,6 +5,7 @@ import com.sojrel.saccoapi.dto.responses.*;
 import com.sojrel.saccoapi.model.Contribution;
 import com.sojrel.saccoapi.model.Loan;
 import com.sojrel.saccoapi.model.Member;
+import com.sojrel.saccoapi.model.UserFiles;
 import com.sojrel.saccoapi.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class MemberServiceImpl implements MemberService{
     private ContributionService contributionService;
     @Autowired
     private LoanService loanService;
+    @Autowired
+    private UserFilesService userFilesService;
+    @Autowired
+    private MemberService memberService;
     @Override
     public MemberResponseDto addMember(MemberRequestDto memberRequestDto) {
         Member member = new Member();
@@ -159,6 +164,7 @@ public class MemberServiceImpl implements MemberService{
         loan.addGuarantor(member);
         return Mapper.memberToMemberResponseDto(member);
     }
+
     @Transactional
     @Override
     public MemberResponseDto removeLoanGuaranteedFromMember(String memberId, Long loanId) {
@@ -179,40 +185,43 @@ public class MemberServiceImpl implements MemberService{
 
     }
 
+    /**
+     * The function fetches members and their savings
+     * @return list of member details and their savings
+     */
     @Override
     public List<MemberTotalSavingsDto> findMemberSavings() {
         return memberRepository.findMemberSavings(Contribution.ContributionType.SAVINGS);
     }
 
+    /**
+     * This function is aimed at fetching all new members whose documents have not been
+     * uploaded in the server. If the member has documents, the record is not added in
+     * the list.
+     * @return a list of member details for newly registered members
+     */
     @Override
     public List<NewMemberResponseDto> findNewMembers() {
         List<NewMemberResponseDto> newMemberResponseDtos = new ArrayList<>();
         List<Object[]> results = memberRepository.findNewMembers();
         for(Object[] row: results){
-            NewMemberResponseDto newMemberResponseDto = new NewMemberResponseDto();
-            newMemberResponseDto.setId((String)row[0]);
-            newMemberResponseDto.setFirstName((String)row[1]);
-            newMemberResponseDto.setMidName((String)row[2]);
-            newMemberResponseDto.setLastName((String)row[3]);
-            newMemberResponseDto.setIdNo((Long)row[4]);
-            newMemberResponseDto.setEmail((String)row[5]);
-            newMemberResponseDto.setPhone((String)row[6]);
-            newMemberResponseDto.setResidence((String)row[7]);
-            newMemberResponseDto.setCredentialsId((Long) row[8]);
-            newMemberResponseDtos.add(newMemberResponseDto);
+            List<UserFiles> files = userFilesService.getUserFilesByMember((String)row[0]);
+            if(files.isEmpty()){
+//                System.out.println(row[0] +" can be added");
+                NewMemberResponseDto newMemberResponseDto = new NewMemberResponseDto();
+                newMemberResponseDto.setId((String)row[0]);
+                newMemberResponseDto.setFirstName((String)row[1]);
+                newMemberResponseDto.setMidName((String)row[2]);
+                newMemberResponseDto.setLastName((String)row[3]);
+                newMemberResponseDto.setIdNo((Long)row[4]);
+                newMemberResponseDto.setEmail((String)row[5]);
+                newMemberResponseDto.setPhone((String)row[6]);
+                newMemberResponseDto.setResidence((String)row[7]);
+                newMemberResponseDtos.add(newMemberResponseDto);
+            }
+
         }
         return newMemberResponseDtos;
-        /**
-         * private String id;
-         *     private String firstName;
-         *     private String midName;
-         *     private String lastName;
-         *     private Long idNo;
-         *     private String email;
-         *     private String phone;
-         *     private String credentialsId;
-         *     private String residence;
-         */
     }
 
 
@@ -238,12 +247,21 @@ public class MemberServiceImpl implements MemberService{
         return null;
     }
 
+    /**
+     * The function counts the number of registered members
+     * @return ItemCountDto
+     */
     @Override
     public ItemCountDto getMemberCount(){
         ItemCountDto itemCountDto = memberRepository.findMemberCount();
         return itemCountDto;
     }
 
+    /**
+     * the function takes member emails and returns the member details
+     * @param email
+     * @return Member
+     */
     @Override
     public Member getMemberByEmail(String email) {
         return memberRepository.findByEmail(email);

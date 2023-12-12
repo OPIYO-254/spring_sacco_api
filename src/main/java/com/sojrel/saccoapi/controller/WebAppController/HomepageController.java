@@ -4,11 +4,9 @@ import com.sojrel.saccoapi.dto.requests.*;
 import com.sojrel.saccoapi.dto.responses.*;
 import com.sojrel.saccoapi.exceptions.UserNotFoundException;
 import com.sojrel.saccoapi.model.*;
-import com.sojrel.saccoapi.repository.CredentialsRepository;
 import com.sojrel.saccoapi.repository.FileUploadRepository;
 import com.sojrel.saccoapi.repository.MemberRepository;
 import com.sojrel.saccoapi.service.*;
-import com.sojrel.saccoapi.utils.FileUploader;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -49,8 +47,6 @@ public class HomepageController {
     @Autowired
     private RepaymentService repaymentService;
     @Autowired
-    private CredentialsService credentialsService;
-    @Autowired
     private ContactService contactService;
     @Autowired
     private FileUploadService fileUploadService;
@@ -66,8 +62,6 @@ public class HomepageController {
     private StorageService storageService;
     @Autowired
     private FileUploadRepository fileUploadRepository;
-    @Autowired
-    private CredentialsRepository credentialsRepository;
     DecimalFormat df = new DecimalFormat("0.00");
 
     @GetMapping("/home")
@@ -126,9 +120,9 @@ public class HomepageController {
         }
 
     }
-    @GetMapping("/credentials")
+    @GetMapping("/documents")
     public ModelAndView credentials(){
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("documents");
         List<NewMemberResponseDto> memberDetails = memberService.findNewMembers();
         ItemCountDto countUnread = contactService.countUnreadMessages();
         Long unread = countUnread.getCount();
@@ -137,9 +131,9 @@ public class HomepageController {
         return modelAndView;
     }
 
-    @GetMapping("/add-credentials")
+    @GetMapping("/add-documents")
     public ModelAndView addCredetials(@RequestParam String id){
-        ModelAndView modelAndView = new ModelAndView("add-credentials");
+        ModelAndView modelAndView = new ModelAndView("add-documents");
         MemberResponseDto memberResponseDto = memberService.getMember(id);
         modelAndView.addObject("member", memberResponseDto);
         return  modelAndView;

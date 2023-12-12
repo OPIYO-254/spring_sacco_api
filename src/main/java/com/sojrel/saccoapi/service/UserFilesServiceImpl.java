@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Service
@@ -71,6 +73,12 @@ public class UserFilesServiceImpl implements UserFilesService{
         Member member = memberService.getMemberById(memberId);
         UserFiles file = userFilesRepository.findByMemberAndFileName(member, fileName);
         return file;
+    }
+
+    @Override
+    public List<UserFilesResponseDto> getUsersFiles(){
+        List<UserFiles> dtos = StreamSupport.stream(userFilesRepository.findAll().spliterator(), false).collect(Collectors.toList());
+        return Mapper.userFileToUserFilesResponseDtos(dtos);
     }
 
 

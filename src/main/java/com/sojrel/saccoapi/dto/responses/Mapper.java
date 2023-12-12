@@ -104,22 +104,6 @@ public class Mapper {
         return repaymentResponseDtos;
     }
 
-    public static CredentialsResponseDto credentialToCredentialResponseDto(Credentials credentials){
-        CredentialsResponseDto credentialsResponseDto = new CredentialsResponseDto();
-        credentialsResponseDto.setId(credentials.getId());
-        credentialsResponseDto.setPassportPath(credentials.getPassportPath());
-        credentialsResponseDto.setIdFrontPath(credentials.getIdFrontPath());
-        credentialsResponseDto.setIdBackPath(credentials.getIdBackPath());
-        return credentialsResponseDto;
-    }
-    public static List<CredentialsResponseDto> credentialsToCredentialResponseDtoList(List<Credentials> credentialsList){
-        List<CredentialsResponseDto> credentialsResponseDtoList = new ArrayList<>();
-        for(Credentials credentials:credentialsList){
-            credentialsResponseDtoList.add(credentialToCredentialResponseDto(credentials));
-        }
-        return  credentialsResponseDtoList;
-    }
-
     public static ContactResponseDto contactToContactResponseDto(Contact contact){
         ContactResponseDto contactResponseDto = new ContactResponseDto();
         contactResponseDto.setId(contact.getId());

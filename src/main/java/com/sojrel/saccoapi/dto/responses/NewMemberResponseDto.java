@@ -18,7 +18,6 @@ public class NewMemberResponseDto {
     private Long idNo;
     private String email;
     private String phone;
-    private Long credentialsId;
     private String residence;
 
 }

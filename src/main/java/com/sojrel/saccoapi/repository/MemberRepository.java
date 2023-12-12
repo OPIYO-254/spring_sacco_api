@@ -18,8 +18,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 
 //    @Query("SELECT new com.sojrel.saccoapi.dto.responses.NewMemberResponseDto(m.id, m.firstName, m.midName,m.lastName, m.idNo, m.email, m.phone, c.id, m.residence) FROM Member m JOIN m.credentials = c")
     @Query(value = "SELECT member.id, member.first_name, member.mid_name, member.last_name, \n" +
-            "member.id_no, member.email, member.phone, member.residence, credentials.id \n" +
-            "FROM member left join credentials on member.credentials_id = credentials.id where member.credentials_id is null", nativeQuery = true)
+            "member.id_no, member.email, member.phone, member.residence FROM member", nativeQuery = true)
     List<Object[]> findNewMembers();
 
     @Query("SELECT new com.sojrel.saccoapi.dto.responses.ItemCountDto(COUNT(*)) FROM Member")

@@ -120,7 +120,7 @@ public class DarajaApiImpl implements DarajaApi{
         externalStkPushRequest.setCallBackURL(mpesaConfiguration.getStkPushRequestCallback());
         externalStkPushRequest.setAccountReference(HelperUtility.generateTransactionUniqueNumber());
         externalStkPushRequest.setTransactionDesc(String.format("%s Transaction", internalStkPushRequest.getPhoneNumber()));
-
+//        System.out.println(mpesaConfiguration.getStkPushRequestCallback());
         AccessTokenResponse accessTokenResponse = getAccessTokenResponse();
 
         RequestBody body = RequestBody.create(JSON_MEDIA_TYPE,

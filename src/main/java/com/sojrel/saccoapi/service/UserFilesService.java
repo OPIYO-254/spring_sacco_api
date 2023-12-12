@@ -14,5 +14,5 @@ public interface UserFilesService {
     public List<UserFiles> getUserFilesByMember(String memberId);
 
     public UserFiles getMemberFileByName(String memberId, String fileName);
-
+    public List<UserFilesResponseDto> getUsersFiles();
 }

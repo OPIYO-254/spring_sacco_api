@@ -77,9 +77,9 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<FlashLoan> flashLoans;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "credentials_id")
-    private Credentials credentials;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "credentials_id")
+//    private Credentials credentials;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserFiles> userFiles;
@@ -110,8 +110,6 @@ public class Member {
     public void removeLoanGuaranteed(Loan loan){
         loansGuaranteed.remove(loan);
     }
-
-    public void addCredentials(Credentials credentials){this.addCredentials(credentials);}
 
 
     @PrePersist

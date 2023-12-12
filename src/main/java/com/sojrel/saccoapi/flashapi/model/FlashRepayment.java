@@ -18,13 +18,11 @@ public class FlashRepayment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "flash_load_id")
+    @JoinColumn(name = "flash_loan_id")
     private FlashLoan loan;
     @Column(nullable = false)
     private double amount;
-//    private String mpesaReceiptNumber;
     private LocalDateTime transactionDate;
-//    private Long phoneNumber;
 
     @PrePersist
     public void prePersist(){

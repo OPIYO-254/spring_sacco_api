@@ -2,14 +2,10 @@ package com.sojrel.saccoapi.controller;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.sojrel.saccoapi.exceptions.StorageFileNotFoundException;
-import com.sojrel.saccoapi.model.Credentials;
-import com.sojrel.saccoapi.model.FileUploads;
 import com.sojrel.saccoapi.model.Member;
-import com.sojrel.saccoapi.repository.CredentialsRepository;
 import com.sojrel.saccoapi.repository.FileUploadRepository;
 import com.sojrel.saccoapi.repository.MemberRepository;
 import com.sojrel.saccoapi.service.MemberService;
@@ -23,8 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
@@ -34,9 +28,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 public class FileUploadController {
     @Autowired
     private final StorageService storageService;
-    @Autowired
-    private CredentialsRepository credentialsRepository;
-    @Autowired
+
     private FileUploadRepository fileUploadRepository;
     @Autowired
     private MemberRepository memberRepository;
@@ -90,34 +82,34 @@ public class FileUploadController {
                 .body(resource);
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<?> handleMultipleFileUpload(@RequestParam("memberId") String memberId,
-                                                                   @RequestParam("idFrontPath") MultipartFile idFrontPath,
-                                                                   @RequestParam("idBackPath") MultipartFile idBackPath,
-                                                                   @RequestParam("kraCertPath") MultipartFile kraCertPath,
-                                                                   @RequestParam("passportPath") MultipartFile passportPath) {
-
-        Map<String, String> frontDetails = storageService.store(idFrontPath, memberId);
-        Map<String, String> backDetails = storageService.store(idBackPath, memberId);
-        Map<String, String> certDetails = storageService.store(kraCertPath, memberId);
-        Map<String, String> passDetails = storageService.store(passportPath, memberId);
-
-        Credentials credentials = new Credentials();
-        credentials.setIdFrontName(frontDetails.get("fileName"));
-        credentials.setIdFrontPath(frontDetails.get("url"));
-        credentials.setIdBackName(backDetails.get("fileName"));
-        credentials.setIdBackPath(backDetails.get("url"));
-        credentials.setKraCertName(certDetails.get("fileName"));
-        credentials.setKraCertPath(certDetails.get("url"));
-        credentials.setPassportName(passDetails.get("fileName"));
-        credentials.setPassportPath(passDetails.get("url"));
-        Credentials savedCredential = credentialsRepository.save(credentials);
-        Member member = memberService.getMemberById(memberId);
-        member.setCredentials(savedCredential);
-        memberRepository.save(member);
-        return new ResponseEntity<>(HttpStatus.OK);
-
-    }
+//    @PostMapping("/upload")
+//    public ResponseEntity<?> handleMultipleFileUpload(@RequestParam("memberId") String memberId,
+//                                                                   @RequestParam("idFrontPath") MultipartFile idFrontPath,
+//                                                                   @RequestParam("idBackPath") MultipartFile idBackPath,
+//                                                                   @RequestParam("kraCertPath") MultipartFile kraCertPath,
+//                                                                   @RequestParam("passportPath") MultipartFile passportPath) {
+//
+//        Map<String, String> frontDetails = storageService.store(idFrontPath, memberId);
+//        Map<String, String> backDetails = storageService.store(idBackPath, memberId);
+//        Map<String, String> certDetails = storageService.store(kraCertPath, memberId);
+//        Map<String, String> passDetails = storageService.store(passportPath, memberId);
+//
+//        Credentials credentials = new Credentials();
+//        credentials.setIdFrontName(frontDetails.get("fileName"));
+//        credentials.setIdFrontPath(frontDetails.get("url"));
+//        credentials.setIdBackName(backDetails.get("fileName"));
+//        credentials.setIdBackPath(backDetails.get("url"));
+//        credentials.setKraCertName(certDetails.get("fileName"));
+//        credentials.setKraCertPath(certDetails.get("url"));
+//        credentials.setPassportName(passDetails.get("fileName"));
+//        credentials.setPassportPath(passDetails.get("url"));
+//        Credentials savedCredential = credentialsRepository.save(credentials);
+//        Member member = memberService.getMemberById(memberId);
+//        member.setCredentials(savedCredential);
+//        memberRepository.save(member);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//
+//    }
 
 //    @PostMapping("/upload-file")
 //    public ResponseEntity<?> handleFileUpload(@RequestParam("fileDescription") String fileDescription, @RequestParam("file") MultipartFile file){

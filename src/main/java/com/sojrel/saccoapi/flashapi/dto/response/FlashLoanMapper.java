@@ -1,6 +1,7 @@
 package com.sojrel.saccoapi.flashapi.dto.response;
 
 import com.sojrel.saccoapi.flashapi.model.FlashLoan;
+import com.sojrel.saccoapi.flashapi.model.FlashRepayment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,25 @@ public class FlashLoanMapper {
         if(Objects.nonNull(loans)){
             for (FlashLoan loan:loans) {
                 dtoList.add(flashLoanToDto(loan));
+            }
+        }
+        return dtoList;
+    }
+
+    public static FlashRepaymentResponseDto flashRepaymentToFlashRepaymentResponseDto(FlashRepayment repayment){
+        FlashRepaymentResponseDto dto = new FlashRepaymentResponseDto();
+        dto.setLoanId(repayment.getId());
+        dto.setLoanId(repayment.getLoan().getId());
+        dto.setTransactionDate(repayment.getTransactionDate());
+        dto.setAmount(repayment.getAmount());
+        return dto;
+    }
+
+    public static List<FlashRepaymentResponseDto> flashRepaymentsToFlashRepaymentDtos(List<FlashRepayment> repayments){
+        List<FlashRepaymentResponseDto> dtoList = new ArrayList<>();
+        if(Objects.nonNull(repayments)){
+            for(FlashRepayment repayment: repayments){
+                dtoList.add(flashRepaymentToFlashRepaymentResponseDto(repayment));
             }
         }
         return dtoList;
