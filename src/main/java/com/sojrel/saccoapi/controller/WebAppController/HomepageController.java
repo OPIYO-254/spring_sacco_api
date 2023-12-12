@@ -458,7 +458,7 @@ public class HomepageController {
 //        LocalDateTime endDate = LocalDateTime.now();
 //        LocalDateTime startDate = endDate.minusYears(1);
 //        LocalDateTime startMonth = endDate.minusMonths(1);
-        ModelAndView modelAndView = new ModelAndView("/revenue");
+        ModelAndView modelAndView = new ModelAndView("revenue");
         List<LoanResponseDto> loanResponseDtos = loanService.getLoans();
         try {
             double tDisbursed = loanResponseDtos.stream()
