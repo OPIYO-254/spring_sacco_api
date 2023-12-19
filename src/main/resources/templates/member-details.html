@@ -46,7 +46,7 @@
 <!--    </style>-->
 </head>
 <body>
-    <div th:insert="~{base :: navbar}"></div>
+    <div id="navbar-container" th:insert="~{base :: navbar}"></div>
     <div class="row mycontainer">
         <div th:insert="~{base :: sidebar}" class="sidebar-container col-lg-2 p-0" id="sidebar-container"></div>
         <div class="my-section col-lg-10">
@@ -149,11 +149,11 @@
                     <button class="contrib-btn btn" data-bs-toggle="modal" data-bs-target="#contribModal">Add Contribution</button>
                 </div>
             </div>
-            <div class="modal fade" id="contribModal" tabindex="-1" aria-labelledby="repayModalLabel" aria-hidden="true">
+            <div class="modal fade" id="contribModal" tabindex="-1" aria-labelledby="contribModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h6 class="modal-title" id="repayModalLabel">Add Contribution</h6>
+                            <h6 class="modal-title" id="contribModalLabel">Add Contribution</h6>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">

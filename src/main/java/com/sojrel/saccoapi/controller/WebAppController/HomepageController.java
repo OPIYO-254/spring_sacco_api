@@ -3,6 +3,15 @@ package com.sojrel.saccoapi.controller.WebAppController;
 import com.sojrel.saccoapi.dto.requests.*;
 import com.sojrel.saccoapi.dto.responses.*;
 import com.sojrel.saccoapi.exceptions.UserNotFoundException;
+import com.sojrel.saccoapi.flashapi.dto.request.FlashRepaymentRequestDto;
+import com.sojrel.saccoapi.flashapi.dto.response.FlashLoanRepaidAmountDto;
+import com.sojrel.saccoapi.flashapi.dto.response.FlashLoanResponseDto;
+import com.sojrel.saccoapi.flashapi.dto.response.FlashRepaymentAndTotalRepaid;
+import com.sojrel.saccoapi.flashapi.dto.response.FlashRepaymentResponseDto;
+import com.sojrel.saccoapi.flashapi.model.FlashLoan;
+import com.sojrel.saccoapi.flashapi.model.FlashRepayment;
+import com.sojrel.saccoapi.flashapi.service.FlashLoanService;
+import com.sojrel.saccoapi.flashapi.service.FlashRepaymentService;
 import com.sojrel.saccoapi.model.*;
 import com.sojrel.saccoapi.repository.FileUploadRepository;
 import com.sojrel.saccoapi.repository.MemberRepository;
@@ -62,6 +71,11 @@ public class HomepageController {
     private StorageService storageService;
     @Autowired
     private FileUploadRepository fileUploadRepository;
+    @Autowired
+    private FlashLoanService flashLoanService;
+
+    @Autowired
+    private FlashRepaymentService flashRepaymentService;
     DecimalFormat df = new DecimalFormat("0.00");
 
     @GetMapping("/home")
@@ -505,6 +519,93 @@ public class HomepageController {
             e.printStackTrace();
         }
         return modelAndView;
+    }
+
+    @GetMapping("/flash")
+    public ModelAndView flashLoans(){
+        ModelAndView modelAndView = new ModelAndView("flash-loans");
+        List<FlashLoanResponseDto> dtoList = flashLoanService.getNewFlashLoans();
+        List<FlashLoanResponseDto> approvedList = flashLoanService.getFlashLoanByStatus("APPROVED");
+        List<FlashLoanResponseDto> paidList = flashLoanService.getFlashLoanByStatus("PAID");
+        List<FlashLoanResponseDto> rejectedList = flashLoanService.getFlashLoanByStatus("REJECTED");
+        List<FlashLoanResponseDto> writtenList = flashLoanService.getFlashLoanByStatus("WRITTEN_OFF");
+        int countApproved = approvedList.size();
+        int paid = paidList.size();
+        int rejected = rejectedList.size();
+        int writtenOff = writtenList.size();
+        modelAndView.addObject("flashLoans", dtoList);
+        modelAndView.addObject("approvedCount", countApproved);
+        modelAndView.addObject("paid", paid);
+        modelAndView.addObject("rejected", rejected);
+        modelAndView.addObject("writtenOff", writtenOff);
+        return modelAndView;
+    }
+
+    @PostMapping("/approve-flash")
+    public String approveFlashLoan(@RequestParam Long id){
+        flashLoanService.approveFlashLoan(id);
+        return "redirect:/flash";
+    }
+
+    @PostMapping("/reject-flash")
+    public String rejectFlashLoan(@RequestParam Long id){
+        flashLoanService.rejectFlashLoan(id);
+        return "redirect:/flash";
+    }
+
+    @GetMapping("/flash-approved")
+    public ModelAndView approvedFlashLoans(){
+        ModelAndView modelAndView = new ModelAndView("flash-loan-approved");
+        List<FlashLoanResponseDto> dtoList = flashLoanService.getFlashLoanByStatus("APPROVED");
+        List<FlashLoanRepaidAmountDto> repayments = flashRepaymentService.getLoansAndRepaidAmount();
+        List<FlashLoanResponseDto> list = new ArrayList<>();
+        for (FlashLoanResponseDto dto : dtoList) {
+            for (FlashLoanRepaidAmountDto repaidAmountDto : repayments) {
+                if (dto.getId() == repaidAmountDto.getLoanId() && repaidAmountDto.getAmount()-repaidAmountDto.getAmount()>0.0) {//check whether the loan has not been paid fully
+//                    System.out.println(repaidAmountDto.getAmount()-repaidAmountDto.getAmount());
+                    list.add(dto);
+                }
+                else{
+                    //update loan status to completed by first checking if it is not updated.
+                    if(!dto.getLoanStatus().equals(FlashLoan.Status.PAID)){
+                        flashLoanService.completeFlashLoan(dto.getId());
+                    }
+
+                }
+            }
+        }
+//        System.out.println(list);
+        modelAndView.addObject("flashLoans", list);
+        return  modelAndView;
+
+    }
+
+    @PostMapping("/flash-repay")
+    public String flashRepayment(FlashRepaymentRequestDto dto){
+        flashRepaymentService.makeRepayment(dto);
+        return "redirect:/flash-approved";
+    }
+
+    @GetMapping("/flash-rejected")
+    public ModelAndView rejectedFlashLoans(){
+        ModelAndView modelAndView = new ModelAndView("flash-loan-rejected");
+        List<FlashLoanResponseDto> dtoList = flashLoanService.getFlashLoanByStatus("REJECTED");
+        modelAndView.addObject("flashLoans", dtoList);
+        return  modelAndView;
+    }
+    @GetMapping("/flash-repaid")
+    public ModelAndView repaidFlashLoans(){
+        ModelAndView modelAndView = new ModelAndView("flash-loan-repaid");
+        List<FlashLoanResponseDto> dtoList = flashLoanService.getFlashLoanByStatus("PAID");
+        modelAndView.addObject("flashLoans", dtoList);
+        return  modelAndView;
+    }
+    @GetMapping("/flash-written-off")
+    public ModelAndView writtenOffFlashLoans(){
+        ModelAndView modelAndView = new ModelAndView("flash-loan-written-off");
+        List<FlashLoanResponseDto> dtoList = flashLoanService.getFlashLoanByStatus("WRITTEN_OFF");
+        modelAndView.addObject("flashLoans", dtoList);
+        return  modelAndView;
     }
 
     @GetMapping("/about-us")

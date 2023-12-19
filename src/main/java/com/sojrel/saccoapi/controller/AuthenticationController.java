@@ -10,6 +10,7 @@ import com.sojrel.saccoapi.service.MemberService;
 import com.sojrel.saccoapi.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@Slf4j
 @CrossOrigin(origins={"http://10.0.2.2:8080"})
 @RestController
 @RequestMapping("/api/auth")
@@ -66,6 +68,7 @@ public class AuthenticationController {
             Map<String, String> response = new HashMap<>();
             response.put("status", "error");
             response.put("message", "You are not authorized to create signup. Contact admin.");
+            log.error("error "+e.getLocalizedMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(response);
         }
@@ -84,9 +87,9 @@ public class AuthenticationController {
         }catch (UserNotFoundException e){
             model.addAttribute("error", e.getMessage());
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            log.error("messaging exception "+e.getLocalizedMessage());
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            log.error("unsupported encoding "+e.getLocalizedMessage());
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -132,7 +135,7 @@ public class AuthenticationController {
             return ResponseEntity.ok(response);
         }
         catch (Exception e){
-            e.printStackTrace();
+            log.error("Authentication error "+e.getLocalizedMessage());
             Map<String, String> response = new HashMap<>();
             response.put("status", "error");
             response.put("message", "Login error.");

@@ -1,5 +1,6 @@
 package com.sojrel.saccoapi.flashapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sojrel.saccoapi.flashapi.dto.request.LipaNaMpesaDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class FlashRepayment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "flash_loan_id")
     private FlashLoan loan;

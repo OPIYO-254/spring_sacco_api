@@ -16,6 +16,11 @@ body{
     flex-direction: column;
     background-color: #EBECF0;
 }
+#navbar-container{
+    width:100%;
+    position:fixed;
+    z-index:999;
+}
 .card-img-top{
     height: 10rem;
 }
@@ -44,6 +49,9 @@ body{
     background-color: rgba(9, 170, 92, 0.5);
     height: 300px;
 }
+.body-section{
+    margin-top:80px;
+}
 .term-container h3{
    color:#09AA5C;
    font-weight:bold;
@@ -54,6 +62,7 @@ body{
     background-repeat: no-repeat;
     background-position: center center;
     padding:0;
+    margin-top: 80px;
 }
 .about-section{
     background-image:url("images/vision.jpeg");
@@ -63,6 +72,7 @@ body{
     background-position: center center;
     height:300px;
     padding:0;
+    margin-top: 80px;
 }
 .upper-section{
     background-image:url("images/money.jpeg");
@@ -72,6 +82,7 @@ body{
     background-position: center center;
     height:300px;
     padding:0;
+    margin-top: 80px;
 }
 .downloads-upper-section{
     background-image:url("images/forms.jpeg");
@@ -81,6 +92,7 @@ body{
     background-position: center center;
     height:300px;
     padding:0;
+    margin-top: 80px;
 }
 .members-section{
     background-image:url("images/members.jpeg");
@@ -90,6 +102,7 @@ body{
     background-position: center center;
     height:300px;
     padding:0;
+    margin-top: 80px;
 }
 .contact-section{
     background-image:url("images/contact.jpeg");
@@ -99,6 +112,7 @@ body{
     background-position: center center;
     height:300px;
     padding:0;
+    margin-top: 80px;
 }
 .membership-services-section{
     background-image:url("images/service.jpeg");
@@ -108,6 +122,7 @@ body{
     background-position: center center;
     height:300px;
     padding:0;
+    margin-top: 80px;
 }
 .location-container{
     display:flex;
@@ -372,6 +387,18 @@ body{
 .myrow{
     display:flex;
 }
+.flash-item{
+    background-color:#09AA5C;
+    text-decoration:none;
+    cursor:pointer;
+    padding: 8px;
+    border-radius:6px;
+    margin:8px;
+    width: -webkit-fill-available;
+    display:flex;
+    justify-content:space-between
+
+}
 .item{
     background-color:#09AA5C;
     padding: 8px;
@@ -392,12 +419,21 @@ body{
     justify-content:center;
     align-items:center;
 }
-.item i{
+.item-icon i{
     font-size: 48px;
-    color: rgba(1,1,1,.2);
+    color: #fff;
+}
+.flash-item .material-symbols-outlined{
+    font-size: 48px;
+    color: #fff;
 }
 .item span{
     font-size:12px;
+}
+.flash-item-text{
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
 }
 .repayment-container .btn{
     margin:0 12px;

@@ -14,43 +14,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Mina:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div th:insert="~{base :: navbar}"></div>
-<div class="container-fluid">
-    <div class="row">
-        <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-3 col-lg-2 p-0" id="sidebar-container"></div>
-        <div class="col-md-10 main-section">
-            <div class="page-title">
-                <span>Rejected Loans</span>
-            </div>
-            <div class="container-fluid mt-4 approved-table-area">
-                <div class="table-responsive table-responsive-sm">
-                    <table class="table" id="loans-table" style="width:100%;">
-                        <thead>
-                            <th scope="col" class="text-success">SN</th>
-                            <th scope="col" class="text-success">Member No.</th>
-                            <th scope="col" class="text-success">Name</th>
-                            <th scope="col" class="text-success">Date</th>
-                            <th scope="col" class="text-success hide-md">Type</th>
-                            <th scope="col" class="text-success">Principal</th>
-                            <th scope="col" class="text-success">Instalments</th>
-                            <th scope="col" class="text-success">Action</th>
-                        </thead>
-                        <tbody>
-                            <tr th:each="loan: ${rejectedLoans}">
-                                <td data-label="ID:" th:text="${loan.id}"></td>
-                                <td data-label="Member ID:" th:text="${loan.memberId}"></td>
-                                <td data-label="Name:" th:text="${loan.firstName} +' ' +${loan.midName}"></td>
-                                <td data-label="Date:" th:text="${#temporals.format(loan.applicationDate, 'dd MMM yyyy')}"></td>
-                                <td data-label="Type:" th:text="${loan.loanType}" class="hide-md"></td>
-                                <td data-label="Principal:" th:text="'Ksh '+${loan.principal}"></td>
-                                <td data-label="Instalments:" th:text="${loan.instalments}+' months'"></td>
-                                <td><a th:href="@{/rejected-loan-details(id=${loan.id})}" class="text-decoration-none"><button class="btn btn-success text-light">View</button></a></td>
-                        </tbody>
-                    </table>
+    <div id="navbar-container" th:insert="~{base :: navbar}"></div>
+    <div class="container-fluid body-section">
+        <div class="row">
+            <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-3 col-lg-2 p-0" id="sidebar-container"></div>
+            <div class="col-md-10 main-section">
+                <div class="page-title">
+                    <span>Rejected Loans</span>
+                </div>
+                <div class="container-fluid mt-4 approved-table-area">
+                    <div class="table-responsive table-responsive-sm">
+                        <table class="table" id="loans-table" style="width:100%;">
+                            <thead>
+                                <th scope="col" class="text-success">SN</th>
+                                <th scope="col" class="text-success">Member No.</th>
+                                <th scope="col" class="text-success">Name</th>
+                                <th scope="col" class="text-success">Date</th>
+                                <th scope="col" class="text-success hide-md">Type</th>
+                                <th scope="col" class="text-success">Principal</th>
+                                <th scope="col" class="text-success">Instalments</th>
+                                <th scope="col" class="text-success">Action</th>
+                            </thead>
+                            <tbody>
+                                <tr th:each="loan: ${rejectedLoans}">
+                                    <td data-label="ID:" th:text="${loan.id}"></td>
+                                    <td data-label="Member ID:" th:text="${loan.memberId}"></td>
+                                    <td data-label="Name:" th:text="${loan.firstName} +' ' +${loan.midName}"></td>
+                                    <td data-label="Date:" th:text="${#temporals.format(loan.applicationDate, 'dd MMM yyyy')}"></td>
+                                    <td data-label="Type:" th:text="${loan.loanType}" class="hide-md"></td>
+                                    <td data-label="Principal:" th:text="'Ksh '+${loan.principal}"></td>
+                                    <td data-label="Instalments:" th:text="${loan.instalments}+' months'"></td>
+                                    <td><a th:href="@{/rejected-loan-details(id=${loan.id})}" class="text-decoration-none"><button class="btn btn-success text-light">View</button></a></td>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <div th:insert="~{base :: footer}">  </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>

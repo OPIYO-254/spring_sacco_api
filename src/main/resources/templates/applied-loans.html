@@ -17,8 +17,8 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
 </head>
 <body>
-    <div th:insert="~{base :: navbar}"></div>
-    <div class="container-fluid"></div>
+    <div id="navbar-container" th:insert="~{base :: navbar}"></div>
+    <div class="container-fluid body-section"></div>
         <div class="row">
             <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-3 col-lg-2 p-0" id="sidebar-container"></div>
             <div class="col-md-10 main-section">
@@ -37,7 +37,7 @@
                                   <th scope="col" class="text-success hide-md">Type</th>
                                   <th scope="col" class="text-success">Principal</th>
                                   <th scope="col" class="text-success">Instalments</th>
-                                  <th scope="col" class="text-success hide-md">Action</th>
+                                  <th scope="col" class="text-success">Action</th>
                               </thead>
                               <tbody>
                                   <tr th:each="loan: ${loans}">

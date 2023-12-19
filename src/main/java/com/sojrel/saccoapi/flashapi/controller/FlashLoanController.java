@@ -1,6 +1,7 @@
 package com.sojrel.saccoapi.flashapi.controller;
 
 import com.sojrel.saccoapi.flashapi.dto.response.FlashLoanMapper;
+import com.sojrel.saccoapi.flashapi.dto.response.FlashRepaymentAndTotalRepaid;
 import com.sojrel.saccoapi.flashapi.model.FlashLoan;
 import com.sojrel.saccoapi.flashapi.dto.request.FlashLoanRequestDto;
 import com.sojrel.saccoapi.flashapi.dto.response.FlashLoanResponseDto;
@@ -95,6 +96,12 @@ public class FlashLoanController {
     public ResponseEntity<List<FlashLoanResponseDto>> getLoansByDateApplied(@PathVariable LocalDateTime date){
         List<FlashLoanResponseDto> dtoList = flashLoanService.getFlashLoanByApplicationDate(date);
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
+
+    @GetMapping("/loan-repayment-amount/{id}")
+    public ResponseEntity<FlashRepaymentAndTotalRepaid> getLoanAndRepayment(@PathVariable Long id){
+        FlashRepaymentAndTotalRepaid flashRepaymentAndTotalRepaid = flashLoanService.getLoanAndRepayment(id);
+        return new ResponseEntity<>(flashRepaymentAndTotalRepaid, HttpStatus.OK);
     }
 
 }

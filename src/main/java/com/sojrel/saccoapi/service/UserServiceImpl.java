@@ -10,6 +10,7 @@ import com.sojrel.saccoapi.repository.RoleRepository;
 import com.sojrel.saccoapi.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Slf4j
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -101,7 +103,8 @@ public class UserServiceImpl implements UserService {
             return new LoginResponseDTO(user, token);
 
         } catch(AuthenticationException e){
-            e.printStackTrace();
+//            e.printStackTrace();
+            log.error("authentication error "+ e.getLocalizedMessage());
             return new LoginResponseDTO(null, "");
         }
     }

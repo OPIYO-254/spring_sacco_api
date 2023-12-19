@@ -3,6 +3,7 @@ package com.sojrel.saccoapi.flashapi.repository;
 import com.sojrel.saccoapi.flashapi.model.FlashLoan;
 import com.sojrel.saccoapi.model.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -17,4 +18,7 @@ public interface FlashLoanRepository extends JpaRepository<FlashLoan, Long> {
     List<FlashLoan> findByApplicationDate(LocalDateTime date);
 
     List<FlashLoan> findByMemberAndLoanStatus(Member member, FlashLoan.Status loanStatus);
+
+
+//    List<FlashLoan> getLoanRepaidAmount(@Param("amount") double amount);
 }

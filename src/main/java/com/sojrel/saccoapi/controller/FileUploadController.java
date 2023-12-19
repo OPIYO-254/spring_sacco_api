@@ -1,15 +1,20 @@
 package com.sojrel.saccoapi.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.sojrel.saccoapi.exceptions.StorageFileNotFoundException;
 import com.sojrel.saccoapi.model.Member;
+import com.sojrel.saccoapi.model.UserFiles;
 import com.sojrel.saccoapi.repository.FileUploadRepository;
 import com.sojrel.saccoapi.repository.MemberRepository;
 import com.sojrel.saccoapi.service.MemberService;
 import com.sojrel.saccoapi.service.StorageService;
+import com.sojrel.saccoapi.service.UserFilesService;
+import com.sojrel.saccoapi.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -34,6 +39,8 @@ public class FileUploadController {
     private MemberRepository memberRepository;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private UserFilesService userFilesService;
 
     @Autowired
     public FileUploadController(StorageService storageService) {
@@ -122,9 +129,21 @@ public class FileUploadController {
 //        return new ResponseEntity<>(HttpStatus.OK);
 //    }
 
+    @GetMapping("/photo-image/{memberId}")
+    public String getPassportUrl(@PathVariable String memberId){
+        List<UserFiles> files = userFilesService.getUserFilesByMember(memberId);
+        List<String> urls = new ArrayList<>();
+        for(UserFiles file : files){
+            urls.add(file.getFileUrl());
+        }
+        return  urls.get(3);
+    }
+
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
         return ResponseEntity.notFound().build();
     }
+
+
 
 }

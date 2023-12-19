@@ -17,6 +17,7 @@ public class FlashLoanMapper {
         dto.setRepayDate(loan.getRepayDate());
         dto.setLoanStatus(String.valueOf(loan.getLoanStatus()));
         dto.setAmount(loan.getAmount());
+        dto.setRepayments(loan.getRepayments());
         return dto;
     }
 
@@ -32,7 +33,7 @@ public class FlashLoanMapper {
 
     public static FlashRepaymentResponseDto flashRepaymentToFlashRepaymentResponseDto(FlashRepayment repayment){
         FlashRepaymentResponseDto dto = new FlashRepaymentResponseDto();
-        dto.setLoanId(repayment.getId());
+        dto.setId(repayment.getId());
         dto.setLoanId(repayment.getLoan().getId());
         dto.setTransactionDate(repayment.getTransactionDate());
         dto.setAmount(repayment.getAmount());
@@ -48,4 +49,5 @@ public class FlashLoanMapper {
         }
         return dtoList;
     }
+
 }

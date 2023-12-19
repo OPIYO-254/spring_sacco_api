@@ -17,8 +17,8 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
-    <div th:insert="~{base :: navbar}">  </div>
-    <div class="container-fluid">
+    <div id="navbar-container" th:insert="~{base :: navbar}">  </div>
+    <div class="container-fluid body-section">
         <div class="row">
             <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-2 col-lg-2 p-0" id="sidebar-container"></div>
             <!-- Main Section -->
