@@ -29,4 +29,5 @@ public interface FlashLoanService {
 
     List<FlashLoanResponseDto> getMemberLoansByLoanStatus(String memberId, FlashLoan.Status loanStatus);
 
+    Double determineLoanLimit(String memberId);
 }

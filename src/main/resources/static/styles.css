@@ -399,6 +399,10 @@ body{
     justify-content:space-between
 
 }
+.button-class{
+    display:flex;
+    justify-content: space-between;
+}
 .item{
     background-color:#09AA5C;
     padding: 8px;
@@ -961,6 +965,11 @@ body{
     }
     .contribution-box span{
         font-size:14px;
+    }
+    .button-class{
+        display:flex;
+        flex-direction:column;
+        justify-content: space-between;
     }
     .contribution-btn .contrib-btn {
         background-color: white;

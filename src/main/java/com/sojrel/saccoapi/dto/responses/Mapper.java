@@ -113,6 +113,7 @@ public class Mapper {
         contactResponseDto.setPhone(contact.getPhone());
         contactResponseDto.setMessage(contact.getMessage());
         contactResponseDto.setEmail(contact.getEmail());
+        contactResponseDto.setRead(contactResponseDto.isRead());
         return contactResponseDto;
     }
 

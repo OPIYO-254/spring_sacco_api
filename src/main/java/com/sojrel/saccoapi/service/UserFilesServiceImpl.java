@@ -45,6 +45,7 @@ public class UserFilesServiceImpl implements UserFilesService{
             userFiles.setFileType(file.getContentType());
             userFiles.setFile(file.getBytes());
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .scheme("https")
                     .path("/downloadFile/%s/".formatted(memberId))
                     .path(userFiles.getFileName())
                     .toUriString();

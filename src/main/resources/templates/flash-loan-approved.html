@@ -30,24 +30,24 @@
         <div class="table-responsive table-responsive-sm">
           <table class="table" id="flash_table" style="width:100%">
             <thead>
-            <th class="hide-md">ID</th>
-            <th>Member No.</th>
-            <th>Principal</th>
+            <th>ID</th>
+            <th class="hide-md">Member No.</th>
+            <th class="hide-md">Principal</th>
             <th class="hide-md">Date Applied</th>
             <th>Amount Due</th>
-            <th class="hide-md">Date Due</th>
+            <th>Date Due</th>
             <th class="d-flex justify-content-center">Repayment</th>
             </thead>
             <tbody>
             <tr th:each="flash:${flashLoans}">
               <td data-label="ID" th:text="${flash.id}"></td>
-              <td data-label="Member No." th:text="${flash.memberId}"></td>
-              <td data-label="Principal" th:text="${flash.principal}"></td>
-              <td data-label="Date Applied" th:text="${#temporals.format(flash.applicationDate,'dd MMM yyyy')}" class="hide-md"></td>
+              <td class="hide-md" data-label="Member No." th:text="${flash.memberId}"></td>
+              <td class="hide-md" data-label="Principal" th:text="${flash.principal}"></td>
+              <td class="hide-md" data-label="Date Applied" th:text="${#temporals.format(flash.applicationDate,'dd MMM yyyy')}"></td>
               <td data-label="Amount Due" th:text="${flash.amount}"></td>
-              <td data-label="Date Due" th:text="${#temporals.format(flash.repayDate, 'dd MMM yyyy')}" class="hide-md"></td>
-              <td class="d-flex">
-                <div class="d-flex justify-content-center">
+              <td data-label="Date Due" th:text="${#temporals.format(flash.repayDate, 'dd MMM yyyy')}"></td>
+              <td class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between">
                   <div>
                     <div class="modal fade" id="flashRepayModal" tabindex="-1" aria-labelledby="flashRepayModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
@@ -78,13 +78,17 @@
                     </div>
                     <button class="btn btn-warning text-light mx-1"
                             style="background-color: orange; border-color:orange;"
-                            data-bs-toggle="modal" data-bs-target="#flashRepayModal">Partial Payment</button>
+                            data-bs-toggle="modal" data-bs-target="#flashRepayModal">Partial</button>
                   </div>
                   <form th:action="@{/flash-repay}" th:method="post">
                     <input type="hidden" name="loanId" th:value="${flash.id}" />
                     <input type="hidden" name="amount" th:value="${flash.amount}" />
-                    <button type="submit" class="btn btn-success text-light mx-1">Full Payment</button>
+                    <button type="submit" class="btn btn-success text-light mx-1">Full</button>
                   </form>
+                  <form th:action="@{/flash-write-off(id=${flash.id})}" th:method="post">
+                    <button class="btn btn-danger text-light mx-1" style="background-color: red; border-color:red;">WriteOff</button>
+                  </form>
+<!--                  <a th:href="@{/flash-write-off(id=flash.id)}" class="text-decoration-none"><button class="btn btn-success" style="background-color: red; border-color:red;">WriteOff</button></a>-->
               </td>
             </tbody>
           </table>

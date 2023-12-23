@@ -306,10 +306,10 @@ public class HomepageController {
     @GetMapping("/approved-loans")
     public ModelAndView listApprovedLoans(){
         ModelAndView modelAndView = new ModelAndView("approved-loans");
-        List<MemberLoansResponseDto> rejectedLoans = loanService.getApprovedLoans();
+        List<MemberLoansResponseDto> approvedLoans = loanService.getApprovedLoans();
         ItemCountDto countUnread = contactService.countUnreadMessages();
         Long unread = countUnread.getCount();
-        modelAndView.addObject("approvedLoans", rejectedLoans);
+        modelAndView.addObject("approvedLoans", approvedLoans);
         modelAndView.addObject("unread", unread);
         return modelAndView;
     }
@@ -528,7 +528,7 @@ public class HomepageController {
         List<FlashLoanResponseDto> approvedList = flashLoanService.getFlashLoanByStatus("APPROVED");
         List<FlashLoanResponseDto> paidList = flashLoanService.getFlashLoanByStatus("PAID");
         List<FlashLoanResponseDto> rejectedList = flashLoanService.getFlashLoanByStatus("REJECTED");
-        List<FlashLoanResponseDto> writtenList = flashLoanService.getFlashLoanByStatus("WRITTEN_OFF");
+        List<FlashLoanResponseDto> writtenList = flashLoanService.getFlashLoanByStatus("WRITEOFF");
         int countApproved = approvedList.size();
         int paid = paidList.size();
         int rejected = rejectedList.size();
@@ -553,31 +553,37 @@ public class HomepageController {
         return "redirect:/flash";
     }
 
+    @PostMapping("/flash-write-off")
+    public String writeOffFlashLoan(@RequestParam Long id){
+        flashLoanService.writeOffFlashLoan(id);
+        return "redirect:/flash-approved";
+    }
     @GetMapping("/flash-approved")
-    public ModelAndView approvedFlashLoans(){
+    public ModelAndView approvedFlashLoans() {
         ModelAndView modelAndView = new ModelAndView("flash-loan-approved");
         List<FlashLoanResponseDto> dtoList = flashLoanService.getFlashLoanByStatus("APPROVED");
         List<FlashLoanRepaidAmountDto> repayments = flashRepaymentService.getLoansAndRepaidAmount();
+//        System.out.println(repayments);
         List<FlashLoanResponseDto> list = new ArrayList<>();
-        for (FlashLoanResponseDto dto : dtoList) {
-            for (FlashLoanRepaidAmountDto repaidAmountDto : repayments) {
-                if (dto.getId() == repaidAmountDto.getLoanId() && repaidAmountDto.getAmount()-repaidAmountDto.getAmount()>0.0) {//check whether the loan has not been paid fully
-//                    System.out.println(repaidAmountDto.getAmount()-repaidAmountDto.getAmount());
-                    list.add(dto);
-                }
-                else{
-                    //update loan status to completed by first checking if it is not updated.
-                    if(!dto.getLoanStatus().equals(FlashLoan.Status.PAID)){
+        for(FlashLoanResponseDto dto:dtoList){
+            for(FlashLoanRepaidAmountDto repaid : repayments){
+                if(dto.getId() == repaid.getLoanId()){
+                    if(dto.getAmount()-repaid.getAmount()>0.0){
+                        list.add(dto);
+                    }
+                    else{
                         flashLoanService.completeFlashLoan(dto.getId());
                     }
+                    modelAndView.addObject("flashLoans", list);
 
                 }
+                else{
+                    modelAndView.addObject("flashLoans", dtoList);
+                }
             }
-        }
-//        System.out.println(list);
-        modelAndView.addObject("flashLoans", list);
-        return  modelAndView;
 
+        }
+        return  modelAndView;
     }
 
     @PostMapping("/flash-repay")
@@ -585,6 +591,7 @@ public class HomepageController {
         flashRepaymentService.makeRepayment(dto);
         return "redirect:/flash-approved";
     }
+
 
     @GetMapping("/flash-rejected")
     public ModelAndView rejectedFlashLoans(){
@@ -603,7 +610,7 @@ public class HomepageController {
     @GetMapping("/flash-written-off")
     public ModelAndView writtenOffFlashLoans(){
         ModelAndView modelAndView = new ModelAndView("flash-loan-written-off");
-        List<FlashLoanResponseDto> dtoList = flashLoanService.getFlashLoanByStatus("WRITTEN_OFF");
+        List<FlashLoanResponseDto> dtoList = flashLoanService.getFlashLoanByStatus("WRITEOFF");
         modelAndView.addObject("flashLoans", dtoList);
         return  modelAndView;
     }

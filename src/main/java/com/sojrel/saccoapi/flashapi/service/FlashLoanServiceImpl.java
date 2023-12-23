@@ -1,6 +1,5 @@
 package com.sojrel.saccoapi.flashapi.service;
 
-import com.sojrel.saccoapi.dto.responses.ItemTotalDto;
 import com.sojrel.saccoapi.dto.responses.TotalDoubleItem;
 import com.sojrel.saccoapi.flashapi.dto.request.FlashLoanRequestDto;
 import com.sojrel.saccoapi.flashapi.dto.response.*;
@@ -91,7 +90,7 @@ public class FlashLoanServiceImpl implements FlashLoanService{
     public FlashLoanResponseDto writeOffFlashLoan(Long id) {
         FlashLoan loan = getFlashLoanById(id);
         if(Objects.nonNull(loan)){
-            loan.setLoanStatus(FlashLoan.Status.WRITTEN_OFF);
+            loan.setLoanStatus(FlashLoan.Status.WRITEOFF);
             flashLoanRepository.save(loan);
         }
         return FlashLoanMapper.flashLoanToDto(loan);
@@ -173,4 +172,36 @@ public class FlashLoanServiceImpl implements FlashLoanService{
         List<FlashLoan> loans = StreamSupport.stream(flashLoanRepository.findByMemberAndLoanStatus(member, loanStatus).spliterator(), false).collect(Collectors.toList());
         return FlashLoanMapper.flashLoansToFlashLoanDtos(loans);
     }
+
+    @Override
+    public Double determineLoanLimit(String memberId){
+        double limit = 0.0;
+        List<FlashLoanResponseDto> loansTaken = getFlashLoanByMemberId(memberId);
+        if(loansTaken.isEmpty()){//for first time applicants
+            limit = 1000.0;
+        }
+        else{
+            List<Double> principals = new ArrayList<>();
+            for(FlashLoanResponseDto dto:loansTaken){
+                principals.add(dto.getPrincipal());
+            }
+            //determine the largest loan ever taken
+            double minPrincipal = Double.MIN_VALUE;
+            for (double number : principals) {
+                if (number > minPrincipal) {
+                    minPrincipal = number;
+                }
+            }
+            if(minPrincipal<10000.0){
+                limit = minPrincipal+500.0;
+            }
+            else {
+                limit = 10000.0;
+            }
+
+        }
+        System.out.println(limit);
+        return limit;
+    }
+
 }

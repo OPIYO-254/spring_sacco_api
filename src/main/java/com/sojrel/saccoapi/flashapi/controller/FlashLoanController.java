@@ -104,4 +104,10 @@ public class FlashLoanController {
         return new ResponseEntity<>(flashRepaymentAndTotalRepaid, HttpStatus.OK);
     }
 
+    @GetMapping("/get-limit/{memberId}")
+    public ResponseEntity<?> getLoanLimit(@PathVariable String memberId){
+        double limit = flashLoanService.determineLoanLimit(memberId);
+        return new ResponseEntity<>(limit, HttpStatus.OK);
+    }
+
 }

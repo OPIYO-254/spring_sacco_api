@@ -48,7 +48,7 @@ public class FlashLoan {
     private FlashDisbursement flashDisbursement;
     @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<FlashRepayment> repayments;
-    public enum Status{REVIEWING,APPROVED,REJECTED,PAID, WRITTEN_OFF}
+    public enum Status{REVIEWING,APPROVED,REJECTED,PAID, WRITEOFF}
 
 
     @PrePersist

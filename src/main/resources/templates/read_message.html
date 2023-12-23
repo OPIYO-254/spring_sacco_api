@@ -57,10 +57,11 @@
 
       <div class="d-flex justify-content-center">
         <a th:href="@{/messages}"><button class="btn mx-3">Back</button></a>
-        <form th:action="@{/mark-read-message/{id}(id=${message.id})}" th:method="post">
-          <button type="submit" class="btn mx-3" >Mark as Read</button>
-        </form>
-
+        <div th:if="${message.isRead}">
+          <form th:action="@{/mark-read-message/{id}(id=${message.id})}" th:method="post">
+            <button type="submit" class="btn mx-3" >Mark as Read</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
