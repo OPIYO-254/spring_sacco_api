@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
         String content = "<p>Hello,</p>"
                 + "<p>You have requested to reset your password.</p>"
                 + "<p>Click the link below to change your password:</p>"
-                + "<h3><a href=\"" + link + "\">Change my password</a></h3>"
+                + "<button><h3><a href=\"" + link + "\">Change my password</a></h3></button>"
                 + "<br>"
                 + "<p>Ignore this email if you do remember your password, "
                 + "or you have not made the request.</p>";

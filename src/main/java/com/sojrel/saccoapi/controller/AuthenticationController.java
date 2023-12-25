@@ -84,8 +84,9 @@ public class AuthenticationController {
             String resetPasswordLink = getSiteURL(request) + "/reset-password?token=" + token;
             userService.sendResetEmail(email, resetPasswordLink);
             response.put("status", "success");
-            response.put("message", "We have sent a reset password link to your email. Please check.");
+            response.put("message", "We have sent a reset password link to your email.");
         }catch (Exception e){
+            log.error("error sending email "+e.getLocalizedMessage());
             response.put("error", "error in sending email");
         }
         return ResponseEntity.ok(response);
