@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -81,11 +82,11 @@ public class UserServiceImpl implements UserService {
         user.setVerificationCode(randomCode);
         //System.out.println(randomCode);
 
+        boolean send = sendVerificationEmail(user, siteURL);
         // save user
-        userRepository.save(user);
-        // send verification email to user
-        sendVerificationEmail(user, siteURL);
-//        System.out.println("sending email...");
+        if(send) {
+            userRepository.save(user);
+        }
         return user;
     }
 
@@ -110,7 +111,8 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    private void sendVerificationEmail(User user, String siteURL) throws MessagingException, UnsupportedEncodingException {
+    private boolean sendVerificationEmail(User user, String siteURL) throws MessagingException, UnsupportedEncodingException {
+        boolean send = false;
         String toAddress = user.getEmail();
         String fromAddress = "sojrelsacco@gmail.com";
         String senderName = "Sojrel Sacco";
@@ -135,8 +137,14 @@ public class UserServiceImpl implements UserService {
         content = content.replace("[[URL]]", verifyURL);
 
         helper.setText(content, true);
-
-        mailSender.send(message);
+        try {
+            mailSender.send(message);
+            send = true;
+        }
+        catch (Exception e){
+            log.error("Sending error: " + e.getLocalizedMessage());
+        }
+        return  send;
     }
 
     public void setResetPasswordToken(String email, String token) throws UserNotFoundException {

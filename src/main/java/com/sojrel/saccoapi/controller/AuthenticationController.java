@@ -38,41 +38,39 @@ public class AuthenticationController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody RegistrationRequestDto registrationRequestDto, HttpServletRequest request){
         String siteURl = getSiteURL(request);
-        try {
-            Member member = memberService.getMemberByEmail(registrationRequestDto.getEmail());
-            System.out.println(member.getId());
-            if(!Objects.nonNull(member)) {
-                try {
-                    userService.addUser(registrationRequestDto, siteURl);
-                    Map<String, String> response = new HashMap<>();
-                    response.put("status", "success");
-                    response.put("message", "Registration successful. Please check your email to activate your account.");
-                    return ResponseEntity.ok(response);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Map<String, String> response = new HashMap<>();
-                    response.put("status", "error");
-                    response.put("message", "Error creating user");
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                            .body(response);
-                }
-            }
-            else{
+        Member member = memberService.getMemberByEmail(registrationRequestDto.getEmail());
+        if(member!=null) {
+            try {
+                userService.addUser(registrationRequestDto,siteURl);
+                Map<String, String> response = new HashMap<>();
+                response.put("status", "success");
+                response.put("message", "Registered Successfully. \nPlease check your email to verify your account.");
+                return ResponseEntity.ok(response);
+            } catch (Exception e) {
+                log.error("error in creating account: "+e.getLocalizedMessage());
                 Map<String, String> response = new HashMap<>();
                 response.put("status", "error");
-                response.put("message", "You are not authorized to create signup. Contact admin.");
+                response.put("message", "Error creating user");
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(response);
             }
         }
-        catch (Exception e){
+        else{
             Map<String, String> response = new HashMap<>();
             response.put("status", "error");
             response.put("message", "You are not authorized to create signup. Contact admin.");
-            log.error("error "+e.getLocalizedMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(response);
         }
+
+//        catch (Exception e){
+//            Map<String, String> response = new HashMap<>();
+//            response.put("status", "error");
+//            response.put("message", "You are not authorized to create signup. Contact admin.");
+//            log.error("error "+e.getLocalizedMessage());
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(response);
+//        }
 
 
     }
