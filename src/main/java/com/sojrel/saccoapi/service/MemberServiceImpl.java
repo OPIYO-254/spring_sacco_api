@@ -57,7 +57,6 @@ public class MemberServiceImpl implements MemberService{
         return memberRepository.findById(memberId).orElseThrow(()->
                 new IllegalArgumentException("Member with id "+memberId+" not found"));
     }
-
     @Override
     public List<MemberResponseDto> getAllMembers() {
         List<Member> members = StreamSupport.stream(memberRepository.findAll().spliterator(), false).collect(Collectors.toList());

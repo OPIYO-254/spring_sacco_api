@@ -39,8 +39,9 @@ public class AuthenticationController {
     public ResponseEntity<?> signup(@RequestBody RegistrationRequestDto registrationRequestDto, HttpServletRequest request){
         String siteURl = getSiteURL(request);
         try {
-            Member member = memberService.getMemberById(registrationRequestDto.getEmail());
-            if(member != null) {
+            Member member = memberService.getMemberByEmail(registrationRequestDto.getEmail());
+            System.out.println(member.getId());
+            if(!Objects.nonNull(member)) {
                 try {
                     userService.addUser(registrationRequestDto, siteURl);
                     Map<String, String> response = new HashMap<>();
