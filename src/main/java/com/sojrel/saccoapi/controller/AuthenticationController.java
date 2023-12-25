@@ -58,7 +58,7 @@ public class AuthenticationController {
         else{
             Map<String, String> response = new HashMap<>();
             response.put("status", "error");
-            response.put("message", "You are not authorized to create signup. Contact admin.");
+            response.put("message", "You are not authorized to signup. Contact admin.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(response);
         }
