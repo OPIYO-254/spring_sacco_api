@@ -78,19 +78,17 @@ public class AuthenticationController {
     public ResponseEntity<?> processForgotPassword(HttpServletRequest request, Model model) throws UserNotFoundException {
         String email = request.getParameter("email");
         String token = RandomString.make(30);
+        Map<String, String> response = new HashMap<>();
         try {
             userService.setResetPasswordToken(email, token);
             String resetPasswordLink = getSiteURL(request) + "/reset-password?token=" + token;
             userService.sendResetEmail(email, resetPasswordLink);
-            model.addAttribute("message", "We have sent a reset password link to your email. Please check.");
-        }catch (UserNotFoundException e){
-            model.addAttribute("error", e.getMessage());
-        } catch (MessagingException e) {
-            log.error("messaging exception "+e.getLocalizedMessage());
-        } catch (UnsupportedEncodingException e) {
-            log.error("unsupported encoding "+e.getLocalizedMessage());
+            response.put("status", "success");
+            response.put("message", "We have sent a reset password link to your email. Please check.");
+        }catch (Exception e){
+            response.put("error", "error in sending email");
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok(response);
     }
 
 
