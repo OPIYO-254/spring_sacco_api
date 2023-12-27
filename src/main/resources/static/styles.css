@@ -235,9 +235,7 @@ body{
     height: 240px;
 }
 .carousel-item img{
-    width: 400px;
-    position: relative;
-    right: calc(50% - 450px);
+    width: 100%;
 }
 /*.carousel-item:nth-child(3) img{
         height: 300px;
