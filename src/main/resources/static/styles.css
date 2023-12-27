@@ -235,8 +235,15 @@ body{
     height: 240px;
 }
 .carousel-item img{
-    /*height:400px;*/
+    width: 400px;
+    position: relative;
+    right: calc(50% - 450px);
 }
+/*.carousel-item:nth-child(3) img{
+        height: 300px;
+        position: relative;
+        right: calc(50% - 330px);
+}*/
 .carousel-inner .title{
     display:flex;
     justify-content:center;
@@ -1305,7 +1312,7 @@ body{
        right: 1px;
        height: 60px;
     }
-    .collapse:not(.show) {
+    .menu-collapse:not(.show) {
         display: block;
         position: absolute;
         right: 15%;
@@ -1434,7 +1441,7 @@ body{
     .join-container {
         width:auto;
     }
-    .collapse:not(.show) {
+    .menu-collapse:not(.show) {
         display: block;
         position: absolute;
         right: 15%;
@@ -1695,7 +1702,7 @@ body{
    .logoutBtn .card-title{
         display:none;
    }
-   .collapse:not(.show) {
+   .menu-collapse:not(.show) {
         display: block;
         position: absolute;
         right: 15%;
@@ -1897,7 +1904,7 @@ body{
    .logoutBtn .card-title{
         display:none;
    }
-   .collapse:not(.show) {
+   .menu-collapse:not(.show) {
        display: block;
        position: absolute;
        right: 15%;
