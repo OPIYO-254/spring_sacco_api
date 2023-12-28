@@ -28,6 +28,6 @@ public class LoanResponseDto {
     private String borrowerFname;
     private String borrowerMname;
     private String borrowerLname;
-//    private List<Member> guarantors;
+    private List<GuarantorsDto> guarantors;
 
 }

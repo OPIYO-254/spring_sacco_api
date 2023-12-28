@@ -22,6 +22,14 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
             "from Loan l join Member m on l.borrower = m where l.loanStatus=:loanStatus AND SIZE(l.repayments) > 0")
     List<MemberLoansResponseDto> findRepayingLoans(@Param("loanStatus") Loan.LoanStatus loanStatus);
 
+    @Query(value = "SELECT new com.sojrel.saccoapi.dto.responses.MemberLoansResponseDto(m.id, m.firstName, m.midName, l.id, l.loanType, l.applicationDate, l.principal, l.instalments, l.loanStatus)\n" +
+            "from Loan l join Member m on l.borrower = m where l.loanStatus=:loanStatus")
+    List<MemberLoansResponseDto> findApprovedLoans(@Param("loanStatus") Loan.LoanStatus loanStatus);
+
+    @Query(value = "SELECT new com.sojrel.saccoapi.dto.responses.MemberLoansResponseDto(m.id, m.firstName, m.midName, l.id, l.loanType, l.applicationDate, l.principal, l.instalments, l.loanStatus)\n" +
+            "from Loan l join Member m on l.borrower = m where l.loanStatus=:loanStatus")
+    List<MemberLoansResponseDto> findMemberApprovedLoans(@Param("loanStatus") Loan.LoanStatus loanStatus);
+
     @Query("SELECT new com.sojrel.saccoapi.dto.responses.MemberLoansResponseDto(m.id, m.firstName, m.midName, l.id, l.loanType, l.applicationDate, l.principal, l.instalments, l.loanStatus)\n" +
             "from Loan l join Member m on l.borrower = m where l.loanStatus=:loanStatus")
     List<MemberLoansResponseDto> findCompletedLoans(@Param("loanStatus") Loan.LoanStatus loanStatus);
@@ -47,6 +55,9 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     @Query("SELECT new com.sojrel.saccoapi.dto.responses.TotalDoubleItem(SUM(amount)) FROM Repayment r WHERE r.loan.id =:loanId")
     TotalDoubleItem getTotalRepaid(@Param("loanId") Long loanId);
 
+
+
+
     /**
      * get disbursements done for a specified period.
      * @return
@@ -66,6 +77,9 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
 
     @Query(value = "SELECT loan_type, SUM(principal) FROM loan group by loan_type", nativeQuery = true)
     List<Object[]> getTotalPerLoanCategory();
+
+    List<Loan> findByLoanStatus(Loan.LoanStatus status);
+
 
 
 }

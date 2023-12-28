@@ -16,10 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @CrossOrigin(origins={"http://10.0.2.2:8080"})
 @RestController
@@ -144,7 +141,11 @@ public class LoanController {
         }
     }
 
-    //flas
+    @GetMapping("/guarantee-total")
+    public ResponseEntity<?> getOutstandingGuaranteeAmount(@RequestParam String memberId){
+        String oustanding = loanService.getGuaranteeBalance(memberId);
+        return new ResponseEntity<>(oustanding, HttpStatus.OK);
+    }
 
 
 

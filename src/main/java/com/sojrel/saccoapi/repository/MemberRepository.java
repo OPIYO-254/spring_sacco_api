@@ -25,6 +25,5 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     ItemCountDto findMemberCount();
 
 
-
 }
 

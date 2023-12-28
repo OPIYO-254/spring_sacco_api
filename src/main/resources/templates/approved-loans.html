@@ -37,14 +37,14 @@
                         </thead>
                         <tbody>
                             <tr th:each="loan: ${approvedLoans}">
-                                <td data-label="ID:" th:text="${loan.id}"></td>
+                                <td data-label="ID:" th:text="${loan.loanId}"></td>
                                 <td data-label="Member ID:" th:text="${loan.memberId}"></td>
                                 <td data-label="Name:" th:text="${loan.firstName} +' ' +${loan.midName}"></td>
                                 <td data-label="Date:" th:text="${#temporals.format(loan.applicationDate, 'dd MMM yyyy')}"></td>
                                 <td data-label="Type:" th:text="${loan.loanType}" class="hide-md"></td>
                                 <td data-label="Principal:" th:text="'Ksh '+${loan.principal}"></td>
                                 <td data-label="Instalments:" th:text="${loan.instalments}+' months'"></td>
-                                <td><a th:href="@{/approved-loan-details(id=${loan.id})}" class="text-decoration-none"><button class="btn btn-success text-light">View</button></a></td>
+                                <td><a th:href="@{/approved-loan-details(id=${loan.loanId})}" class="text-decoration-none"><button class="btn btn-success text-light">View</button></a></td>
                             </tr>
                         </tbody>
                   </table>

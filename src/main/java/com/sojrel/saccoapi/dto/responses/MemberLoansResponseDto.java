@@ -19,7 +19,7 @@ public class MemberLoansResponseDto {
     private String memberId;
     private String firstName;
     private String midName;
-    private Long id;
+    private Long loanId;
     private Loan.LoanType loanType;
     private LocalDateTime applicationDate;
     private double principal;

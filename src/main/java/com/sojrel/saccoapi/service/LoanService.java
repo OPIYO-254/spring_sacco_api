@@ -5,14 +5,10 @@ import com.sojrel.saccoapi.dto.requests.RepaymentRequestDto;
 import com.sojrel.saccoapi.dto.responses.*;
 import com.sojrel.saccoapi.model.Loan;
 import com.sojrel.saccoapi.model.LoanGuarantor;
-import com.sojrel.saccoapi.model.LoanGuarantorId;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public interface LoanService {
@@ -55,4 +51,5 @@ public interface LoanService {
     List<LoanResponseDto> findByMember(String memberId);
     public List<KeyValueDto> totalMonthlyDisbursements();
     public List<KeyValueDto> totalPerLoanCategory();
+    public String getGuaranteeBalance (String memberId);
 }

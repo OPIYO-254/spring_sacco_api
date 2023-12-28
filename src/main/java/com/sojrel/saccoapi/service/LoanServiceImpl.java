@@ -8,14 +8,13 @@ import com.sojrel.saccoapi.repository.LoanGuarantorRepository;
 import com.sojrel.saccoapi.repository.LoanRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import jakarta.websocket.OnError;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -24,6 +23,7 @@ import java.util.stream.StreamSupport;
 
 import static com.sojrel.saccoapi.utils.DateConverter.convertDateFormat;
 
+@Slf4j
 @Service
 public class LoanServiceImpl implements LoanService{
     @Autowired
@@ -209,6 +209,13 @@ public class LoanServiceImpl implements LoanService{
         return loans;
     }
 
+    public double getLoanOutstanding(Long loanId){
+        TotalDoubleItem repaidTotal = getTotalRepaid(loanId);
+        LoanResponseDto loan = getLoan(loanId);
+        double amount = loan.getAmount();
+        return  amount-repaidTotal.getTotal();
+    }
+
     @Override
     public ItemCountDto countAppliedLoans() {
         ItemCountDto loanCount = loanRepository.countAppliedLoans(Loan.LoanStatus.REVIEW);
@@ -315,6 +322,27 @@ public class LoanServiceImpl implements LoanService{
         return totalRepaid;
     }
 
+    /**
+     * The function gets loans and their total repaid amounts
+     * @return
+     */
+    public List<LoanRepaymentDetails> getLoanTotalRepayments(){
+        List<LoanResponseDto> loans = getLoans();
+        List<LoanRepaymentDetails> repaymentDetails = new ArrayList<>();
+        List<Repayment> repayments = new ArrayList<>();
+        for(LoanResponseDto dto:loans){
+            LoanRepaymentDetails loanRepaymentDetails = new LoanRepaymentDetails();
+            loanRepaymentDetails.setLoanId(dto.getId());
+            loanRepaymentDetails.setAmount(dto.getAmount());
+            repayments = dto.getRepayments();
+            double totalRepaid = repayments.stream().mapToDouble(Repayment::getAmount).sum();
+            loanRepaymentDetails.setTotalRepaid(totalRepaid);
+            repaymentDetails.add(loanRepaymentDetails);
+        }
+        return repaymentDetails;
+
+    }
+
     @Override
     public ItemTotalDto getMonthlyDisbursement(){
         LocalDateTime now = LocalDateTime.now();
@@ -405,6 +433,64 @@ public class LoanServiceImpl implements LoanService{
 //        return null;
 //        return null;
 //    }
+
+    /**
+     * Todo
+     * get the list of members loans guaranteed
+     * get only loans with approved status
+     * get amount guaranteed for each loan
+     * calculate the oustanding guarantee balance by total_repaid/amount*amount_guaranteed
+     * get the sum of oustanding
+     */
+    @Override
+    public String getGuaranteeBalance (String memberId){
+        double oustanding = 0.0;
+        List<GuarantorsDto> loansGuaranteed = loanGuarantorRepository.getMemberApprovedLoansGuaranteed(memberId); //this gives the list of loans guaranteed by member
+//        System.out.println(loansGuaranteed);
+        List<LoanResponseDto> approvedLoans = Mapper.loanToLoanResponseDtos(loanRepository.findByLoanStatus(Loan.LoanStatus.APPROVED)); //list of all approved loans
+        List<LoanRepaymentDetails> repayments = getLoanTotalRepayments();
+//        List<LoanResponseDto> membersGuaranteedLoans = new ArrayList<>();
+        List<Double> balances = new ArrayList<>();
+        List<Map<String, Object>> repaymentDetails=new ArrayList<>();
+//        Map<String, Object> totals = new HashMap<>();
+        for(LoanResponseDto dto: approvedLoans){
+            for(GuarantorsDto dto1: loansGuaranteed){
+                for(LoanRepaymentDetails details:repayments){
+                    if(dto1.getLoanId().equals(dto.getId())){
+                        if(dto1.getLoanId().equals(details.getLoanId()) && dto1.getAmount()!=null){
+                            if(details.getTotalRepaid().equals(0.0)){
+                                oustanding = dto.getAmount()/dto.getAmount()*dto1.getAmount();
+                            }
+                            else{
+                                oustanding = details.getTotalRepaid()/dto.getAmount()*dto1.getAmount();
+                            }
+                            Map<String, Object> totals = new HashMap<>();
+                            totals.put("loanId", details.getLoanId());
+                            totals.put("balance", oustanding);
+                            repaymentDetails.add(totals);
+                            break;
+                        }
+
+                    }
+                }
+
+            }
+        }
+//        List<Map<String, Object>> oustanding = loanService.getGuaranteeBalance(memberId);
+        List<Double> oustandings = new ArrayList<>();
+        for(Map<String, Object> objectMap: repaymentDetails){
+            oustandings.add((double) objectMap.get("balance"));
+        }
+        System.out.println(oustandings);
+        double sum = 0.0;
+        for(double val : oustandings){
+            sum += val;
+        }
+
+//        System.out.println(repaymentDetails);
+        return String.format("%.2f", sum);
+    }
 }
+
 
 

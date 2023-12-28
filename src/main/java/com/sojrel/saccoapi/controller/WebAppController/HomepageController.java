@@ -227,14 +227,28 @@ public class HomepageController {
         ItemTotalDto shares = contributionService.getMemberTotalShares(id);
         Long totalShares = shares.getTotal();
         Long totalContribs;
+
+
+        String totalGuaranteed = loanService.getGuaranteeBalance(id);
+
         if(totalSavings == null && totalShares==null){totalContribs=null;}
         else if(totalSavings!=null && totalShares==null){totalContribs=totalSavings;}
         else if(totalSavings == null && totalShares!=null){totalContribs=totalShares;}
         else{totalContribs = totalShares + totalSavings;}
+        double availableGuarantee = 0.0;
+        if(totalSavings==null){
+            availableGuarantee = 0.0 - Double.valueOf(loanService.getGuaranteeBalance(id));
+        }
+        else{
+            availableGuarantee = Double.valueOf(totalSavings) - Double.valueOf(loanService.getGuaranteeBalance(id));
+        }
         modelAndView.addObject("member", memberResponseDto);
         modelAndView.addObject("savings", totalSavings);
         modelAndView.addObject("shares", totalShares);
+        modelAndView.addObject("guaranteed", totalGuaranteed);
+        modelAndView.addObject("guaranteeLimit", String.format("%.2f",availableGuarantee));
         modelAndView.addObject("total", totalContribs);
+
         return modelAndView;
     }
 

@@ -66,17 +66,11 @@ public class Mapper {
         loanResponseDto.setInterest(loan.getInterest());
         loanResponseDto.setLoanStatus(loan.getLoanStatus().name());
         loanResponseDto.setAmount(loan.calculatedAmount());
-//        loanResponseDto.setGuarantors(loan.getGuarantors());
-         loanResponseDto.setBorrowerFname(loan.getBorrower().getFirstName());
-         loanResponseDto.setBorrowerMname(loan.getBorrower().getMidName());
-         loanResponseDto.setBorrowerLname(loan.getBorrower().getLastName());
+        loanResponseDto.setBorrowerFname(loan.getBorrower().getFirstName());
+        loanResponseDto.setBorrowerMname(loan.getBorrower().getMidName());
+        loanResponseDto.setBorrowerLname(loan.getBorrower().getLastName());
         loanResponseDto.setRepayments(loan.getRepayments());
-        if(!Objects.nonNull(loanResponseDto)){
-            return null;
-        }
-         return loanResponseDto;
-
-
+        return loanResponseDto;
     }
 
     public static List<LoanResponseDto> loanToLoanResponseDtos(List<Loan> loans){
