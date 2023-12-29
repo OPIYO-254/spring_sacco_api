@@ -128,6 +128,20 @@ body{
     display:flex;
 
 }
+.guarantee-container{
+    display:flex;
+    justify-content:center;
+    margin-bottom: 12px;
+}
+.guaranteed-sub-container{
+    width: 200px;
+    margin: 0 12px;
+    padding:12px;
+    background-color:rgba(9, 170, 92, 1);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
 /*.file-uploader{
     height: 120px;
     background-color: rgba(9, 170, 92, 0.2);
@@ -805,6 +819,18 @@ body{
     }
     .icon-container i, .material-symbols-outlined{
         display:none;
+    }
+    .guarantee-container{
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+    }
+    .guaranteed-sub-container{
+        width: 100%;
+        margin: 6px 0;
+        display: flex;
+        flex-direction: row;
+        justify-content:space-between
     }
 
 }

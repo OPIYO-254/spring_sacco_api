@@ -2,14 +2,12 @@ package com.sojrel.saccoapi.flashapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sojrel.saccoapi.model.Member;
-import com.sojrel.saccoapi.flashapi.model.FlashDisbursement;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,7 +35,8 @@ public class FlashLoan {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status loanStatus;
-
+    @Column(nullable = false)
+    private Boolean repaidInTime = false;
     @Column(nullable = false)
     private double amount;
     @JsonIgnore

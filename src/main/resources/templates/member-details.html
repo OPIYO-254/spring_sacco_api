@@ -234,15 +234,15 @@
             </div>
 
             <hr class="border-2 border-success">
-            <div class="container d-flex justify-content-center">
-                <div class="mx-3 p-2 bg-success text-light rounded" style="width: 200px;">
-                    <span class="d-flex justify-content-center fw-bold"><u>Total Guaranteed</u></span>
-                    <h5 class="d-flex justify-content-center fw-bold" th:text="'Ksh '+ ${guaranteed}"></h5>
+            <div class="container guarantee-container">
+                <div class="rounded guaranteed-sub-container text-light">
+                    <span class="d-flex justify-content-center fw-bold">Total Guaranteed</span>
+                    <span class="d-flex justify-content-center fw-bold" th:text="'Ksh '+ ${guaranteed}"></span>
                 </div>
 
-                <div class="mx-3 p-2 bg-success text-light rounded" style="width: 200px;">
-                    <span class="d-flex justify-content-center fw-bold"><u>Guarantee Limit</u></span>
-                    <h5 class="d-flex justify-content-center fw-bold" th:text="'Ksh '+ ${guaranteeLimit}"></h5>
+                <div class="rounded guaranteed-sub-container text-light">
+                    <span class="d-flex justify-content-center fw-bold">Guarantee Limit</span>
+                    <span class="d-flex justify-content-center fw-bold" th:text="'Ksh '+ ${guaranteeLimit}"></span>
                 </div>
             </div>
 

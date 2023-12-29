@@ -15,6 +15,7 @@ public class FlashLoanMapper {
         dto.setApplicationDate(loan.getApplicationDate());
         dto.setMemberId(loan.getMember().getId());
         dto.setRepayDate(loan.getRepayDate());
+        dto.setRepaidInTime(loan.getRepaidInTime());
         dto.setLoanStatus(String.valueOf(loan.getLoanStatus()));
         dto.setAmount(loan.getAmount());
         dto.setRepayments(loan.getRepayments());

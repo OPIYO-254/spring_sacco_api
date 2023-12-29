@@ -1,11 +1,13 @@
 package com.sojrel.saccoapi.flashapi.service;
 
+import com.sojrel.saccoapi.dto.responses.RepaymentResponseDto;
 import com.sojrel.saccoapi.dto.responses.TotalDoubleItem;
 import com.sojrel.saccoapi.flashapi.dto.request.FlashLoanRequestDto;
 import com.sojrel.saccoapi.flashapi.dto.response.*;
 import com.sojrel.saccoapi.flashapi.model.FlashLoan;
 import com.sojrel.saccoapi.flashapi.repository.FlashLoanRepository;
 import com.sojrel.saccoapi.model.Member;
+import com.sojrel.saccoapi.model.Repayment;
 import com.sojrel.saccoapi.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 

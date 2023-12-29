@@ -435,24 +435,21 @@ public class LoanServiceImpl implements LoanService{
 //    }
 
     /**
-     * Todo
-     * get the list of members loans guaranteed
-     * get only loans with approved status
-     * get amount guaranteed for each loan
-     * calculate the oustanding guarantee balance by total_repaid/amount*amount_guaranteed
-     * get the sum of oustanding
+     * The function calculates the total amount of loan guaranteed by excluding any
+     * repayments made on loans guaranteed.
+     * This is used on calculating the guarantor's current(realtime) savings that can be used
+     * to guarantee future loans;
+     * @param memberId
+     * @return
      */
     @Override
     public String getGuaranteeBalance (String memberId){
         double oustanding = 0.0;
         List<GuarantorsDto> loansGuaranteed = loanGuarantorRepository.getMemberApprovedLoansGuaranteed(memberId); //this gives the list of loans guaranteed by member
-//        System.out.println(loansGuaranteed);
         List<LoanResponseDto> approvedLoans = Mapper.loanToLoanResponseDtos(loanRepository.findByLoanStatus(Loan.LoanStatus.APPROVED)); //list of all approved loans
         List<LoanRepaymentDetails> repayments = getLoanTotalRepayments();
-//        List<LoanResponseDto> membersGuaranteedLoans = new ArrayList<>();
         List<Double> balances = new ArrayList<>();
         List<Map<String, Object>> repaymentDetails=new ArrayList<>();
-//        Map<String, Object> totals = new HashMap<>();
         for(LoanResponseDto dto: approvedLoans){
             for(GuarantorsDto dto1: loansGuaranteed){
                 for(LoanRepaymentDetails details:repayments){
@@ -481,7 +478,7 @@ public class LoanServiceImpl implements LoanService{
         for(Map<String, Object> objectMap: repaymentDetails){
             oustandings.add((double) objectMap.get("balance"));
         }
-        System.out.println(oustandings);
+//        System.out.println(oustandings);
         double sum = 0.0;
         for(double val : oustandings){
             sum += val;
