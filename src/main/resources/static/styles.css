@@ -818,9 +818,13 @@ body{
         display: flex;
         flex-direction:column;
     }
-    .icon-container i, .material-symbols-outlined{
+    .icon-container{
         display:none;
     }
+    .requirement-container{
+        margin:12px 0;
+    }
+
     .guarantee-container{
         display:flex;
         flex-direction:column;
