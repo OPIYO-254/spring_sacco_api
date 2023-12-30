@@ -65,7 +65,13 @@ public class FlashRepaymentServiceImpl implements FlashRepaymentService{
         for(Object[] row:dtoList){
             FlashLoanRepaidAmountDto dto = new FlashLoanRepaidAmountDto();
             dto.setLoanId((Long)row[0]);
-            dto.setAmount((Double)row[1]);
+            if(row[1] == null){
+                dto.setAmount(0.0);
+            }
+            else{
+                dto.setAmount((Double)row[1]);
+            }
+
             dtos.add(dto);
         }
         return dtos;

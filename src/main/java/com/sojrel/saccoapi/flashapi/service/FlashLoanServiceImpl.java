@@ -5,6 +5,7 @@ import com.sojrel.saccoapi.dto.responses.TotalDoubleItem;
 import com.sojrel.saccoapi.flashapi.dto.request.FlashLoanRequestDto;
 import com.sojrel.saccoapi.flashapi.dto.response.*;
 import com.sojrel.saccoapi.flashapi.model.FlashLoan;
+import com.sojrel.saccoapi.flashapi.model.FlashRepayment;
 import com.sojrel.saccoapi.flashapi.repository.FlashLoanRepository;
 import com.sojrel.saccoapi.model.Member;
 import com.sojrel.saccoapi.model.Repayment;
@@ -60,6 +61,7 @@ public class FlashLoanServiceImpl implements FlashLoanService{
     @Override
     public FlashLoanResponseDto approveFlashLoan(Long id) {
         FlashLoan loan = getFlashLoanById(id);
+
         if(Objects.nonNull(loan)){
             loan.setLoanStatus(FlashLoan.Status.APPROVED);
             flashLoanRepository.save(loan);
@@ -80,7 +82,24 @@ public class FlashLoanServiceImpl implements FlashLoanService{
     @Override
     public FlashLoanResponseDto completeFlashLoan(Long id) {
         FlashLoan loan = getFlashLoanById(id);
+        List<FlashRepaymentResponseDto> repayments = flashRepaymentService.getAllRepayments();
+        List<LocalDateTime> dtoList = new ArrayList<>();
         if(Objects.nonNull(loan)){
+//            for(FlashRepaymentResponseDto dto: repayments){
+//                if(dto.getLoanId().equals(id)){
+//                    dtoList.add(dto.getTransactionDate());
+//                }
+//            }
+//            LocalDateTime latestDate = dtoList.stream()
+//                    .max(LocalDateTime::compareTo)
+//                    .orElse(null);
+////            System.out.println(latestDate);
+//            if(latestDate.isAfter(loan.getRepayDate())){
+//                loan.setRepaidInTime(false);
+//            }
+//            else{
+//                loan.setRepaidInTime(true);
+//            }
             loan.setLoanStatus(FlashLoan.Status.PAID);
             flashLoanRepository.save(loan);
         }

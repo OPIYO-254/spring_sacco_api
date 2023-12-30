@@ -250,6 +250,7 @@ body{
 }
 .carousel-item img{
     width: 100%;
+    height:100%;
 }
 /*.carousel-item:nth-child(3) img{
         height: 300px;
@@ -833,6 +834,7 @@ body{
         justify-content:space-between
     }
 
+
 }
 
 @media only screen and (max-width:576px){
@@ -1009,6 +1011,10 @@ body{
         border-radius: 20px;
         width:100%;
         margin-top:4px;
+    }
+    .carousel-item img {
+        width: 100%;
+        height: 80vw;
     }
     .contribution-btn{
         padding: 0 5px;
@@ -2195,6 +2201,12 @@ body{
         position:relative;
         left:35%;
     }
+    .carousel-item img {
+         width: 90%;
+         height: 100%;
+         position:relative;
+         left:5%;
+     }
 
 }
 
@@ -2224,6 +2236,12 @@ body{
     .form-container{
         width: 30%;
     }
+    .carousel-item img {
+         width: 70%;
+         height: 100%;
+         position:relative;
+         left:15%;
+     }
 }
 
 

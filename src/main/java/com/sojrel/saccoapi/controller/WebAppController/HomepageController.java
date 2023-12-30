@@ -578,26 +578,38 @@ public class HomepageController {
         List<FlashLoanResponseDto> dtoList = flashLoanService.getFlashLoanByStatus("APPROVED");
         List<FlashLoanRepaidAmountDto> repayments = flashRepaymentService.getLoansAndRepaidAmount();
 //        System.out.println(repayments);
-        List<FlashLoanResponseDto> list = new ArrayList<>();
-        for(FlashLoanResponseDto dto:dtoList){
-            for(FlashLoanRepaidAmountDto repaid : repayments){
-                if(dto.getId() == repaid.getLoanId()){
-                    if(dto.getAmount()-repaid.getAmount()>0.0){
-                        list.add(dto);
-                    }
-                    else{
-                        flashLoanService.completeFlashLoan(dto.getId());
-                    }
-                    modelAndView.addObject("flashLoans", list);
-
-                }
-                else{
-                    modelAndView.addObject("flashLoans", dtoList);
-                }
-            }
-
+        if(repayments.isEmpty()){
+            modelAndView.addObject("flashLoans", dtoList);
         }
+        else{
+            try {
+                List<FlashLoanResponseDto> list = new ArrayList<>();
+                for (FlashLoanResponseDto dto : dtoList) {
+                    for (FlashLoanRepaidAmountDto repaid : repayments) {
+                        if (dto.getId().equals(repaid.getLoanId())) { //check if the loan has been repaid before
+                            if (dto.getAmount() - repaid.getAmount() > 0.0) {//check of the loans has been paid fully if not add it to a list
+                                list.add(dto);
+                            } else {
+                                flashLoanService.completeFlashLoan(dto.getId());//if loan has been fully paid, update its status to 'PAID'
+                            }
+                            modelAndView.addObject("flashLoans", list); //return a list of incomplete loans
+                        }
+                        else{
+                            modelAndView.addObject("flashLoans", dtoList);
+                        }
+                    }
+                }
+//                System.out.println(list);
+            }catch (Exception e){
+                log.error("approved flash error: "+e.getLocalizedMessage());
+                e.printStackTrace();
+            }
+//            System.out.println(list);
+        }
+//        System.out.println(dtoList);
+
         return  modelAndView;
+
     }
 
     @PostMapping("/flash-repay")
