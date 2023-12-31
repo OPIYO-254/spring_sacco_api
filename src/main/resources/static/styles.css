@@ -309,7 +309,7 @@ body{
     justify-content:center;
     text-align: center;
 }
-.carousel-caption{
+.info-caption{
     padding-bottom:25%;
 }
 .carousel-caption p{
@@ -1026,8 +1026,8 @@ body{
     .contribution-box span{
         font-size:14px;
     }
-    .carousel-caption{
-        padding-bottom:35%;
+    .info-caption{
+        padding-bottom:40%;
     }
     .img-container{
         margin-right:0;
@@ -1528,6 +1528,9 @@ body{
     .img-container{
         margin-right:0;
     }
+    .info-caption{
+        padding-bottom:30%;
+    }
     .contribution-box{
         margin:4px;
         padding:4px;
@@ -1791,6 +1794,7 @@ body{
         flex-direction:column;
         align-items: center;
     }
+
     .mission-img img{
         display:none;
     }
