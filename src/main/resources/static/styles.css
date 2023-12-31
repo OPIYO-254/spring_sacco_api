@@ -1026,6 +1026,9 @@ body{
     .contribution-box span{
         font-size:14px;
     }
+    .carousel-caption{
+        padding-bottom:35%;
+    }
     .img-container{
         margin-right:0;
     }
