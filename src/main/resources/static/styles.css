@@ -309,9 +309,13 @@ body{
     justify-content:center;
     text-align: center;
 }
+.carousel-caption{
+    padding-bottom:25%;
+}
 .carousel-caption p{
     text-align:justify;
     font-family: 'Mina', sans-serif;
+
 }
 .client-footer{
     background-color:#012b17;
