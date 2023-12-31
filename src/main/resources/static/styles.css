@@ -167,13 +167,31 @@ body{
     padding: 12px;
 }
 .location-section{
+    padding:12px 0;
+}
+.service-container{
     background-color: rgba(9, 170, 92, 0.1);
     padding: 12px 0;
 }
 
 .beginings-container{
-    background-color: rgba(9, 170, 92, 0.1);
+    /*background-color: rgba(9, 170, 92, 0.1);*/
     padding: 12px;
+}
+.values-container{
+    background-image:url("images/sacco-banner.jpeg");
+    background-size: cover;
+    text-align:center;
+    background-repeat: no-repeat;
+    background-position: center center;
+   /* height:300px;*/
+    padding:0;
+    /*margin-top: 80px;*/
+
+}
+.values-info-container{
+    background-color:rgba(9, 170, 92, 0.9);
+    text-align:left;
 }
 .mission-img{
     display:flex;
@@ -190,9 +208,9 @@ body{
 .img-container{
     margin-right: 12px;
 }
-.img-container img{
+/*.img-container img{
     height:240px;
-}
+}*/
 .about-section h2{
     text-align:center;
 
@@ -307,7 +325,7 @@ body{
 .information{
     text-align:justify;
 }
-.information h6{
+.information h5{
     font-weight:bold;
     color:#09AA5C;
 }
@@ -1004,6 +1022,9 @@ body{
     .contribution-box span{
         font-size:14px;
     }
+    .img-container{
+        margin-right:0;
+    }
     .button-class{
         display:flex;
         flex-direction:column;
@@ -1015,6 +1036,9 @@ body{
         border-radius: 20px;
         width:100%;
         margin-top:4px;
+    }
+    .location-info{
+        margin-top: 12px;
     }
     .carousel-item img {
         width: 100%;
@@ -1493,6 +1517,9 @@ body{
         position: absolute;
         right: 12px;
         top: 22px;
+    }
+    .img-container{
+        margin-right:0;
     }
     .contribution-box{
         margin:4px;
