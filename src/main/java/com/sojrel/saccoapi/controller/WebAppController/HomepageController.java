@@ -918,4 +918,8 @@ public class HomepageController {
         String siteURL = request.getRequestURL().toString();
         return siteURL.replace(request.getServletPath(), "");
     }
+    @GetMapping("/error")
+    public String getError(){
+        return "error";
+    }
 }

@@ -81,7 +81,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/admin-page").hasAuthority("ADMIN")
                         .requestMatchers("/home").hasAuthority("MANAGER")
-                        .requestMatchers("/styles.css","/main.js","/jquery.js",
+                        .requestMatchers("/styles.css","/main.js","/jquery.js","/error",
                         "/verify","/verify-success","/verify-fail","/images/**","/favicon.ico",
                         "/","/create-account","/api/auth/**","/login","/about-us","/membership","/services",
                         "/contact-us","/downloads","/forgot-password","/reset-password","/file/**",
