@@ -150,7 +150,7 @@
                                 $("#submitBtn").html(originalButtonText);
                                 $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;margin;0;"><p>'+response.message+'</p></div>');
                                 $("#results").fadeToggle(3000);
-                                $("#repayment-form")[0].reset();
+                                window.location.href="/approved-loans";
                             }
                             else{
                                 $("#submitBtn").html(originalButtonText);

@@ -47,49 +47,8 @@
               <td class="hide-md" data-label="Date Applied" th:text="${#temporals.format(flash.applicationDate,'dd MMM yyyy')}"></td>
               <td data-label="Amount Due" th:text="${flash.amount}"></td>
               <td data-label="Date Due" th:text="${#temporals.format(flash.repayDate, 'dd MMM yyyy')}"></td>
-              <td class="d-flex justify-content-between">
-                <div class="d-flex justify-content-between">
-                  <div>
-                    <div class="modal fade" id="flashRepayModal" tabindex="-1" aria-labelledby="flashRepayModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h6 class="modal-title" id="flashRepayModalLabel">Record Repayment</h6>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            <form th:action="@{/flash-repay}" id="flash-repayment-form" method="post">
-                              <div class="mb-3">
-                                <input hidden id="loanId" name="loanId" th:value="${flash.id}">
-                                <div class="mb-3">
-                                  <label for="amount" class="form-label">Enter Amount:</label>
-                                  <input type="number" id="amount" name="amount" class="form-control" required>
-                                </div>
-                                <span id="amt-msg"></span>
-                              </div>
-                              <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                              <button type="submit" id="submitBtn" class="btn">Submit</button>
-                            </form>
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <button class="btn btn-warning text-light mx-1"
-                            style="background-color: orange; border-color:orange;"
-                            data-bs-toggle="modal" data-bs-target="#flashRepayModal">Partial</button>
-                  </div>
-                  <form th:action="@{/flash-repay}" th:method="post">
-                    <input type="hidden" name="loanId" th:value="${flash.id}" />
-                    <input type="hidden" name="amount" th:value="${flash.amount}" />
-                    <button type="submit" class="btn btn-success text-light mx-1">Full</button>
-                  </form>
-                  <form th:action="@{/flash-write-off(id=${flash.id})}" th:method="post">
-                    <button class="btn btn-danger text-light mx-1" style="background-color: red; border-color:red;">WriteOff</button>
-                  </form>
-<!--                  <a th:href="@{/flash-write-off(id=flash.id)}" class="text-decoration-none"><button class="btn btn-success" style="background-color: red; border-color:red;">WriteOff</button></a>-->
+              <td>
+                  <a th:href="@{/flash-approved-details(id=${flash.id})}" class="text-decoration-none"><button class="btn btn-success">View</button></a>
               </td>
             </tbody>
           </table>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Sojrel Sacco Ltd</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mina:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body>
+<div id="navbar-container" th:insert="~{base :: navbar}"></div>
+<div class="container-fluid body-section">
+    <div class="row">
+        <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-2 col-lg-2 p-0" id="sidebar-container"></div>
+        <div class="col-md-10 main-section">
+            <span class="d-flex justify-content-center mt-3 text-success fw-bold fs-3">Loan Details</span>
+            <hr class="border-2 border-success">
+            <table class="table" id="details-table">
+<!--                private Long id;-->
+<!--                private double principal;-->
+<!--                private LocalDateTime applicationDate;-->
+<!--                private LocalDateTime repayDate;-->
+<!--                private String loanStatus;-->
+<!--                private double amount;-->
+<!--                private String memberId;-->
+<!--                private Boolean repaidInTime;-->
+<!--                private List<FlashRepayment> repayments;-->
+                <tbody>
+                <tr>
+                    <th scope="row row-scoped" style="width:40%">Member ID</th>
+                    <td th:text="${flashLoan.memberId}"></td>
+                </tr>
+                <tr>
+                    <th scope="row row-scoped">Loan ID:</th>
+                    <td th:text="${flashLoan.id}"></td>
+                </tr>
+                <tr>
+                    <th scope="row row-scoped">Application Date:</th>
+                    <td th:text="${#temporals.format(flashLoan.applicationDate, 'dd MMM yyyy')}"></td>
+                </tr>
+                <tr>
+                    <th scope="row row-scoped">Repayement Date:</th>
+                    <td th:text="${#temporals.format(flashLoan.repayDate, 'dd MMM yyyy')}"></td>
+                </tr>
+                <tr>
+                    <th scope="row row-scoped">Applied Amount:</th>
+                    <td th:text="'Ksh '+${flashLoan.principal}"></td>
+                </tr>
+
+                <tr>
+                    <th scope="row row-scoped">Repayment Amount:</th>
+                    <td th:text="'Ksh '+${flashLoan.amount}"></td>
+                </tr>
+
+                <tr>
+                    <th scope="row row-scoped">Total Repaid:</th>
+                    <td th:text="'Ksh '+${totalRepaid}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="repayment-btn d-flex justify-content-center">
+<!--                <button class="btn" data-bs-toggle="modal" data-bs-target="#repayModal">Record Payment</button>-->
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <div class="modal fade" id="flashRepayModal" tabindex="-1" aria-labelledby="flashRepayModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h6 class="modal-title" id="flashRepayModalLabel">Record Repayment</h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <form th:action="@{/flash-repay}" id="flash-repayment-form" method="post">
+                              <div class="mb-3">
+                                <input hidden id="loanId" name="loanId" th:value="${flashLoan.id}">
+                                <div class="mb-3">
+                                  <label for="amount" class="form-label">Enter Amount:</label>
+                                  <input type="number" id="amount" name="amount" class="form-control" required>
+                                </div>
+                                <span id="amt-msg"></span>
+                              </div>
+                              <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" id="submitBtn" class="btn">Submit</button>
+                            </form>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn btn-warning text-light mx-1"
+                            style="background-color: orange; border-color:orange;"
+                            data-bs-toggle="modal" data-bs-target="#flashRepayModal">Partial Repayment</button>
+                  </div>
+                  <form th:action="@{/flash-repay}" th:method="post">
+                    <input type="hidden" name="loanId" th:value="${flashLoan.id}" />
+                    <input type="hidden" name="amount" th:value="${flashLoan.amount}" />
+                    <button type="submit" class="btn btn-success text-light mx-1">Full Repayment</button>
+                  </form>
+                  <form th:action="@{/flash-write-off(id=${flashLoan.id})}" th:method="post">
+                    <button class="btn btn-danger text-light mx-1" style="background-color: red; border-color:red;">WriteOff Unpaid</button>
+                  </form>
+            </div>
+<!--            <div class="modal fade" id="repayModal" tabindex="-1" aria-labelledby="repayModalLabel" aria-hidden="true">-->
+<!--                <div class="modal-dialog">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-header">-->
+<!--                            <h6 class="modal-title" id="repayModalLabel">Loan Repayment</h6>-->
+<!--                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                            <span id="results"></span>-->
+<!--                        </div>-->
+<!--                        <div class="modal-body">-->
+<!--                            <form id="repayment-form" method="post">&lt;!&ndash;th:action="@{/repay-loan}"&ndash;&gt;-->
+<!--                                <div class="mb-3">-->
+<!--                                    <input hidden id="loanId" th:value="${flashLoan.id}" name="loanId">-->
+<!--                                    <label for="amount" class="form-label">Enter Amount:</label>-->
+<!--                                    <input type="number" class="form-control" id="amount" name="amount">-->
+<!--                                    <span id="amount-msg"></span>-->
+<!--                                </div>-->
+<!--                                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>-->
+<!--                                <button type="submit" id="submitBtn" class="btn">Save</button>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                        <div class="modal-footer">-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <hr class="border-2 border-success">
+            <span class="d-flex justify-content-center fw-bold text-success">Loan Repayments</span>
+            <hr class="border-2 border-success">
+<!--            private Long loanId;-->
+<!--            private double amount;-->
+<!--            private LocalDateTime transactionDate;-->
+            <div class="container guarantor-table-area mt-4">
+                <div class="table-responsive table-responsive-sm">
+                    <table class="table" id="flash-repay-table" style="width:100%;">
+                        <thead>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                        </thead>
+                        <tbody>
+                        <tr th:each="repay: ${flashLoan.repayments}">
+                            <td data-label="ID:" th:text="${repay.id}"></td>
+                            <td data-label="Date:" th:text="${#temporals.format(repay.transactionDate, 'dd MMM yyyy')}"></td>
+                            <td data-label="Amount:" th:text="${repay.amount != null ? 'Ksh ' + repay.amount : 'Ksh 0'}"></td>
+                            <td class="d-flex">
+                                <div><span class="material-symbols-outlined">edit_square</span></div>
+                                <div><span class="material-symbols-outlined">delete</span></div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+<div th:insert="~{base :: footer}">  </div>
+<script src="main.js" type="text/javascript"></script>
+<script src="jquery.js" type="text/javascript"></script>
+<script>
+         $(document).ready(function () {
+            $("#repayment-form").submit(function (event) {
+                event.preventDefault();
+                if($("#amount").val()==""){
+                    $("#amount-msg").html('<p style="font-size:12px; color:red;">Enter first name</p>');
+                }
+                else{
+                   var originalButtonText = $("#submitBtn").html();
+                   $("#submitBtn").html('<div class="spinner-border" role="status" id="spinner">' +
+                                      '<span class="visually-hidden"></span>' +
+                                      '</div> Wait...');
+
+                   var formData={
+                       loanId:$("#loanId").val(),
+                       amount:$("#amount").val()
+                   }
+                   $.ajax({
+                        contentType : "application/json",
+                        dataType : 'json',
+                        type: "POST",
+                        url: "/repay-loan",
+                        data: JSON.stringify(formData),
+                        success: function (response) {
+                            if(response.status=='success'){
+                                $("#submitBtn").html(originalButtonText);
+                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;margin;0;"><p>'+response.message+'</p></div>');
+                                $("#results").fadeToggle(3000);
+                                $("#repayment-form")[0].reset();
+                            }
+                            else{
+                                $("#submitBtn").html(originalButtonText);
+                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>'+response.message+'</p></div>');
+                                $("#results").fadeToggle(3000);
+                                $("#repayment-form")[0].reset();
+
+                            }
+                        },
+                        error: function (error) {
+                            console.log("Error:", error);
+                            $("#submitBtn").html(originalButtonText);
+                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>Error!</p></div>');
+                            $("#results").fadeToggle(3000);
+                            $("#repayment-form")[0].reset();
+                        }
+
+                   });
+                }
+            });
+         });
+    </script>
+</body>
+</html>
