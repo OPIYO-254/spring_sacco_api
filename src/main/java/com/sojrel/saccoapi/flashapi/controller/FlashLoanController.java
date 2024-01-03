@@ -7,6 +7,7 @@ import com.sojrel.saccoapi.flashapi.dto.request.FlashLoanRequestDto;
 import com.sojrel.saccoapi.flashapi.dto.response.FlashLoanResponseDto;
 import com.sojrel.saccoapi.flashapi.repository.FlashLoanRepository;
 import com.sojrel.saccoapi.flashapi.service.FlashLoanService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 @CrossOrigin(origins={"http://10.0.2.2:8080"})
 @RestController
 @RequestMapping("/api/v1/flash/")
@@ -106,8 +108,15 @@ public class FlashLoanController {
 
     @GetMapping("/get-limit/{memberId}")
     public ResponseEntity<?> getLoanLimit(@PathVariable String memberId){
-        double limit = flashLoanService.determineLoanLimit(memberId);
-        return new ResponseEntity<>(limit, HttpStatus.OK);
+        try {
+            double limit = flashLoanService.determineLoanLimit(memberId);
+            return new ResponseEntity<>(limit, HttpStatus.OK);
+        }
+        catch (Exception e){
+            log.error("error in getting limit "+e.getLocalizedMessage());
+            return null;
+        }
+
     }
 
 }
