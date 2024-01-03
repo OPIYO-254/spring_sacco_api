@@ -128,6 +128,12 @@ body{
     display:flex;
 
 }
+.row-pair{
+    display:flex;
+    justify-content:space-between;
+    width: 100%;
+}
+
 .guarantee-container{
     display:flex;
     justify-content:center;
@@ -453,6 +459,7 @@ body{
     height:100px;
     width: -webkit-fill-available;
     display:flex;
+    flex: 1;
     justify-content:space-between
 }
 .item .col{
@@ -466,7 +473,7 @@ body{
     align-items:center;
 }
 .item-icon i{
-    font-size: 48px;
+    font-size: 36px;
     color: #fff;
 }
 .flash-item .material-symbols-outlined{
@@ -1009,6 +1016,10 @@ body{
     .loan-type-container{
         height:200px;
     }
+    .row-pair{
+        display:flex;
+        flex:direction:column;
+    }
 
 }
 
@@ -1389,10 +1400,24 @@ body{
    .dropdown-toggle i{
         display:none;
    }
+   .item {
+        height:60px;
+   }
+   .item-icon i{
+        font-size:24px;
+   }
+   .row-pair{
+       display:flex;
+       justify-content:space-between;
+   }
 
 }
 
 @media only screen and (min-width: 576px) and (max-width:600px){
+    .row-pair{
+           display:flex;
+           justify-content:space-between;
+       }
     .contribution-box{
         margin:4px;
         padding:4px;
@@ -1530,6 +1555,9 @@ body{
     }
     .fa-question-circle-o{
         display:none;
+    }
+    .item span {
+        font-size: 24px;
     }
     .img-container{
         margin-right:0;
@@ -1794,6 +1822,12 @@ body{
         position: absolute;
         right: 12px;
         top: 22px;
+    }
+    .item-icon i {
+        display:none;
+    }
+    .item span {
+        font-size: 14px;
     }
     .mission-img {
         display: flex;

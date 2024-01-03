@@ -37,56 +37,72 @@
 <!--            </div>-->
             <div class="mycards-section">
                 <div class="myrow">
-                    <div class="item">
-                        <div class="col">
-                            <span class="card-text text-light m-0">Total Disbursed</span>
-<!--                            <span class="card-text text-light m-0" th:text="'KES ' +${totalDisbursed}"></span>-->
-                            <span class="card-text text-light m-0" th:if="${totalDisbursed != null}" th:text="'KES ' + ${totalDisbursed}"></span>
+                    <div class="row-pair">
+                        <div class="item">
+                            <div class="col">
+                                <span class="card-text text-light m-0">Total Disbursed</span>
+                                <!--                            <span class="card-text text-light m-0" th:text="'KES ' +${totalDisbursed}"></span>-->
+                                <span class="card-text text-light m-0" th:if="${totalDisbursed != null}" th:text="'Ksh ' + ${totalDisbursed}"></span>
 
+                            </div>
+                            <div class="item-icon">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            </div>
                         </div>
-                        <div class="item-icon">
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        <div class="item">
+                            <div class="col">
+                                <span class="card-text text-light m-0">Total Amount</span>
+                                <span class="card-text text-light m-0" th:if="${totalAmount != null}" th:text="'Ksh '+${totalAmount}"></span>
+                            </div>
+                            <div class="item-icon">
+                                <i class="fa fa-calculator" aria-hidden="true"></i>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="item">
-                        <div class="col">
-                            <span class="card-text text-light m-0">Total Amount</span>
-                            <span class="card-text text-light m-0" th:if="${totalAmount != null}" th:text="'KES '+${totalAmount}"></span>
-                        </div>
-                        <div class="item-icon">
-                            <i class="fa fa-calculator" aria-hidden="true"></i>
-                        </div>
 
+                    <div class="row-pair">
+                        <div class="item">
+                            <div class="col">
+                                <span class="card-text text-light m-0">Expected Revenue</span>
+                                <span class="card-text text-light m-0" th:text="'Ksh '+(${totalAmount}-${totalDisbursed})"></span>
+                            </div>
+                            <div class="item-icon">
+                                <i class="fa fa-percent" aria-hidden="true"></i>
+                            </div>
+
+                        </div>
+                        <div class="item">
+                            <div class="col">
+                                <span class="card-text text-light m-0">Completed</span>
+                                <span class="card-text text-light m-0" th:text="'Ksh '+${completed}"></span>
+                            </div>
+                            <div class="item-icon">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="item">
-                        <div class="col">
-                            <span class="card-text text-light m-0">Expected Revenue</span>
-                            <span class="card-text text-light m-0" th:text="'KES '+(${totalAmount}-${totalDisbursed})"></span>
-                        </div>
-                        <div class="item-icon">
-                            <i class="fa fa-percent" aria-hidden="true"></i>
-                        </div>
 
-                    </div>
-                    <div class="item">
-                        <div class="col">
-                            <span class="card-text text-light m-0">Completed</span>
-                            <span class="card-text text-light m-0" th:text="'KES '+${completed}"></span>
+                    <div class="row-pair">
+                        <div class="item">
+                            <div class="col">
+                                <span class="card-text text-light m-0">Uncollected</span>
+                                <span class="card-text text-light m-0" th:text="'Ksh '+ (${totalAmount}-${repaid})"></span>
+                            </div>
+                            <div class="item-icon">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            </div>
                         </div>
-                        <div class="item-icon">
-                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                        <div class="item">
+                            <div class="col">
+                                <span class="card-text text-light m-0">Flash Collections</span>
+                                <span class="card-text text-light m-0">0.00</span>
+                            </div>
+                            <div class="item-icon">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            </div>
                         </div>
-
-                    </div>
-                    <div class="item">
-                        <div class="col">
-                            <span class="card-text text-light m-0">Uncollected</span>
-                            <span class="card-text text-light m-0" th:text="'KES '+ (${totalAmount}-${repaid})"></span>
-                        </div>
-                        <div class="item-icon">
-                            <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        </div>
-
                     </div>
                 </div>
 <!--                <div class="myrow">-->
