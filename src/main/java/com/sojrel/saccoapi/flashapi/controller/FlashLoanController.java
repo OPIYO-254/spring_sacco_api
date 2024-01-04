@@ -31,7 +31,7 @@ public class FlashLoanController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addFlashLoan(@RequestBody FlashLoanRequestDto requestDto){
-        List<FlashLoanResponseDto> loanResponseDtos = flashLoanService.getMemberLoansByLoanStatus(requestDto.getMemberId(), FlashLoan.Status.valueOf(requestDto.getLoanStatus()));
+        List<FlashLoanResponseDto> loanResponseDtos = flashLoanService.getFlashLoanByMemberId(requestDto.getMemberId());
         List<FlashLoanResponseDto> unpaidLoans = new ArrayList<>();
         if(Objects.nonNull(loanResponseDtos)){
             for (FlashLoanResponseDto loanDto: loanResponseDtos) {
