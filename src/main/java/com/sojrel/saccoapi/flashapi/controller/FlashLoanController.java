@@ -42,7 +42,6 @@ public class FlashLoanController {
         }
         if(unpaidLoans.isEmpty()) {
             try {
-
                 FlashLoanResponseDto dto = flashLoanService.addFlashLoan(requestDto);
                 return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Loan application successful\"}");
 

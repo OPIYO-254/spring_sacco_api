@@ -39,7 +39,7 @@ public class FlashLoanServiceImpl implements FlashLoanService{
             loan.setMember(member);
         }
         loan.setAmount(dto.getAmount());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
         LocalDateTime dateTime = LocalDateTime.parse(dto.getRepayDate(), formatter);
         loan.setRepayDate(dateTime);
         loan.setLoanStatus(FlashLoan.Status.valueOf(dto.getLoanStatus()));
