@@ -43,7 +43,7 @@ public class FlashLoanController {
         if(unpaidLoans.isEmpty()) {
             try {
                 FlashLoanResponseDto dto = flashLoanService.addFlashLoan(requestDto);
-                return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Loan application successful\"}");
+                return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Loan application successful. Reviewing underway.\"}");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -52,7 +52,7 @@ public class FlashLoanController {
             }
         }
         else {
-            return ResponseEntity.ok("{\"status\": \"error\", \"message\": \"You have unpaid loan. Please repay first and try again.\"}");
+            return ResponseEntity.ok("{\"status\": \"error\", \"message\": \"Oops! You have an existing loan.\"}");
         }
 
     }
