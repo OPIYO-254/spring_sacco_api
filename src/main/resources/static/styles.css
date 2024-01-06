@@ -1034,6 +1034,9 @@ body{
         text-transform:uppercase;
         justify-content: space-between;
     }
+    .page-title{
+        height:48px;
+    }
     .contribution-box span{
         font-size:14px;
     }

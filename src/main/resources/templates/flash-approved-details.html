@@ -60,12 +60,16 @@
 
                 <tr>
                     <th scope="row row-scoped">Repayment Amount:</th>
-                    <td th:text="'Ksh '+${flashLoan.amount}"></td>
+                    <td th:text="'Ksh '+${flashLoan.amount + flashLoan.processingFee}"></td>
                 </tr>
 
                 <tr>
                     <th scope="row row-scoped">Total Repaid:</th>
                     <td th:text="'Ksh '+${totalRepaid}"></td>
+                </tr>
+                <tr>
+                    <th scope="row row-scoped">Outstanding balance:</th>
+                    <td th:text="'Ksh '+${flashLoan.amount + flashLoan.processingFee - totalRepaid}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -90,8 +94,8 @@
                                 </div>
                                 <span id="amt-msg"></span>
                               </div>
-                              <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                              <button type="submit" id="submitBtn" class="btn">Submit</button>
+                              <button type="button" class="btn m-1" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" id="submitBtn" class="btn m-1">Submit</button>
                             </form>
                             </div>
                           </div>
@@ -102,15 +106,15 @@
                     </div>
                     <button class="btn btn-warning text-light mx-1"
                             style="background-color: orange; border-color:orange;"
-                            data-bs-toggle="modal" data-bs-target="#flashRepayModal">Partial Repayment</button>
+                            data-bs-toggle="modal" data-bs-target="#flashRepayModal">Partial</button>
                   </div>
                   <form th:action="@{/flash-repay}" th:method="post">
                     <input type="hidden" name="loanId" th:value="${flashLoan.id}" />
-                    <input type="hidden" name="amount" th:value="${flashLoan.amount}" />
-                    <button type="submit" class="btn btn-success text-light mx-1">Full Repayment</button>
+                    <input type="hidden" name="amount" th:value="${flashLoan.amount+flashLoan.processingFee-totalRepaid}" />
+                    <button type="submit" class="btn btn-success text-light mx-1">Full</button>
                   </form>
                   <form th:action="@{/flash-write-off(id=${flashLoan.id})}" th:method="post">
-                    <button class="btn btn-danger text-light mx-1" style="background-color: red; border-color:red;">WriteOff Unpaid</button>
+                    <button class="btn btn-danger text-light mx-2" style="background-color: red; border-color:red;">WriteOff</button>
                   </form>
             </div>
 <!--            <div class="modal fade" id="repayModal" tabindex="-1" aria-labelledby="repayModalLabel" aria-hidden="true">-->

@@ -33,20 +33,19 @@
                         <thead>
                         <th class="hide-md">ID</th>
                         <th>Member No.</th>
-                        <th>Principal</th>
+                        <th>Applied Amount</th>
                         <th class="hide-md">Date Applied</th>
-                        <th>Amount Due</th>
+                        <th>Amount Repaid</th>
                         <th class="hide-md">Date Due</th>
                         </thead>
                         <tbody>
                         <tr th:each="flash:${flashLoans}">
                               <td data-label="ID" th:text="${flash.id}"></td>
                               <td data-label="Member No." th:text="${flash.memberId}"></td>
-                              <td data-label="Principal" th:text="${flash.principal}"></td>
+                              <td data-label="Applied Amount" th:text="'Ksh '+${flash.principal}"></td>
                               <td data-label="Date Applied" th:text="${#temporals.format(flash.applicationDate,'dd MMM yyyy')}" class="hide-md"></td>
-                              <td data-label="Amount Due" th:text="${flash.amount}"></td>
+                              <td data-label="Amount Repaid" th:text="'Ksh '+${flash.amount+flash.processingFee}"></td>
                               <td data-label="Date Due" th:text="${#temporals.format(flash.repayDate, 'dd MMM yyyy')}" class="hide-md"></td>
-
                         </tbody>
                     </table>
                 </div>

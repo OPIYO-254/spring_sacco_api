@@ -45,7 +45,7 @@
               <td class="hide-md" data-label="Member No." th:text="${flash.memberId}"></td>
               <td class="hide-md" data-label="Principal" th:text="${flash.principal}"></td>
               <td class="hide-md" data-label="Date Applied" th:text="${#temporals.format(flash.applicationDate,'dd MMM yyyy')}"></td>
-              <td data-label="Amount Due" th:text="${flash.amount}"></td>
+              <td data-label="Amount Due" th:text="${flash.amount+flash.processingFee}"></td>
               <td data-label="Date Due" th:text="${#temporals.format(flash.repayDate, 'dd MMM yyyy')}"></td>
               <td>
                   <a th:href="@{/flash-approved-details(id=${flash.id})}" class="text-decoration-none"><button class="btn btn-success">View</button></a>
