@@ -39,6 +39,8 @@ public class FlashLoan {
     private Boolean repaidInTime = false;
     @Column(nullable = false)
     private double amount;
+    @Transient
+    private double processingFee;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -49,6 +51,27 @@ public class FlashLoan {
     private List<FlashRepayment> repayments;
     public enum Status{REVIEWING,APPROVED,REJECTED,PAID, WRITEOFF}
 
+    public double calculateFee(){
+        if(principal > 1000.0 && principal <=1500.0){
+            processingFee = 28.0;
+        }
+        else if(principal > 1500.0 && principal <=2500.0){
+            processingFee = 33.0;
+        }
+        else if(principal > 2500.0 && principal <=5000.0){
+            processingFee = 57.0;
+        }
+        else if(principal > 5000.0 && principal <=7500.0){
+            processingFee = 78.0;
+        }
+        else if(principal > 7500.0 && principal <=1000.0){
+            processingFee = 90.0;
+        }
+        else{
+            processingFee = 23.0;
+        }
+        return processingFee;
+    }
 
     @PrePersist
     public void prePersist(){
