@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Slf4j
-@CrossOrigin(origins={"http://10.0.2.2:8080"})
+//@CrossOrigin(origins={"http://10.0.2.2:8080"})
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
@@ -50,7 +50,7 @@ public class AuthenticationController {
                 log.error("error in creating account: "+e.getLocalizedMessage());
                 Map<String, String> response = new HashMap<>();
                 response.put("status", "error");
-                response.put("message", "Error creating user");
+                response.put("message", "Error creating account. Try again");
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(response);
             }
@@ -58,7 +58,7 @@ public class AuthenticationController {
         else{
             Map<String, String> response = new HashMap<>();
             response.put("status", "error");
-            response.put("message", "You are not authorized to signup. Contact admin.");
+            response.put("message", "You are not authorized to signup at this moment. Contact admin.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(response);
         }
