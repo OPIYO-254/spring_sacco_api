@@ -448,7 +448,7 @@ public class LoanServiceImpl implements LoanService{
         List<GuarantorsDto> loansGuaranteed = loanGuarantorRepository.getMemberApprovedLoansGuaranteed(memberId); //this gives the list of loans guaranteed by member
         List<LoanResponseDto> approvedLoans = Mapper.loanToLoanResponseDtos(loanRepository.findByLoanStatus(Loan.LoanStatus.APPROVED)); //list of all approved loans
         List<LoanRepaymentDetails> repayments = getLoanTotalRepayments();
-        List<Double> balances = new ArrayList<>();
+//        List<Double> guaranteed = new ArrayList<>();
         List<Map<String, Object>> repaymentDetails=new ArrayList<>();
         for(LoanResponseDto dto: approvedLoans){
             for(GuarantorsDto dto1: loansGuaranteed){
@@ -464,6 +464,7 @@ public class LoanServiceImpl implements LoanService{
                             Map<String, Object> totals = new HashMap<>();
                             totals.put("loanId", details.getLoanId());
                             totals.put("balance", oustanding);
+                            totals.put("amount", dto1.getAmount());
                             repaymentDetails.add(totals);
                             break;
                         }
@@ -473,18 +474,23 @@ public class LoanServiceImpl implements LoanService{
 
             }
         }
-//        List<Map<String, Object>> oustanding = loanService.getGuaranteeBalance(memberId);
-        List<Double> oustandings = new ArrayList<>();
+
+        List<Double> repaids = new ArrayList<>();
+        List<Double> amounts = new ArrayList<>();
+        List<Double> outstandings = new ArrayList<>();
         for(Map<String, Object> objectMap: repaymentDetails){
-            oustandings.add((double) objectMap.get("balance"));
-        }
-//        System.out.println(oustandings);
-        double sum = 0.0;
-        for(double val : oustandings){
-            sum += val;
+            repaids.add((double) objectMap.get("balance"));
+            amounts.add((double) objectMap.get("amount"));
+            outstandings.add((double) objectMap.get("amount")-(double) objectMap.get("balance"));
         }
 
-//        System.out.println(repaymentDetails);
+//        System.out.println(amounts);
+//        System.out.println(repaids);
+//        System.out.println(outstandings);
+        double sum = 0.0;
+        for(double val : outstandings){
+            sum += val;
+        }
         return String.format("%.2f", sum);
     }
 }
