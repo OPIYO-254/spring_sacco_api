@@ -4,16 +4,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class SimulateTransactionResponse {
+public class CommonSyncResponse {
     @JsonProperty("ConversationID")
     private String conversationID;
-
-    @JsonProperty("ResponseDescription")
-    private String responseDescription;
 
     @JsonProperty("ResponseCode")
     private String responseCode;
 
-    @JsonProperty("OriginatorCoversationID")
-    private String originatorCoversationID;
+    @JsonProperty("OriginatorConversationID")
+    private String originatorConversationID;
+
+    @JsonProperty("ResponseDescription")
+    private String responseDescription;
 }

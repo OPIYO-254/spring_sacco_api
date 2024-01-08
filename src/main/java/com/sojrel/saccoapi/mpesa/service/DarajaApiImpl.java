@@ -40,7 +40,7 @@ public class DarajaApiImpl implements DarajaApi{
                 .build();
         try{
             Response response = okHttpClient.newCall(request).execute();
-            System.out.println(response.code());
+//            System.out.println(response.code());
             assert response.body()!=null;
             return objectMapper.readValue(response.body().string(), AccessTokenResponse.class);
         }
@@ -53,21 +53,17 @@ public class DarajaApiImpl implements DarajaApi{
     @Override
     public RegisterUrlResponse registerUrl() {
         AccessTokenResponse accessTokenResponse = getAccessTokenResponse();
-
         RegisterUrlRequest registerUrlRequest = new RegisterUrlRequest();
         registerUrlRequest.setConfirmationURL(mpesaConfiguration.getConfirmationUrl());
         registerUrlRequest.setResponseType(mpesaConfiguration.getResponseType());
         registerUrlRequest.setValidationURL(mpesaConfiguration.getValidationUrl());
         registerUrlRequest.setShortCode(mpesaConfiguration.getShortCode());
-
         RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, Objects.requireNonNull(HelperUtility.toJson(registerUrlRequest)));
-
         Request request = new Request.Builder()
                 .url(mpesaConfiguration.getRegisterUrl())
                 .post(body)
                 .addHeader(AUTHORIZATION_HEADER_STRING, String.format("%s %s", BEARER_AUTH_STRING,accessTokenResponse.getAccessToken()))
                 .build();
-
         try {
             Response response = okHttpClient.newCall(request).execute();
             assert response.body() !=null;
@@ -83,24 +79,23 @@ public class DarajaApiImpl implements DarajaApi{
         AccessTokenResponse accessTokenResponse = getAccessTokenResponse();
         RequestBody body = RequestBody.create(JSON_MEDIA_TYPE,
                 Objects.requireNonNull(HelperUtility.toJson(simulateTransactionRequest)));
-
         Request request = new Request.Builder()
                 .url(mpesaConfiguration.getSimulateTransactionUrl())
                 .post(body)
                 .addHeader(AUTHORIZATION_HEADER_STRING, String.format("%s %s", BEARER_AUTH_STRING, accessTokenResponse.getAccessToken()))
                 .build();
-
         try {
             Response response = okHttpClient.newCall(request).execute();
             assert response.body() != null;
             // use Jackson to Decode the ResponseBody ...
-
             return objectMapper.readValue(response.body().string(), SimulateTransactionResponse.class);
         } catch (IOException e) {
             log.error(String.format("Could not simulate C2B transaction -> %s", e.getLocalizedMessage()));
             return null;
         }
     }
+
+
 
     @Override
     public StkPushSyncResponse performStkPushTransaction(InternalStkPushRequest internalStkPushRequest) {
@@ -118,11 +113,9 @@ public class DarajaApiImpl implements DarajaApi{
         externalStkPushRequest.setPartyB(mpesaConfiguration.getPushShortCode());
         externalStkPushRequest.setPhoneNumber(internalStkPushRequest.getPhoneNumber());
         externalStkPushRequest.setCallBackURL(mpesaConfiguration.getStkPushRequestCallback());
-        externalStkPushRequest.setAccountReference(HelperUtility.generateTransactionUniqueNumber());
+        externalStkPushRequest.setAccountReference(Constants.ACCOUNT_REFERENCE_STRING);
         externalStkPushRequest.setTransactionDesc(String.format("%s Transaction", internalStkPushRequest.getPhoneNumber()));
-//        System.out.println(mpesaConfiguration.getStkPushRequestCallback());
         AccessTokenResponse accessTokenResponse = getAccessTokenResponse();
-
         RequestBody body = RequestBody.create(JSON_MEDIA_TYPE,
                 Objects.requireNonNull(HelperUtility.toJson(externalStkPushRequest)));
 
@@ -136,8 +129,8 @@ public class DarajaApiImpl implements DarajaApi{
         try {
             Response response = okHttpClient.newCall(request).execute();
             assert response.body() != null;
+//            System.out.println(externalStkPushRequest);
             // use Jackson to Decode the ResponseBody ...
-
             return objectMapper.readValue(response.body().string(), StkPushSyncResponse.class);
         } catch (IOException e) {
             log.error(String.format("Could not perform the STK push request -> %s", e.getLocalizedMessage()));
@@ -145,3 +138,4 @@ public class DarajaApiImpl implements DarajaApi{
         }
     }
 }
+
