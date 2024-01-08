@@ -136,7 +136,7 @@ public class AuthenticationController {
             log.error("Authentication error "+e.getLocalizedMessage());
             Map<String, String> response = new HashMap<>();
             response.put("status", "error");
-            response.put("message", "Login error.");
+            response.put("message", "Invalid login credentials. Check and try again.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(response);
         }
