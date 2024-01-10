@@ -217,9 +217,8 @@ public class FlashLoanServiceImpl implements FlashLoanService{
             else {
                 limit = 10000.0;
             }
-
         }
-        System.out.println(limit);
+//        System.out.println(limit);
         return limit;
     }
 

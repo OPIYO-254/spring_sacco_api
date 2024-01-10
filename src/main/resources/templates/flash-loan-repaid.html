@@ -44,7 +44,7 @@
                               <td data-label="Member No." th:text="${flash.memberId}"></td>
                               <td data-label="Applied Amount" th:text="'Ksh '+${flash.principal}"></td>
                               <td data-label="Date Applied" th:text="${#temporals.format(flash.applicationDate,'dd MMM yyyy')}" class="hide-md"></td>
-                              <td data-label="Amount Repaid" th:text="'Ksh '+${flash.amount+flash.processingFee}"></td>
+                              <td data-label="Amount Repaid" th:text="'Ksh '+${flash.amount}"></td>
                               <td data-label="Date Due" th:text="${#temporals.format(flash.repayDate, 'dd MMM yyyy')}" class="hide-md"></td>
                         </tbody>
                     </table>

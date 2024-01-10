@@ -18,7 +18,7 @@ public class FlashLoanMapper {
         dto.setRepaidInTime(loan.getRepaidInTime());
         dto.setLoanStatus(String.valueOf(loan.getLoanStatus()));
         dto.setAmount(loan.getAmount());
-        dto.setProcessingFee(loan.calculateFee());
+//        dto.setProcessingFee(loan.calculateFee());
         dto.setRepayments(loan.getRepayments());
         return dto;
     }

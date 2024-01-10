@@ -19,7 +19,7 @@ public class FlashLoanResponseDto {
     private LocalDateTime repayDate;
     private String loanStatus;
     private double amount;
-    private double processingFee;
+//    private double processingFee;
     private String memberId;
     private Boolean repaidInTime;
     private List<FlashRepayment> repayments;

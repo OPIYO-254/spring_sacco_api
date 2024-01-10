@@ -60,16 +60,15 @@
 
                 <tr>
                     <th scope="row row-scoped">Repayment Amount:</th>
-                    <td th:text="'Ksh '+${flashLoan.amount + flashLoan.processingFee}"></td>
+                    <td th:text="'Ksh '+${flashLoan.amount}"></td>
                 </tr>
-
                 <tr>
                     <th scope="row row-scoped">Total Repaid:</th>
                     <td th:text="'Ksh '+${totalRepaid}"></td>
                 </tr>
                 <tr>
                     <th scope="row row-scoped">Outstanding balance:</th>
-                    <td th:text="'Ksh '+${flashLoan.amount + flashLoan.processingFee - totalRepaid}"></td>
+                    <td th:text="'Ksh '+${flashLoan.amount - totalRepaid}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -110,7 +109,7 @@
                   </div>
                   <form th:action="@{/flash-repay}" th:method="post">
                     <input type="hidden" name="loanId" th:value="${flashLoan.id}" />
-                    <input type="hidden" name="amount" th:value="${flashLoan.amount+flashLoan.processingFee-totalRepaid}" />
+                    <input type="hidden" name="amount" th:value="${flashLoan.amount-totalRepaid}" />
                     <button type="submit" class="btn btn-success text-light mx-1">Full</button>
                   </form>
                   <form th:action="@{/flash-write-off(id=${flashLoan.id})}" th:method="post">
