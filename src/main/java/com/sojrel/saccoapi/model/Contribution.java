@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 
 @Entity
@@ -21,7 +22,7 @@ public class Contribution {
     private Long id;
 
     @Column(updatable = false)
-    private LocalDateTime contributionDate=LocalDateTime.now();
+    private LocalDateTime contributionDate=LocalDateTime.now(ZoneId.of("Africa/Nairobi"));
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

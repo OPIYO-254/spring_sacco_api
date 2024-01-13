@@ -10,6 +10,7 @@ import org.hibernate.annotations.Formula;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Entity
@@ -80,7 +81,7 @@ public class Loan {
     @PrePersist
     public void prePersist(){
         if(applicationDate == null){
-            applicationDate = LocalDateTime.now();
+            applicationDate = LocalDateTime.now(ZoneId.of("Africa/Nairobi"));
         }
     }
 

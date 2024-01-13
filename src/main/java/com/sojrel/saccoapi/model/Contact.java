@@ -8,6 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @Data
@@ -34,7 +35,7 @@ public class Contact {
     @PrePersist
     public void prePersist(){
         if(contactDate == null){
-            contactDate = LocalDateTime.now();
+            contactDate = LocalDateTime.now(ZoneId.of("Africa/Nairobi"));
         }
     }
 

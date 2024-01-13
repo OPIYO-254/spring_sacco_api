@@ -377,7 +377,6 @@ public class HomepageController {
         ModelAndView modelAndView = new ModelAndView("repaying-loan-details");
         LoanResponseDto loanResponseDto = loanService.getLoan(id);
         TotalDoubleItem repaidTotal = loanService.getTotalRepaid(id);
-        System.out.println(repaidTotal.getTotal());
         double totalRepaid = repaidTotal.getTotal();
         if(loanResponseDto.getAmount()==totalRepaid || loanResponseDto.getAmount()<totalRepaid){
             loanService.completeLoan(id);
@@ -575,39 +574,6 @@ public class HomepageController {
         ModelAndView modelAndView = new ModelAndView("flash-loan-approved");
         List<FlashLoanResponseDto> dtoList = flashLoanService.getFlashLoanByStatus("APPROVED");
         modelAndView.addObject("flashLoans", dtoList);
-//        List<FlashLoanRepaidAmountDto> repayments = flashRepaymentService.getLoansAndRepaidAmount();
-//        System.out.println(repayments);
-//        if(repayments.isEmpty()){
-//            modelAndView.addObject("flashLoans", dtoList);
-//        }
-//        else{
-//            try {
-//                List<FlashLoanResponseDto> list = new ArrayList<>();
-//                for (FlashLoanResponseDto dto : dtoList) {
-//                    for (FlashLoanRepaidAmountDto repaid : repayments) {
-//                        if (dto.getId().equals(repaid.getLoanId())) { //check if the loan has been repaid before
-//                            if (dto.getAmount() - repaid.getAmount() > 0.0) {//check of the loans has been paid fully if not add it to a list
-//                                list.add(dto);
-//                            }
-//                            else {
-//                                flashLoanService.completeFlashLoan(dto.getId());//if loan has been fully paid, update its status to 'PAID'
-//                            }
-//                            modelAndView.addObject("flashLoans", list); //return a list of incomplete loans
-//                        }
-//                        else{
-//                            modelAndView.addObject("flashLoans", dtoList);
-//                        }
-//                    }
-//                }
-//                System.out.println(list);
-//            }catch (Exception e){
-//                log.error("approved flash error: "+e.getLocalizedMessage());
-//                e.printStackTrace();
-//            }
-//            System.out.println(list);
-//        }
-//        System.out.println(dtoList);
-
         return  modelAndView;
 
     }
@@ -618,6 +584,9 @@ public class HomepageController {
         FlashLoanResponseDto dto = FlashLoanMapper.flashLoanToDto(flashLoanService.getFlashLoanById(id));
         List<FlashRepayment> repayments = dto.getRepayments();
         double totalRepaid = repayments.stream().mapToDouble(FlashRepayment::getAmount).sum();
+        if(dto.getAmount()+dto.getLoanPenalty()-totalRepaid <= 0.0){
+            flashLoanService.completeFlashLoan(dto.getId());
+        }
         modelAndView.addObject("flashLoan", dto);
         modelAndView.addObject("totalRepaid", totalRepaid);
         return  modelAndView;
@@ -627,7 +596,7 @@ public class HomepageController {
     @PostMapping("/flash-repay")
     public String flashRepayment(FlashRepaymentRequestDto dto){
         flashRepaymentService.makeRepayment(dto);
-        return "redirect:/flash-approved";
+        return "redirect:/flash-approved-details?id="+dto.getLoanId();
     }
 
 

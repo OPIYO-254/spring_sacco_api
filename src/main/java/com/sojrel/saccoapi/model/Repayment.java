@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 @Entity
 @Table(name = "repayment")
 @Data
@@ -37,7 +39,7 @@ public class Repayment {
     @PrePersist
     public void prePersist(){
         if(repaymentDate==null){
-            repaymentDate = LocalDateTime.now();
+            repaymentDate = LocalDateTime.now(ZoneId.of("Africa/Nairobi"));
         }
     }
 }

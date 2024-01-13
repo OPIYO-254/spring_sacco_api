@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Entity
@@ -29,7 +30,7 @@ public class FlashRepayment {
     @PrePersist
     public void prePersist(){
         if(transactionDate == null){
-            transactionDate = LocalDateTime.now();
+            transactionDate = LocalDateTime.now(ZoneId.of("Africa/Nairobi"));
         }
     }
 

@@ -9,11 +9,13 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Entity
-@Data
+//@Data
 @Table(name="flash_loan")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,7 +42,7 @@ public class FlashLoan {
     @Column(nullable = false)
     private double amount;
     @Transient
-    private double processingFee;
+    private double loanPenalty;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -49,34 +51,113 @@ public class FlashLoan {
     private FlashDisbursement flashDisbursement;
     @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<FlashRepayment> repayments;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public double getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(double principal) {
+        this.principal = principal;
+    }
+
+    public LocalDateTime getApplicationDate() {
+        return applicationDate;
+    }
+
+    public void setApplicationDate(LocalDateTime applicationDate) {
+        this.applicationDate = applicationDate;
+    }
+
+    public LocalDateTime getRepayDate() {
+        return repayDate;
+    }
+
+    public void setRepayDate(LocalDateTime repayDate) {
+        this.repayDate = repayDate.atZone(ZoneId.of("Africa/Nairobi")).toLocalDateTime();;
+    }
+
+    public Status getLoanStatus() {
+        return loanStatus;
+    }
+
+    public void setLoanStatus(Status loanStatus) {
+        this.loanStatus = loanStatus;
+    }
+
+    public Boolean getRepaidInTime() {
+        return repaidInTime;
+    }
+
+    public void setRepaidInTime(Boolean repaidInTime) {
+        this.repaidInTime = repaidInTime;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public double getLoanPenalty() {
+        return loanPenalty;
+    }
+
+    public void setLoanPenalty(double loanPenalty) {
+        this.loanPenalty = loanPenalty;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public FlashDisbursement getFlashDisbursement() {
+        return flashDisbursement;
+    }
+
+    public void setFlashDisbursement(FlashDisbursement flashDisbursement) {
+        this.flashDisbursement = flashDisbursement;
+    }
+
+    public List<FlashRepayment> getRepayments() {
+        return repayments;
+    }
+
+    public void setRepayments(List<FlashRepayment> repayments) {
+        this.repayments = repayments;
+    }
+
     public enum Status{REVIEWING,APPROVED,REJECTED,PAID, WRITEOFF}
 
-    public double calculateFee(){
-        if(principal > 1000.0 && principal <=1500.0){
-            processingFee = 28.0;
+    public double calculatePenalty(){
+        if(LocalDateTime.now().isAfter(repayDate)){
+            Duration duration = Duration.between(repayDate, LocalDateTime.now());
+            Long days = duration.toDays();
+            loanPenalty = amount*0.01*days;
         }
-        else if(principal > 1500.0 && principal <=2500.0){
-            processingFee = 33.0;
+        else {
+            loanPenalty = 0;
         }
-        else if(principal > 2500.0 && principal <=5000.0){
-            processingFee = 57.0;
-        }
-        else if(principal > 5000.0 && principal <=7500.0){
-            processingFee = 78.0;
-        }
-        else if(principal > 7500.0 && principal <=1000.0){
-            processingFee = 90.0;
-        }
-        else{
-            processingFee = 23.0;
-        }
-        return processingFee;
+        return  loanPenalty;
     }
 
     @PrePersist
     public void prePersist(){
         if(applicationDate == null){
-            applicationDate = LocalDateTime.now();
+            applicationDate = LocalDateTime.now(ZoneId.of("Africa/Nairobi"));
         }
     }
 

@@ -82,24 +82,7 @@ public class FlashLoanServiceImpl implements FlashLoanService{
     @Override
     public FlashLoanResponseDto completeFlashLoan(Long id) {
         FlashLoan loan = getFlashLoanById(id);
-        List<FlashRepaymentResponseDto> repayments = flashRepaymentService.getAllRepayments();
-        List<LocalDateTime> dtoList = new ArrayList<>();
         if(Objects.nonNull(loan)){
-//            for(FlashRepaymentResponseDto dto: repayments){
-//                if(dto.getLoanId().equals(id)){
-//                    dtoList.add(dto.getTransactionDate());
-//                }
-//            }
-//            LocalDateTime latestDate = dtoList.stream()
-//                    .max(LocalDateTime::compareTo)
-//                    .orElse(null);
-////            System.out.println(latestDate);
-//            if(latestDate.isAfter(loan.getRepayDate())){
-//                loan.setRepaidInTime(false);
-//            }
-//            else{
-//                loan.setRepaidInTime(true);
-//            }
             loan.setLoanStatus(FlashLoan.Status.PAID);
             flashLoanRepository.save(loan);
         }

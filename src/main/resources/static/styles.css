@@ -762,13 +762,12 @@ body{
 }
 .loan-type-container{
     display:flex;
-    margin-right: 12px;
-    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19);*/
     border-radius:12px;
     background-color: rgba(9, 170, 92, 0.1);
     color:#09AA5C;
     padding:8px;
     width:100%;
+    margin-right:12px;
     height: 180px;
 }
 .loan-type-container .icon{
@@ -1014,13 +1013,12 @@ body{
          left:20%;
     }
     .loan-type-container{
-        height:200px;
+         height:auto;
     }
     .row-pair{
         display:flex;
         flex:direction:column;
     }
-
 }
 
 /* Extra small devices (phones, 600px and down) */
@@ -1034,6 +1032,9 @@ body{
         text-transform:uppercase;
         justify-content: space-between;
     }
+    .icon-container i, .material-symbols-outlined{
+         display:none
+     }
     .page-title{
         height:48px;
     }
@@ -1361,6 +1362,7 @@ body{
     }
     .loan-type-container {
         margin-top: 12px;
+        height:auto;
 
     }
     .loan-type-container .icon i {
@@ -1782,7 +1784,7 @@ body{
    }
    .loan-type-container {
         margin-top: 12px;
-        height:200px;
+        height:auto;
    }
    .contact-form-container{
         display-flex;
@@ -2009,6 +2011,7 @@ body{
    }
    .loan-type-container {
     margin-top: 12px;
+    height:auto;
    }
    .logoutBtn{
        position: absolute;
@@ -2138,6 +2141,10 @@ body{
        width:10%;
    }
 
+    .loan-type-container{
+        height: 200px;
+        margin-right: 12px;
+    }
 
 }
 
