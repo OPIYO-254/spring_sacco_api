@@ -62,14 +62,13 @@
                     <th scope="row row-scoped">Repayment Amount:</th>
                     <td th:text="'Ksh '+${flashLoan.amount}"></td>
                 </tr>
-                <tr>
-                    <th scope="row row-scoped">Total Repaid:</th>
-                    <td th:text="'Ksh '+${totalRepaid}"></td>
-                </tr>
-
                 <tr th:if="${flashLoan.loanPenalty} > 0.0">
                     <th scope="row row-scoped">Penalty:</th>
                     <td th:text="'Ksh '+${flashLoan.loanPenalty}"></td>
+                </tr>
+                <tr>
+                    <th scope="row row-scoped">Total Repaid:</th>
+                    <td th:text="'Ksh '+${totalRepaid}"></td>
                 </tr>
                 <tr>
                     <th scope="row row-scoped">Outstanding balance:</th>

@@ -179,10 +179,43 @@ public class FlashLoanServiceImpl implements FlashLoanService{
     public Double determineLoanLimit(String memberId){
         double limit = 0.0;
         List<FlashLoanResponseDto> loansTaken = getFlashLoanByMemberId(memberId);
+
         if(loansTaken.isEmpty()){//for first time applicants
             limit = 1000.0;
         }
         else{
+            List<FlashLoan> previousLoans = flashLoanRepository.findByMemberAndLoanStatus(memberService.getMemberById(memberId), FlashLoan.Status.PAID);
+            List<Boolean> isPaidInTime = new ArrayList<>();
+
+            for(FlashLoan loan : previousLoans){
+                isPaidInTime.add(loan.getRepaidInTime());
+            }
+            System.out.println(isPaidInTime);
+            boolean lastItemPaid = true;
+            boolean secondLastPaid = true;
+            boolean thirdLastPaid = true;
+
+//            int lastIndex = isPaidInTime.size() - 1;
+//            boolean lastItemPaid = isPaidInTime.get(lastIndex);
+
+            if(!isPaidInTime.isEmpty()){
+                int lastIndex = isPaidInTime.size() - 1;
+                lastItemPaid = isPaidInTime.get(lastIndex);
+
+            }
+            if(isPaidInTime.size() >= 2) {
+                int secondLastIndex = isPaidInTime.size() - 2;
+                secondLastPaid = isPaidInTime.get(secondLastIndex);
+                int thirdLastIndex = isPaidInTime.size() - 3;
+                thirdLastPaid = isPaidInTime.get(thirdLastIndex);
+            }
+//            System.out.println(lastItemPaid);
+            System.out.println(secondLastPaid);
+//            System.out.println(thirdLastPaid);
+//            if(isPaidInTime.size()>2) {
+//                int thirdLastIndex = isPaidInTime.size() - 3;
+//                thirdLastPaid = isPaidInTime.get(thirdLastIndex);
+//            }
             List<Double> principals = new ArrayList<>();
             for(FlashLoanResponseDto dto:loansTaken){
                 principals.add(dto.getPrincipal());
@@ -194,14 +227,27 @@ public class FlashLoanServiceImpl implements FlashLoanService{
                     minPrincipal = number;
                 }
             }
-            if(minPrincipal<10000.0){
+            if((minPrincipal < 10000.0) && lastItemPaid && secondLastPaid && thirdLastPaid){
                 limit = minPrincipal+500.0;
+//                limit = Math.max(limit, 10000);
+            }
+            else if((minPrincipal < 10000.0) && !lastItemPaid && secondLastPaid && thirdLastPaid){
+                limit = minPrincipal;
+            }
+            else if (minPrincipal < 10000.0 && !secondLastPaid && !lastItemPaid && thirdLastPaid) {
+                // Halve the limit if paid late for two consecutive times
+                limit = minPrincipal / 2.0;
+                System.out.println(String.format("new limit is %s", limit));
+                // If resulting half is below 1000, set the limit to 1000
+                limit = Math.max(limit, 1000.0);
+            } else if (minPrincipal < 10000.0 && !thirdLastPaid && !secondLastPaid && !lastItemPaid) {
+                limit = 0.0;
             }
             else {
                 limit = 10000.0;
             }
         }
-//        System.out.println(limit);
+        System.out.println(limit);
         return limit;
     }
 

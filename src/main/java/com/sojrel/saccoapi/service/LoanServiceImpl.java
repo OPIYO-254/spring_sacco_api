@@ -448,24 +448,23 @@ public class LoanServiceImpl implements LoanService{
         List<GuarantorsDto> loansGuaranteed = loanGuarantorRepository.getMemberApprovedLoansGuaranteed(memberId); //this gives the list of loans guaranteed by member
         List<LoanResponseDto> approvedLoans = Mapper.loanToLoanResponseDtos(loanRepository.findByLoanStatus(Loan.LoanStatus.APPROVED)); //list of all approved loans
         List<LoanRepaymentDetails> repayments = getLoanTotalRepayments();
-//        List<Double> guaranteed = new ArrayList<>();
+
         List<Map<String, Object>> repaymentDetails=new ArrayList<>();
+
         for(LoanResponseDto dto: approvedLoans){
+//            System.out.println("guaranteed "+dto.getAmount());
             for(GuarantorsDto dto1: loansGuaranteed){
+//                System.out.println("approved ones "+dto1.getAmount());
                 for(LoanRepaymentDetails details:repayments){
                     if(dto1.getLoanId().equals(dto.getId())){
                         if(dto1.getLoanId().equals(details.getLoanId()) && dto1.getAmount()!=null){
-                            if(details.getTotalRepaid().equals(0.0)){
-                                oustanding = dto.getAmount()/dto.getAmount()*dto1.getAmount();
-                            }
-                            else{
-                                oustanding = details.getTotalRepaid()/dto.getAmount()*dto1.getAmount();
-                            }
+                            oustanding = details.getTotalRepaid()/dto.getAmount()*dto1.getAmount();
                             Map<String, Object> totals = new HashMap<>();
                             totals.put("loanId", details.getLoanId());
-                            totals.put("balance", oustanding);
-                            totals.put("amount", dto1.getAmount());
+                            totals.put("balance", oustanding); //amount guaranteed by the guarantor that is, amount guaranteed minus repaid
+                            totals.put("amount", dto1.getAmount());//amount of loan guaranteed by borrower
                             repaymentDetails.add(totals);
+//                            System.out.println(repaymentDetails);
                             break;
                         }
 
@@ -491,6 +490,7 @@ public class LoanServiceImpl implements LoanService{
         for(double val : outstandings){
             sum += val;
         }
+//        System.out.println(sum);
         return String.format("%.2f", sum);
     }
 }

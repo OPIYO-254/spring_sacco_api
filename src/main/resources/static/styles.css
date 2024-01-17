@@ -52,6 +52,9 @@ body{
 .body-section{
     margin-top:80px;
 }
+.term-container{
+    margin-bottom: 12px;
+}
 .term-container h3{
    color:#09AA5C;
    font-weight:bold;
@@ -768,7 +771,7 @@ body{
     padding:8px;
     width:100%;
     margin-right:12px;
-    height: 180px;
+    height: 200px;
 }
 .loan-type-container .icon{
     display: flex;
@@ -1061,6 +1064,9 @@ body{
         border-radius: 20px;
         width:100%;
         margin-top:4px;
+    }
+    .term-container{
+        margin-bottom: 0px;
     }
     .location-info{
         margin-top: 12px;

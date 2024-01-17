@@ -21,15 +21,4 @@ public interface FlashLoanRepository extends JpaRepository<FlashLoan, Long> {
 
     List<FlashLoan> findByMemberAndLoanStatus(Member member, FlashLoan.Status loanStatus);
 
-//    @Query("SELECT new com.sojrel.saccoapi.flashapi.dto.response.LoanHistoryDto(l.id, l.principal,l.repayDate, r.amount, " +
-//            "r.transactionDate)")
-//    List<LoanHistoryDto> findMemberHistory(@Param("memberId") String memberId);
 }
-
-/*
-private Long loanId;
-    private double borrowedAmount;
-    private LocalDateTime setRepayDate;
-    private double repaidAmount;
-    private LocalDateTime actualRepayment;
- */

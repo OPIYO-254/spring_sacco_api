@@ -234,7 +234,7 @@ public class HomepageController {
         else{totalContribs = totalShares + totalSavings;}
         double availableGuarantee = 0.0;
         if(totalSavings==null){
-            availableGuarantee = 0.0 - Double.valueOf(loanService.getGuaranteeBalance(id));
+            availableGuarantee = 0.0;
         }
         else{
             availableGuarantee = Double.valueOf(totalSavings) - Double.valueOf(loanService.getGuaranteeBalance(id));
@@ -399,12 +399,15 @@ public class HomepageController {
         ItemTotalDto item = loanService.getTotalGuaranteed(id);
         Long totalGuaranteed = item.getTotal();
         Loan loan = loanService.getLoanById(id);
-        if (totalGuaranteed != null) {
+        if(loan.getLoanType().equals(Loan.LoanType.EMERGENCY)){
+            loanService.approveLoan(id);
+            return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Loan approved successfully.\"}");
+        }
+        else if(totalGuaranteed != null) {
             if (loan.getPrincipal() == totalGuaranteed || loan.getPrincipal() < totalGuaranteed) {
                 loanService.approveLoan(id);
                 return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Loan approved successfully.\"}");
             }
-            return ResponseEntity.ok("{\"status\": \"error\", \"message\": \"Loan not fully guaranteed\"}");
         }
         return ResponseEntity.ok("{\"status\": \"error\", \"message\": \"Loan not fully guaranteed\"}");
     }
