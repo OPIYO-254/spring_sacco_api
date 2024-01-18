@@ -35,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -378,7 +379,7 @@ public class HomepageController {
         LoanResponseDto loanResponseDto = loanService.getLoan(id);
         TotalDoubleItem repaidTotal = loanService.getTotalRepaid(id);
         double totalRepaid = repaidTotal.getTotal();
-        if(loanResponseDto.getAmount()==totalRepaid || loanResponseDto.getAmount()<totalRepaid){
+        if(loanResponseDto.getAmount()==totalRepaid || loanResponseDto.getAmount() < totalRepaid){
             loanService.completeLoan(id);
         }
         modelAndView.addObject("loan", loanResponseDto);

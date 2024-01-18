@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.Formula;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -65,11 +67,16 @@ public class Loan {
     private List<Member> guarantors;
 
     public double calculatedAmount(){
-        amount = instalments * (principal * (interest / 100) * Math.pow((1 + (interest / 100)), instalments)) / (Math.pow((1 + (interest / 100)), instalments) - 1);
+        amount = instalments * (principal * (interest / 100) * Math.pow((1 + (interest / 100)), instalments)) /
+                (Math.pow((1 + (interest / 100)), instalments) - 1);
         DecimalFormat decimalFormat = new DecimalFormat("#");
         String formattedNumber = decimalFormat.format(amount);
-        double formatteAmount = Double.parseDouble(formattedNumber);
-        return Math.round(formatteAmount/100f)*100;
+        double formattedAmount = Double.parseDouble(formattedNumber);
+        if(loanType.equals(LoanType.EMERGENCY)){
+            return Math.floor(formattedAmount/5f)*5;
+        }
+        return Math.round(formattedAmount/100f)*100;
+
     }
 
     public enum LoanType {
