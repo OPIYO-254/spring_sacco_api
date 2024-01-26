@@ -11,7 +11,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -66,32 +69,18 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberResponseDto editMember(String memberId, MemberRequestDto memberRequestDto) {
         Member member = getMemberById(memberId);
+        member.setFirstName(memberRequestDto.getFirstName());
+        member.setMidName(memberRequestDto.getMidName());
+        member.setLastName(memberRequestDto.getLastName());
         member.setEmail(memberRequestDto.getEmail());
         member.setPhone(memberRequestDto.getPhone());
+        member.setAlternativePhone(memberRequestDto.getAlternativePhone());
+        member.setDob(memberRequestDto.getDob());
+        member.setIdNo(memberRequestDto.getIdNo());
+        member.setKraPin(memberRequestDto.getKraPin());
+        member.setGender(Member.Gender.valueOf(memberRequestDto.getGender()));
         member.setAddress(memberRequestDto.getAddress());
         member.setResidence(memberRequestDto.getResidence());
-        member.setGender(Member.Gender.valueOf(memberRequestDto.getGender()));
-//        if(!memberRequestDto.getContributionIds().isEmpty()){ //check if the list is not empty
-//            List<Contribution> contributions = new ArrayList<>();
-//            for(Long contributionId: memberRequestDto.getContributionIds()){
-//                contributions.add(contributionService.getContributionById(contributionId));
-//            }
-//            member.setContributions(contributions);
-//        }
-//        if(!memberRequestDto.getLoansTakenIds().isEmpty()){
-//            List<Loan> loansTaken = new ArrayList<>();
-//            for(Long loanTakenId : memberRequestDto.getLoansTakenIds()){
-//                loansTaken.add(loanService.getLoanById(loanTakenId));
-//            }
-//            member.setLoansTaken(loansTaken);
-//        }
-//        if(!memberRequestDto.getLoansGuaranteedIds().isEmpty()){
-//            List<Loan> loansGuaranteed = new ArrayList<>();
-//            for (Long loanTakenGuaranteed : memberRequestDto.getLoansGuaranteedIds()){
-//                loansGuaranteed.add(loanService.getLoanById(loanTakenGuaranteed));
-//            }
-//            member.setLoansGuaranteed(loansGuaranteed);
-//        }
         memberRepository.save(member);
         return Mapper.memberToMemberResponseDto(member);
     }

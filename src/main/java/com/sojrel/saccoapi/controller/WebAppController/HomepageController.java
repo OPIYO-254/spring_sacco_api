@@ -126,11 +126,18 @@ public class HomepageController {
             // Return a JSON response with success message
             return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Member registered successfully.\"}");
         } catch (Exception e) {
+            e.printStackTrace();
             // Return a JSON response with error message
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"status\": \"error\", \"message\": \"Error registering member.\"}");
         }
 
+    }
+
+    @PostMapping("/edit/{id}")
+    public ResponseEntity<MemberResponseDto> editMember(@PathVariable String id, @RequestBody MemberRequestDto memberRequestDto) {
+        MemberResponseDto memberResponseDto = memberService.editMember(id, memberRequestDto);
+        return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
     @GetMapping("/documents")
     public ModelAndView credentials(){

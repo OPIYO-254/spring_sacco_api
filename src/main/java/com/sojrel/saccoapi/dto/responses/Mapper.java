@@ -17,6 +17,7 @@ public class Mapper {
         memberResponseDto.setEmail(member.getEmail());
         memberResponseDto.setIdNo(member.getIdNo());
         memberResponseDto.setPhone(member.getPhone());
+        memberResponseDto.setAlternativePhone(member.getAlternativePhone());
         memberResponseDto.setDob(member.getDob());
         memberResponseDto.setKraPin(member.getKraPin());
         memberResponseDto.setGender(String.valueOf(member.getGender()));
@@ -27,6 +28,7 @@ public class Mapper {
         memberResponseDto.setLoansGuaranteed(member.getLoansGuaranteed());
         memberResponseDto.setFlashLoans(member.getFlashLoans());
         memberResponseDto.setUserFiles(member.getUserFiles());
+        memberResponseDto.setActive(memberResponseDto.isActive());
         return memberResponseDto;
     }
 

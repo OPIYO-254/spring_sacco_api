@@ -1,5 +1,6 @@
 package com.sojrel.saccoapi.mpesa.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sojrel.saccoapi.mpesa.dto.*;
 import com.sojrel.saccoapi.mpesa.service.DarajaApi;
@@ -40,18 +41,37 @@ public class MpesaController {
     }
 
 //    similating c2b transaction
-    @PostMapping("/simulate-c2b")
+    @PostMapping(path = "/simulate-c2b", produces = "application/json")
     public ResponseEntity<SimulateTransactionResponse> simulateB2CTransaction(@RequestBody SimulateTransactionRequest simulateTransactionRequest) {
         return ResponseEntity.ok(darajaApi.simulateC2BTransaction(simulateTransactionRequest));
     }
 
-    @PostMapping("/stk-transaction-request")
+    @PostMapping(path = "/b2c-transaction-result", produces = "application/json")
+    public ResponseEntity<AcknowledgeResponse> b2cTransactionAsyncResults(@RequestBody B2CTransactionAsyncResponse b2CTransactionAsyncResponse)
+            throws JsonProcessingException {
+        log.info("============ B2C Transaction Response =============");
+        log.info(objectMapper.writeValueAsString(b2CTransactionAsyncResponse));
+        return ResponseEntity.ok(acknowledgeResponse);
+    }
+
+    @PostMapping(path = "/b2c-queue-timeout", produces = "application/json")
+    public ResponseEntity<AcknowledgeResponse> queueTimeout(@RequestBody Object object) {
+        return ResponseEntity.ok(acknowledgeResponse);
+    }
+
+    @PostMapping(path = "/b2c-transaction", produces = "application/json")
+    public ResponseEntity<B2CTransactionSyncResponse> performB2CTransaction(@RequestBody InternalB2CTransactionRequest internalB2CTransactionRequest) {
+
+        return ResponseEntity.ok(darajaApi.performB2CTransaction(internalB2CTransactionRequest));
+    }
+
+    @PostMapping(path="/stk-transaction-request", produces = "application/json")
     public ResponseEntity<StkPushSyncResponse> stkPushTransaction(@RequestBody InternalStkPushRequest internalStkPushRequest){
         return ResponseEntity.ok(darajaApi.performStkPushTransaction(internalStkPushRequest));
     }
 
     @SneakyThrows
-    @PostMapping("/stk-transaction-result")
+    @PostMapping(path="/stk-transaction-result", produces = "application/json")
     public ResponseEntity<AcknowledgeResponse> acknowledgeStkPushResponse(@RequestBody StkPushAsyncResonse stkPushAsyncResonse){
         log.info("======= STK Push Async Response =====");
         log.info(objectMapper.writeValueAsString(stkPushAsyncResonse));

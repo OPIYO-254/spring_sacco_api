@@ -19,5 +19,4 @@ public class NewMemberResponseDto {
     private String email;
     private String phone;
     private String residence;
-
 }

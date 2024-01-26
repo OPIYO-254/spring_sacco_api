@@ -95,6 +95,51 @@ public class DarajaApiImpl implements DarajaApi{
         }
     }
 
+    @Override
+    public B2CTransactionSyncResponse performB2CTransaction(InternalB2CTransactionRequest internalB2CTransactionRequest) {
+        AccessTokenResponse accessTokenResponse = getAccessTokenResponse();
+        //log.info(String.format("Access Token: %s", accessTokenResponse.getAccessToken()));
+
+        B2CTransactionRequest b2CTransactionRequest = new B2CTransactionRequest();
+
+        b2CTransactionRequest.setCommandID(internalB2CTransactionRequest.getCommandID());
+        b2CTransactionRequest.setAmount(internalB2CTransactionRequest.getAmount());
+        b2CTransactionRequest.setPartyB(internalB2CTransactionRequest.getPartyB());
+        b2CTransactionRequest.setRemarks(internalB2CTransactionRequest.getRemarks());
+        b2CTransactionRequest.setOccassion(internalB2CTransactionRequest.getOccassion());
+
+        // get the security credentials ...
+        b2CTransactionRequest.setSecurityCredential(HelperUtility.getSecurityCredentials(mpesaConfiguration.getB2cInitiatorPassword()));
+
+        //log.info(String.format("Security Creds: %s", b2CTransactionRequest.getSecurityCredential()));
+
+        // set the result url ...
+        b2CTransactionRequest.setResultURL(mpesaConfiguration.getB2cResultUrl());
+        b2CTransactionRequest.setQueueTimeOutURL(mpesaConfiguration.getB2cQueueTimeoutUrl());
+        b2CTransactionRequest.setInitiatorName(mpesaConfiguration.getB2cInitiatorName());
+        b2CTransactionRequest.setPartyA(mpesaConfiguration.getShortCode());
+
+        RequestBody body = RequestBody.create(JSON_MEDIA_TYPE,
+                Objects.requireNonNull(HelperUtility.toJson(b2CTransactionRequest)));
+
+        Request request = new Request.Builder()
+                .url(mpesaConfiguration.getB2cTransactionEndpoint())
+                .post(body)
+                .addHeader(AUTHORIZATION_HEADER_STRING, String.format("%s %s", BEARER_AUTH_STRING, accessTokenResponse.getAccessToken()))
+                .build();
+
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+
+            assert response.body() != null;
+            log.info(b2CTransactionRequest.toString());
+            return objectMapper.readValue(response.body().string(), B2CTransactionSyncResponse.class);
+        } catch (IOException e) {
+            log.error(String.format("Could not perform B2C transaction ->%s", e.getLocalizedMessage()));
+            return null;
+        }
+
+    }
 
 
     @Override

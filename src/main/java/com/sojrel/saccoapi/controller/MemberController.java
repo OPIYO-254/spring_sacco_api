@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 @CrossOrigin(origins={"http://10.0.2.2:8080"})
 @RestController
@@ -78,7 +79,7 @@ public class MemberController {
 
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<MemberResponseDto> editMember(@PathVariable String id, @RequestBody MemberRequestDto memberRequestDto) {
+    public ResponseEntity<MemberResponseDto> editMember(@PathVariable String id, @RequestBody MemberRequestDto memberRequestDto) throws ParseException {
         MemberResponseDto memberResponseDto = memberService.editMember(id, memberRequestDto);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }

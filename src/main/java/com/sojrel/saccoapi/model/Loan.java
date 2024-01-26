@@ -67,15 +67,18 @@ public class Loan {
     private List<Member> guarantors;
 
     public double calculatedAmount(){
-        amount = instalments * (principal * (interest / 100) * Math.pow((1 + (interest / 100)), instalments)) /
-                (Math.pow((1 + (interest / 100)), instalments) - 1);
-        DecimalFormat decimalFormat = new DecimalFormat("#");
-        String formattedNumber = decimalFormat.format(amount);
-        double formattedAmount = Double.parseDouble(formattedNumber);
-        if(loanType.equals(LoanType.EMERGENCY)){
-            return Math.floor(formattedAmount/5f)*5;
-        }
-        return Math.round(formattedAmount/100f)*100;
+//        amount = instalments * (principal * (interest / 100) * Math.pow((1 + (interest / 100)), instalments)) /
+//                (Math.pow((1 + (interest / 100)), instalments) - 1);
+//        DecimalFormat decimalFormat = new DecimalFormat("#");
+//        String formattedNumber = decimalFormat.format(instalmentAmount);
+//        double formattedAmount = Double.parseDouble(formattedNumber);
+//        if(loanType.equals(LoanType.EMERGENCY)){
+//            return Math.floor(formattedAmount/10f)*10;
+//        }
+//        return Math.round(formattedAmount/100f)*100;
+        double instalmentAmount = ((principal*interest/100)+(principal/instalments * interest/100))/2*instalments;//calculates total interest for the loan
+        double amount = principal + instalmentAmount; //amount of the loan
+        return  amount;
 
     }
 

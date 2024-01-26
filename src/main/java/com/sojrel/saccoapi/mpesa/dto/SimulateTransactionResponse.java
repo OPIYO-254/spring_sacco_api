@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class SimulateTransactionResponse {
-    @JsonProperty("ConversationID")
-    private String conversationID;
+//    @JsonProperty("ConversationID")
+//    private String conversationID;
 
     @JsonProperty("ResponseDescription")
     private String responseDescription;

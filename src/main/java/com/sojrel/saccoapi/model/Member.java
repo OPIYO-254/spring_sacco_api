@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -38,32 +39,28 @@ public class Member {
     @Column(updatable = false)
     private LocalDateTime regDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private Long idNo;
 
-    @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String phone;
 
     private String alternativePhone;
 
-    @Column(nullable = false,unique = true, updatable = false)
+    @Column(unique = true, updatable = false)
     private String kraPin;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Gender gender;
 
-    @Column(nullable = false)
     private String residence;
 
-    @Column(nullable = false)
     private String address;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -81,6 +78,10 @@ public class Member {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserFiles> userFiles;
+
+    @Column(nullable = false, columnDefinition = "tinyint(1) default 1")
+    private boolean isActive;
+
 
     public String getId() {
         return id;
@@ -234,8 +235,11 @@ public class Member {
         this.userFiles = userFiles;
     }
 
+    public boolean getIsActive(){return isActive;}
+    public void setIsActive(boolean isActive){this.isActive = isActive;}
+
     public enum Gender{
-        MALE,FEMALE
+        MALE,FEMALE,NONE
     }
     public void addContribution(Contribution contribution){
         contributions.add(contribution);

@@ -68,11 +68,11 @@
                         <th scope="row row-scoped">Registration Date:</th>
                         <td th:text="${#temporals.format(member.regDate,'dd MMM yyyy')}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${member.idNo} != null">
                         <th scope="row row-scoped">ID No:</th>
                         <td th:text="${member.idNo}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${member.dob}!=null">
                         <th scope="row row-scoped">Date of Birth:</th>
                         <td th:text="${#dates.format(member.dob,'dd MMM yyyy')}"></td>
                     </tr>
@@ -128,8 +128,189 @@
                             </a>
                         </td>
                     </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <div class="edit-buttons">
+                                <button th:if="${member.idNo == null}" class="button btn mx-1" data-bs-toggle="modal" data-bs-target="#groupRegistrationModal">Edit Details</button>
+                                <button th:unless="${member.idNo == null}" class="button btn mx-1" data-bs-toggle="modal" data-bs-target="#individualRegistrationModal">Edit Details</button>
+                                <button class="button btn mx-1">Deactivate</button>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
+
+
+<!--            edit individual member details-->
+            <div class="registration-modal modal fade" id="individualRegistrationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fw-bold" id="exampleModalLabel" style="color:#09AA5C;">Update Member Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid mb-3 reg-form-container">
+                                <div class="reg-container m-lg-3 m-md-3">
+                                    <!--                                        <div class="d-flex justify-content-center align-items-center py-1">-->
+                                    <!--                                            <h3 style="color:#09AA5C;">Individual Member Registration</h3>-->
+                                    <!--                                        </div>-->
+                                    <form id="individual-registration-form" method="post">
+                                        <div class="row input-container">
+                                            <div class="col sub-container">
+                                                <input type="text" class="form-control" id="memberId" name="id"  th:value="${member.id}" hidden>
+                                                <div class="mb-3">
+                                                    <label for="firstName" class="form-label">First Name:</label>
+                                                    <input type="text" class="form-control" id="firstName" name="firstName"  th:field="${member.firstName}" disabled>
+                                                    <!--                                                        <span id="fnameMsg"></span>-->
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="midName" class="form-label">Middle Name (optional):</label>
+                                                    <input type="text" class="form-control" id="midName" name="midName" th:field="${member.midName}">
+<!--                                                    <input type="text" class="form-control" id="midName" name="midName" th:field="${member.midName}">-->
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="lastName" class="form-label">Last Name:</label>
+                                                    <input type="text" class="form-control" id="lastName" name="lastName" th:field="${member.lastName}">
+                                                    <!--                                                        <span id="lnameMsg"></span>-->
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email:</label>
+                                                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" th:field="${member.email}">
+                                                    <!--                                                        <span id="emailMsg"></span>-->
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="dob" class="form-label">Date of Birth:</label>
+                                                    <input type="date" class="form-control" id="dob" name="dob" th:value="${#dates.format(member.dob, 'yyyy-MM-dd')}">
+                                                    <!--                                                        <span id="dobMsg"></span>-->
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="idNo" class="form-label">ID Number:</label>
+                                                    <input type="number" class="form-control" id="idNo" name="idNo" th:field="${member.idNo}" disabled>
+                                                    <!--                                                        <span id="idNoMsg"></span>-->
+                                                </div>
+
+                                            </div>
+                                            <div class="col sub-container">
+                                                <div class="mb-3">
+                                                    <label for="kraPin" class="form-label">Kra Pin:</label>
+                                                    <input type="text" class="form-control" id="kraPin"  name="kraPin" th:field="${member.kraPin}" disabled>
+                                                    <!--                                                        <span id="kraPinMsg"></span>-->
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="phone" class="form-label">Phone Number:</label>
+                                                    <input type="text" class="form-control" id="phone" name="phone" th:field="${member.phone}">
+                                                    <!--                                                        <span id="phoneMsg"></span>-->
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="phone1" class="form-label">Alternative Contact:</label>
+                                                    <input type="text" class="form-control" id="phone1" name="alternativePhone" th:field="${member.alternativePhone}">
+                                                    <!--                                                        <span id="phone1Msg"></span>-->
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="gender" class="form-label">Gender</label>
+                                                    <select id="gender" name="gender" class="form-control" th:field="${member.gender}">
+                                                        <option align="center" value="">Select Gender</option>
+                                                        <option value="MALE">MALE</option>
+                                                        <option value="FEMALE">FEMALE</option>
+                                                    </select>
+                                                    <!--                                                        <span id="genderMsg"></span>-->
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="address" class="form-label">Postal Address:</label>
+                                                    <input type="text" class="form-control" id="address" name="address" th:field="${member.address}">
+                                                    <!--                                                        <span id="addressMsg"></span>-->
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="residence" class="form-label">Residence:</label>
+                                                    <input type="text" class="form-control" id="residence" name="residence" th:field="${member.residence}">
+                                                    <!--                                                        <span id="residenceMsg"></span>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" id="regsubmitBtn" style="width:auto; margin-bottom:24px;" class="btn submitBtn">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!--            edit group/business member details-->
+            <div class="registration-modal modal fade" id="groupRegistrationModal" tabindex="-1" aria-labelledby="groupRegistrationModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fw-bold" id="groupRegistrationModalLabel" style="color:#09AA5C;">Update Member Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid pt-2 mt-2 mb-3 reg-form-container">
+                                <div class="reg-container m-lg-3 m-md-3">
+                                    <form id="group-registration-form" method="post">
+                                        <div class="row input-container">
+                                            <div class="col sub-container">
+                                                <input type="text" class="form-control" id="member_id" name="id"  th:value="${member.id}" hidden>
+                                                <div class="mb-3">
+                                                    <label for="cfirstName" class="form-label">First Name:</label>
+                                                    <input type="text" class="form-control" id="cfirstName" th:field="${member.firstName}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="cmidName" class="form-label">Second Name (optional):</label>
+                                                    <input type="text" class="form-control" id="cmidName" th:field="${member.midName}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="clastName" class="form-label">Last Name:</label>
+                                                    <input type="text" class="form-control" id="clastName" th:field="${member.lastName}">
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="cemail" class="form-label">Email:</label>
+                                                    <input type="email" class="form-control" id="cemail" aria-describedby="emailHelp" th:field="${member.email}">
+                                                </div>
+
+                                            </div>
+                                            <div class="col sub-container">
+                                                <div class="mb-3">
+                                                    <label for="ckraPin" class="form-label">Kra Pin:</label>
+                                                    <input type="text" class="form-control" id="ckraPin" th:field="${member.kraPin}">
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="cphone" class="form-label">Phone Number:</label>
+                                                    <input type="text" class="form-control" id="cphone" th:field="${member.phone}">
+                                                    <!--                                                        <span id="phoneMsg"></span>-->
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="caddress" class="form-label">Postal Address:</label>
+                                                    <input type="text" class="form-control" id="caddress" th:field="${member.address}">
+                                                    <!--                                                        <span id="addressMsg"></span>-->
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="cresidence" class="form-label">Physical Address:</label>
+                                                    <input type="text" class="form-control" id="cresidence" th:field="${member.residence}">
+                                                    <!--                                                        <span id="residenceMsg"></span>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" id="csubmitBtn" style="width:auto; margin-bottom:24px;" class="btn submitBtn">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <span class="d-flex justify-content-center text-success fw-bold">Contributions</span>
             <div class="totals">
@@ -307,10 +488,6 @@
         });
 
 
-
-
-
-
         $(document).ready(function (){
             $("#contrib-form").submit(function(event){
                 event.preventDefault();
@@ -371,6 +548,123 @@
 
                     });
                 }
+            });
+        });
+
+
+         $(document).ready(function () {
+            $("#individual-registration-form").submit(function (event) {
+                event.preventDefault();
+               var originalButtonText = $("#regsubmitBtn").html();
+               $("#regsubmitBtn").html('<div class="spinner-border" role="status" id="spinner">' +
+                                  '<span class="visually-hidden"></span>' +
+                                  '</div> Please wait...');
+               var formData = {
+                    firstName: $("#firstName").val(),
+                    midName: $("#midName").val(),
+                    lastName: $("#lastName").val(),
+                    email: $("#email").val(),
+                    dob: $("#dob").val(),
+                    idNo: $("#idNo").val(),
+                    kraPin: $("#kraPin").val(),
+                    phone: $("#phone").val(),
+                    alternativePhone: $("#phone1").val(),
+                    gender: $("#gender").val(),
+                    address: $("#address").val(),
+                    residence: $("#residence").val(),
+               }
+                console.log(formData);
+                $.ajax({
+                    contentType : "application/json",
+                    dataType : 'json',
+                    type: "POST",
+                    url: "/edit/" + $("#memberId").val(),
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        if(response.status=="success"){
+                            $("#regsubmitBtn").html(originalButtonText);
+                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;margin;0;"><p>'+response.message+'</p></div>');
+                            $("#results").fadeToggle(3000);
+                            $("#individual-registration-form")[0].reset();
+                            //$('#individualRegistrationModal').modal('hide');
+                        }
+                        else{
+                            $("#regsubmitBtn").html(originalButtonText);
+                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>'+response.message+'</p></div>');
+                            $("#results").fadeToggle(3000);
+                            //$("#individual-registration-form")[0].reset();
+                        }
+                    },
+                    error: function (error) {
+                        console.log("Error:", error);
+                        $("#regsubmitBtn").html(originalButtonText);
+                        $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>Error!</p></div>');
+                        $("#results").fadeToggle(3000);
+                        $("#individual-registration-form")[0].reset();
+                        //$('#individualRegistrationModal').modal('hide');
+                    }
+                });
+
+
+            });
+        });
+
+
+
+        $(document).ready(function () {
+            $("#group-registration-form").submit(function (event) {
+                event.preventDefault();
+               var originalButtonText = $("#regsubmitBtn").html();
+               $("#csubmitBtn").html('<div class="spinner-border" role="status" id="spinner">' +
+                                  '<span class="visually-hidden"></span>' +
+                                  '</div> Please wait...');
+               var formData = {
+                    firstName: $("#cfirstName").val(),
+                    midName: $("#cmidName").val(),
+                    lastName: $("#clastName").val(),
+                    email: $("#cemail").val(),
+                    dob: "",
+                    idNo: "",
+                    kraPin: $("#ckraPin").val(),
+                    phone: $("#cphone").val(),
+                    alternativePhone: "",
+                    gender: "NONE",
+                    address: $("#caddress").val(),
+                    residence: $("#cresidence").val(),
+               }
+                console.log(formData);
+                $.ajax({
+                    contentType : "application/json",
+                    dataType : 'json',
+                    type: "POST",
+                    url: "/edit/" + $("#member_id").val(),
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        if(response.status=="success"){
+                            $("#csubmitBtn").html(originalButtonText);
+                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;margin;0;"><p>'+response.message+'</p></div>');
+                            $("#results").fadeToggle(3000);
+                            $("#individual-registration-form")[0].reset();
+                            //$('#individualRegistrationModal').modal('hide');
+                        }
+                        else{
+                            $("#csubmitBtn").html(originalButtonText);
+                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>'+response.message+'</p></div>');
+                            $("#results").fadeToggle(3000);
+                            //$("#individual-registration-form")[0].reset();
+                        }
+                    },
+                    error: function (error) {
+                        console.log("Error:", error);
+                        $("#csubmitBtn").html(originalButtonText);
+                        $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:12px 0px; text-align:center; width:100%;"><p>Error!</p></div>');
+                        $("#results").fadeToggle(3000);
+                        $("#individual-registration-form")[0].reset();
+                        //$('#individualRegistrationModal').modal('hide');
+                    }
+                });
+
+
             });
         });
     </script>

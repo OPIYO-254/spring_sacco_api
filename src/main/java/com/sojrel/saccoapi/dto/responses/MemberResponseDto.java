@@ -34,4 +34,5 @@ public class MemberResponseDto {
     private List<Loan> loansGuaranteed;
     private List<FlashLoan> flashLoans;
     private List<UserFiles> userFiles;
+    private boolean isActive;
 }

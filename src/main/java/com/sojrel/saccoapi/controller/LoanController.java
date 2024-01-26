@@ -26,9 +26,16 @@ public class LoanController {
     private LoanService loanService;
 
     @PostMapping("/add")
-    public ResponseEntity<LoanResponseDto> addLoan(@RequestBody LoanRequestDto loanRequestDto){
-        LoanResponseDto loanResponseDto = loanService.addLoan(loanRequestDto);
-        return new ResponseEntity<>(loanResponseDto, HttpStatus.CREATED);
+    public ResponseEntity<?> addLoan(@RequestBody LoanRequestDto loanRequestDto){
+        try{
+            loanService.addLoan(loanRequestDto);
+            return ResponseEntity.ok("{\"status\":\"success\", \"message\":\"Application submitted successfully for review.\"}");
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"status\":\"error\", \"message\":\"You still have another loan under review.\"}");
+        }
+
     }
     @GetMapping("/get-one/{id}")
     public ResponseEntity<LoanResponseDto> getLoan(@PathVariable Long id){

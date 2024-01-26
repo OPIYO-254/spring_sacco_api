@@ -24,6 +24,11 @@ public class MpesaConfiguration {
     private String pushShortCode;
     private String stkPushUrl;
     private String stkPushRequestCallback;
+    private String b2cTransactionEndpoint;
+    private String b2cResultUrl;
+    private String b2cQueueTimeoutUrl;
+    private String b2cInitiatorName;
+    private String b2cInitiatorPassword;
 
     @Bean
     public OkHttpClient okHttpClient() {

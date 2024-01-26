@@ -8,6 +8,7 @@ import com.sojrel.saccoapi.dto.responses.NewMemberResponseDto;
 import com.sojrel.saccoapi.model.Member;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 @Service
 public interface MemberService {

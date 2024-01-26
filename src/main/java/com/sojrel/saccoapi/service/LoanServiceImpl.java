@@ -39,6 +39,10 @@ public class LoanServiceImpl implements LoanService{
     public LoanResponseDto addLoan(LoanRequestDto loanRequestDto) {
         Loan loan = new Loan();
 //        System.out.println(loanRequestDto.getLoanType());
+        if(loanRequestDto.getLoanType().equals(Loan.LoanType.EMERGENCY) && loanRequestDto.getInstalments() > 2){
+            log.error("Maximum period for emergency loan is 2");
+            return null;
+        }
         loan.setLoanType(Loan.LoanType.valueOf(loanRequestDto.getLoanType()));
         Member member = memberService.getMemberById(loanRequestDto.getMemberId());
         if(Objects.nonNull(member)){
