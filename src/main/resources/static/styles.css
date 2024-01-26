@@ -406,6 +406,11 @@ body{
     /*padding: 20px;*/
 
 }
+
+.modal-dialog{
+    position:relative;
+    top:15%;
+}
 /* Style the main content */
 .my-section {
     min-height: calc(100vh-80px); /* Minimum height calculation */
@@ -1275,6 +1280,7 @@ body{
        position:relative;
        top:15%;
    }
+
    .repayment-container{
       display:flex;
       flex-direction:column;
