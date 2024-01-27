@@ -134,7 +134,7 @@ public class AuthenticationController {
             }
             else{
                 response.put("status", "inactive");
-                response.put("message", "You account is not active. Contact admin.");
+                response.put("message", "You account is not active. Please contact admin.");
             }
             return ResponseEntity.ok(response);
         }
