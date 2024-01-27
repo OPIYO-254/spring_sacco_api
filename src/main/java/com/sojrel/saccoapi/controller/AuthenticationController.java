@@ -119,22 +119,28 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto dto){
+        Map<String, String> response = new HashMap<>();
         try {
             LoginResponseDTO loginResponseDTO = userService.loginUser(dto);
             String token = loginResponseDTO.getToken();
             String email = loginResponseDTO.getUser().getEmail();
             Member member = memberService.getMemberByEmail(email);
             String id = member.getId();
-            Map<String, Object> response = new HashMap<>();
-            response.put("status", "success");
-            response.put("message", "Login successful!");
-            response.put("token", token);
-            response.put("id", id);
-            return ResponseEntity.ok(response);
+            if(member.getIsActive()) {
+                response.put("status", "success");
+                response.put("message", "Login successful!");
+                response.put("token", token);
+                response.put("id", id);
+                return ResponseEntity.ok(response);
+            }
+            else{
+                response.put("status", "inactive");
+                response.put("message", "You account is not active. Contact admin.");
+                return ResponseEntity.ok(response);
+            }
         }
         catch (Exception e){
             log.error("Authentication error "+e.getLocalizedMessage());
-            Map<String, String> response = new HashMap<>();
             response.put("status", "error");
             response.put("message", "Invalid login credentials. Check and try again.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
