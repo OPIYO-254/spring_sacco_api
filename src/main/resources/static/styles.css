@@ -364,7 +364,7 @@ body{
     color:#09AA5C;
 }
 .card{
-    width:18rem;
+   /* width:18rem;*/
     padding:12px;
 }
 .card-body .card-text{
@@ -376,11 +376,10 @@ body{
     display:flex;
 }
 .services-pair{
-    width:50%;
     display:flex;
 }
 .services-section .card{
-    margin: 6px 12px;
+    margin: 6px;
 }
 .services-section .card i{
     font-size:80px;
