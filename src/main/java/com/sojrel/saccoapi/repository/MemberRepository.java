@@ -22,7 +22,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
             "member.id_no, member.email, member.phone, member.residence FROM member WHERE member.is_active is true", nativeQuery = true)
     List<Object[]> findNewMembers();
 
-    @Query("SELECT new com.sojrel.saccoapi.dto.responses.ItemCountDto(COUNT(*)) FROM Member")
+    @Query("SELECT new com.sojrel.saccoapi.dto.responses.ItemCountDto(COUNT(*)) FROM Member m where m.isActive = true")
     ItemCountDto findMemberCount();
 
 
