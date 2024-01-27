@@ -63,7 +63,13 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public List<MemberResponseDto> getAllMembers() {
         List<Member> members = StreamSupport.stream(memberRepository.findAll().spliterator(), false).collect(Collectors.toList());
-        return Mapper.memberToMembersResponseDtos(members);
+        List<MemberResponseDto> activeMembersDto = new ArrayList<>();
+        for(Member member : members){
+            if(member.getIsActive()){
+                activeMembersDto.add(Mapper.memberToMemberResponseDto(member));
+            }
+        }
+        return activeMembersDto;
     }
     @Transactional
     @Override
@@ -83,6 +89,13 @@ public class MemberServiceImpl implements MemberService{
         member.setResidence(memberRequestDto.getResidence());
         memberRepository.save(member);
         return Mapper.memberToMemberResponseDto(member);
+    }
+
+    @Override
+    public void deactivateMember(String memberId) {
+        Member member = getMemberById(memberId);
+        member.setIsActive(false);
+        memberRepository.save(member);
     }
 
     @Override

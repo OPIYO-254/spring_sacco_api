@@ -80,6 +80,12 @@ public class HomepageController {
     public ModelAndView adminMain(){
         ModelAndView modelAndView = new ModelAndView("home");
         List<MemberTotalSavingsDto> memberTotalSavingDtos = memberService.findMemberSavings();
+        List<MemberTotalSavingsDto> activeMembers = new ArrayList<>();
+        for(MemberTotalSavingsDto dto : memberTotalSavingDtos){
+            if(dto.getIsActive()){
+                activeMembers.add(dto);
+            }
+        }
         ItemCountDto loanCount = loanService.countAppliedLoans();
         Long count = loanCount.getCount();
         ItemCountDto memberCount = memberService.getMemberCount();
@@ -103,7 +109,7 @@ public class HomepageController {
         modelAndView.addObject("repaying", repaying);
         modelAndView.addObject("rejected_count", rejected);
         modelAndView.addObject("completed_count", completed);
-        modelAndView.addObject("savings", memberTotalSavingDtos);
+        modelAndView.addObject("savings", activeMembers);
         modelAndView.addObject("unread", unread);
         return modelAndView;
     }
@@ -141,11 +147,30 @@ public class HomepageController {
             return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Member details updated successfully.\"}");
         }
         catch (Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"status\": \"error\", \"message\": \"Error updating member details.\"}");
         }
     }
+
+    @PostMapping("/deactivate")
+    public String deactivateMember(@RequestParam String id){
+        memberService.deactivateMember(id);
+        return "redirect:/members";
+    }
+//    @PostMapping("/deactivate")
+//    public ResponseEntity<?> deactivateMember(@RequestParam String id){
+//        try{
+//
+//            return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Member deactivated.\"}");
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("{\"status\": \"error\", \"message\": \"Error deactivating member.\"}");
+//        }
+//    }
+    @PostMapping
     @GetMapping("/documents")
     public ModelAndView credentials(){
         ModelAndView modelAndView = new ModelAndView("documents");

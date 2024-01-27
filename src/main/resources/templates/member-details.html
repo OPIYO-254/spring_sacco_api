@@ -132,15 +132,37 @@
                         <th></th>
                         <td>
                             <div class="edit-buttons">
-                                <button th:if="${member.idNo == null}" class="button btn mx-1" data-bs-toggle="modal" data-bs-target="#groupRegistrationModal">Edit Details</button>
+                                <button th:if="${member.idNo == null}" class="button btn m-1" data-bs-toggle="modal" data-bs-target="#groupRegistrationModal">Edit Details</button>
                                 <button th:unless="${member.idNo == null}" class="button btn mx-1" data-bs-toggle="modal" data-bs-target="#individualRegistrationModal">Edit Details</button>
-                                <button class="button btn mx-1">Deactivate</button>
+                                <button class="button btn m-1" data-bs-toggle="modal" data-bs-target="#deactivateModal">Deactivate</button>
+<!--                                <form class="m-1 w-100" th:action="@{/deactivate(id=${member.id})}" th:method="post">-->
+<!--                                    <button class="button btn">Deactivate</button>-->
+<!--                                </form>-->
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
+            <div class="modal fade" id="deactivateModal" tabindex="-1" aria-labelledby="deactivateModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" style="font-weight:bold; color:orangered;">Member Account Deactivation</h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to deactivate this member?</p>
+                        </div>
+                        <div class="modal-footer" style="flex-wrap: nowrap;">
+                            <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
+                            <form class="m-1 w-100" th:action="@{/deactivate(id=${member.id})}" th:method="post">
+                                <button class="button btn" style="background-color: orangered; border-color: orangered;">Deactivate</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 <!--            edit individual member details-->
             <div class="registration-modal modal fade" id="individualRegistrationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

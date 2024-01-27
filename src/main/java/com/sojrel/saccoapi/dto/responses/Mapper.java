@@ -28,7 +28,7 @@ public class Mapper {
         memberResponseDto.setLoansGuaranteed(member.getLoansGuaranteed());
         memberResponseDto.setFlashLoans(member.getFlashLoans());
         memberResponseDto.setUserFiles(member.getUserFiles());
-        memberResponseDto.setActive(memberResponseDto.isActive());
+        memberResponseDto.setIsActive(member.getIsActive());
         return memberResponseDto;
     }
 

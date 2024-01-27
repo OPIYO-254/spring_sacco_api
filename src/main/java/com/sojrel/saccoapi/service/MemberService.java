@@ -17,6 +17,7 @@ public interface MemberService {
     public Member getMemberById(String memberId);
     public List<MemberResponseDto> getAllMembers();
     public MemberResponseDto editMember(String memberId, MemberRequestDto memberRequestDto);
+    public void deactivateMember(String memberId);
     public MemberResponseDto deleteMember(String memberId);
     public MemberResponseDto addContributionToMember(String memberId, Long contributionId);
     public MemberResponseDto removeContributionFromMember(String memberId, Long contributionId);

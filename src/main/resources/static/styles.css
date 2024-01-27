@@ -34,10 +34,16 @@ body{
 .edit-buttons{
     display:flex;
 }
+.edit-buttons .btn{
+        width:140px;
+    }
+
 .edit-buttons .btn:nth-child(2){
     background-color: orangered;
     border-color: orangered;
+
 }
+
 .remember-class{
     display: flex;
     justify-content: space-between;
@@ -875,7 +881,9 @@ body{
         display:flex;
         flex-direction:column;
     }
-
+    .edit-buttons .btn{
+        width:60%;
+    }
     .services-pair {
         padding-right: 18px;
     }
@@ -1103,6 +1111,11 @@ body{
     .contribution-box span{
         font-size:14px;
     }
+
+    .edit-buttons .btn{
+        width:70%;
+    }
+
     .fa-question-circle-o{
         display:none;
     }
@@ -1635,6 +1648,9 @@ body{
         right: 12px;
         top: 22px;
     }
+    .edit-buttons .btn{
+            width:160px;
+        }
     .fa-question-circle-o{
         display:none;
     }

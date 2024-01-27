@@ -20,4 +20,5 @@ public class MemberTotalSavingsDto {
     private String phone;
     private String residence;
     private Long totalSavings;
+    private Boolean isActive;
 }
