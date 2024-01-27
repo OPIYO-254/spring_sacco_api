@@ -664,6 +664,8 @@ public class HomepageController {
         return  modelAndView;
     }
 
+    @GetMapping("/")
+    public String index(){return "index";}
     @GetMapping("/about-us")
     public String aboutUs(){return "about-us";}
 
