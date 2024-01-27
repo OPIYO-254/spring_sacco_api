@@ -131,13 +131,12 @@ public class AuthenticationController {
                 response.put("message", "Login successful!");
                 response.put("token", token);
                 response.put("id", id);
-                return ResponseEntity.ok(response);
             }
             else{
                 response.put("status", "inactive");
                 response.put("message", "You account is not active. Contact admin.");
-                return ResponseEntity.ok(response);
             }
+            return ResponseEntity.ok(response);
         }
         catch (Exception e){
             log.error("Authentication error "+e.getLocalizedMessage());
