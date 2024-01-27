@@ -135,9 +135,16 @@ public class HomepageController {
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<MemberResponseDto> editMember(@PathVariable String id, @RequestBody MemberRequestDto memberRequestDto) {
-        MemberResponseDto memberResponseDto = memberService.editMember(id, memberRequestDto);
-        return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
+    public ResponseEntity<?> editMember(@PathVariable String id, @RequestBody MemberRequestDto memberRequestDto) {
+        try {
+            memberService.editMember(id, memberRequestDto);
+            return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Member details updated successfully.\"}");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"status\": \"error\", \"message\": \"Error updating member details.\"}");
+        }
     }
     @GetMapping("/documents")
     public ModelAndView credentials(){

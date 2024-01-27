@@ -27,13 +27,13 @@ public class Member {
     @GeneratedValue(generator = "id")
     private String id;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private String firstName;
 
-    @Column(updatable = false)
+//    @Column(updatable = false)
     private String midName;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private String lastName;
 
     @Column(updatable = false)
@@ -53,7 +53,7 @@ public class Member {
 
     private String alternativePhone;
 
-    @Column(unique = true, updatable = false)
+    @Column(unique = true)
     private String kraPin;
 
     @Enumerated(EnumType.STRING)
