@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
         String content = "Hello [[name]],<br>"
                             +"You are receiving this email because you tried to create account with us. "
                             +"Please click the button below to verify your registration:<br>"
-                            + "<button><h1><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h1></button><br><br>"
+                            + "<h1><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h1><br><br>"
                             + "Thank you.<br>"
                             + "Sojrel Sacco Management.";
 
@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
         String content = "<p>Hello,</p>"
                 + "<p>You have requested to reset your password.</p>"
                 + "<p>Click the link below to change your password:</p>"
-                + "<button><h1><a href=\"" + link + "\">Change my password</a></h1></button>"
+                + "<h1><a href=\"" + link + "\">Change my password</a></h1>"
                 + "<br>"
                 + "<p>Ignore this email if you do remember your password, "
                 + "or you have not made the request.</p>";
