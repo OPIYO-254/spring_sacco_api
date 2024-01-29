@@ -91,7 +91,7 @@ public class Loan {
     @PrePersist
     public void prePersist(){
         if(applicationDate == null){
-            applicationDate = LocalDateTime.now(ZoneId.of("Africa/Nairobi"));
+            applicationDate = LocalDateTime.now();//ZoneId.of("Africa/Nairobi")
         }
     }
 

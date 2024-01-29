@@ -32,7 +32,7 @@ public class FlashRepayment {
     @PrePersist
     public void prePersist(){
         if(transactionDate == null){
-            transactionDate = LocalDateTime.now(ZoneId.of("Africa/Nairobi"));
+            transactionDate = LocalDateTime.now();//ZoneId.of("Africa/Nairobi")
         }
     }
 

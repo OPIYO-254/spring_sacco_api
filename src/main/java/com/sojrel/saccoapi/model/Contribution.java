@@ -22,7 +22,7 @@ public class Contribution {
     private Long id;
 
     @Column(updatable = false)
-    private LocalDateTime contributionDate=LocalDateTime.now(ZoneId.of("Africa/Nairobi"));
+    private LocalDateTime contributionDate=LocalDateTime.now();//ZoneId.of("Africa/Nairobi")
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

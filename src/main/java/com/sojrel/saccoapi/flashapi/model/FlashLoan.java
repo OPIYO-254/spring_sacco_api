@@ -81,7 +81,7 @@ public class FlashLoan {
     }
 
     public void setRepayDate(LocalDateTime repayDate) {
-        this.repayDate = repayDate.atZone(ZoneId.of("Africa/Nairobi")).toLocalDateTime();;
+        this.repayDate = repayDate;//.atZone(ZoneId.of("Africa/Nairobi")).toLocalDateTime();;
     }
 
     public Status getLoanStatus() {

@@ -39,7 +39,7 @@ public class Repayment {
     @PrePersist
     public void prePersist(){
         if(repaymentDate==null){
-            repaymentDate = LocalDateTime.now(ZoneId.of("Africa/Nairobi"));
+            repaymentDate = LocalDateTime.now();//ZoneId.of("Africa/Nairobi")
         }
     }
 }

@@ -120,7 +120,7 @@ public class Member {
     }
 
     public void setRegDate(LocalDateTime regDate) {
-        this.regDate = regDate.atZone(ZoneId.of("Africa/Nairobi")).toLocalDateTime();
+        this.regDate = regDate;//.atZone(ZoneId.of("Africa/Nairobi")).toLocalDateTime();
     }
 
     public String getEmail() {
