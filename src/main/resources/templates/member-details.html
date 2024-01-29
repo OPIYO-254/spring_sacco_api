@@ -106,7 +106,7 @@
                         <td>
                             <div class="edit-buttons">
                                 <button th:if="${member.idNo == null}" class="button btn m-1" data-bs-toggle="modal" data-bs-target="#groupRegistrationModal">Edit Details</button>
-                                <button th:unless="${member.idNo == null}" class="button btn mx-1" data-bs-toggle="modal" data-bs-target="#individualRegistrationModal">Edit Details</button>
+                                <button th:unless="${member.idNo == null}" class="button btn m-1" data-bs-toggle="modal" data-bs-target="#individualRegistrationModal">Edit Details</button>
                                 <button class="button btn m-1" data-bs-toggle="modal" data-bs-target="#deactivateModal">Deactivate</button>
 <!--                                <form class="m-1 w-100" th:action="@{/deactivate(id=${member.id})}" th:method="post">-->
 <!--                                    <button class="button btn">Deactivate</button>-->
