@@ -43,9 +43,9 @@
                             <td data-label="Member ID:" th:text="${detail.id}"></td>
                             <td data-label="Name:"  th:text="${detail.firstName} +' '+ ${detail.midName} +' '+ ${detail.lastName}"></td>
                             <td data-label="Email:"  th:text="${detail.email}" class="hide-md"></td>
-                            <td data-label="IDNo.:"  th:text="${detail.idNo}"></td>
-                            <td data-label="Phone No.:"  th:text="${detail.phone}"></td>
-                            <td data-label="Residence" th:text="${detail.residence}"></td>
+                            <td data-label="IDNo.:"  th:text="${detail.idNo !=null ? detail.idNo: 'N/A'}"></td>
+                            <td data-label="Phone No.:"  th:text="${detail.phone != '' ?detail.phone: 'N/A'}"></td>
+                            <td data-label="Residence" th:text="${detail.residence!= '' ? detail.residence : 'N/A'}"></td>
                           <td><a th:href="@{/add-documents(id=${detail.id})}" class="text-decoration-none"><button class="btn btn-success text-light">Add</button></a></td>
                         </tr>
                     </tbody>
