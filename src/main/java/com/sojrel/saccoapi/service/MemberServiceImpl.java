@@ -202,27 +202,15 @@ public class MemberServiceImpl implements MemberService{
      * @return a list of member details for newly registered members
      */
     @Override
-    public List<NewMemberResponseDto> findNewMembers() {
-        List<NewMemberResponseDto> newMemberResponseDtos = new ArrayList<>();
-        List<Object[]> results = memberRepository.findNewMembers();
-        for(Object[] row: results){
-            List<UserFiles> files = userFilesService.getUserFilesByMember((String)row[0]);
-            if(files.isEmpty()){
-//                System.out.println(row[0] +" can be added");
-                NewMemberResponseDto newMemberResponseDto = new NewMemberResponseDto();
-                newMemberResponseDto.setId((String)row[0]);
-                newMemberResponseDto.setFirstName((String)row[1]);
-                newMemberResponseDto.setMidName((String)row[2]);
-                newMemberResponseDto.setLastName((String)row[3]);
-                newMemberResponseDto.setIdNo((Long)row[4]);
-                newMemberResponseDto.setEmail((String)row[5]);
-                newMemberResponseDto.setPhone((String)row[6]);
-                newMemberResponseDto.setResidence((String)row[7]);
-                newMemberResponseDtos.add(newMemberResponseDto);
+    public List<MemberResponseDto> findNewMembers() {
+        List<MemberResponseDto> members = getAllMembers();
+        List<MemberResponseDto> newMembers = new ArrayList<>();
+        for(MemberResponseDto dto: members){
+            if(dto.getUserFiles().isEmpty() && dto.getIsActive()){
+                newMembers.add(dto);
             }
-
         }
-        return newMemberResponseDtos;
+        return newMembers;
     }
 
 

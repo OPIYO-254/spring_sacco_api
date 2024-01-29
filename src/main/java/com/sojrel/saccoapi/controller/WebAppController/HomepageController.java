@@ -158,23 +158,12 @@ public class HomepageController {
         memberService.deactivateMember(id);
         return "redirect:/members";
     }
-//    @PostMapping("/deactivate")
-//    public ResponseEntity<?> deactivateMember(@RequestParam String id){
-//        try{
-//
-//            return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Member deactivated.\"}");
-//        }
-//        catch (Exception e){
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body("{\"status\": \"error\", \"message\": \"Error deactivating member.\"}");
-//        }
-//    }
-    @PostMapping
+
     @GetMapping("/documents")
     public ModelAndView credentials(){
         ModelAndView modelAndView = new ModelAndView("documents");
-        List<NewMemberResponseDto> memberDetails = memberService.findNewMembers();
+        List<MemberResponseDto> memberDetails = memberService.findNewMembers();
+//        System.out.println(memberDetails);
         ItemCountDto countUnread = contactService.countUnreadMessages();
         Long unread = countUnread.getCount();
         modelAndView.addObject("memberDetails", memberDetails);

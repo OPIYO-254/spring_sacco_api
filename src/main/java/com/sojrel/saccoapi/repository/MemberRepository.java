@@ -17,11 +17,6 @@ public interface MemberRepository extends JpaRepository<Member, String> {
             "m.phone, m.residence, SUM(c.amount), m.isActive) FROM Contribution c JOIN c.member m WHERE c.contributionType =:type GROUP BY m.id")
     List<MemberTotalSavingsDto> findMemberSavings(@Param("type")Contribution.ContributionType type);
 
-//    @Query("SELECT new com.sojrel.saccoapi.dto.responses.NewMemberResponseDto(m.id, m.firstName, m.midName,m.lastName, m.idNo, m.email, m.phone, c.id, m.residence) FROM Member m JOIN m.credentials = c")
-    @Query(value = "SELECT member.id, member.first_name, member.mid_name, member.last_name, \n" +
-            "member.id_no, member.email, member.phone, member.residence FROM member WHERE member.is_active is true", nativeQuery = true)
-    List<Object[]> findNewMembers();
-
     @Query("SELECT new com.sojrel.saccoapi.dto.responses.ItemCountDto(COUNT(*)) FROM Member m where m.isActive = true")
     ItemCountDto findMemberCount();
 
