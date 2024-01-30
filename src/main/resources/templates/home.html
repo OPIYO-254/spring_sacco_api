@@ -169,10 +169,10 @@
                                 <td data-label="Member ID:" th:text="${saving.id}"></td>
                                 <td data-label="Name:"  th:text="${saving.firstName} +' '+ ${saving.midName}"></td>
                                 <td data-label="Email:"  th:text="${saving.email}" class="hide-md"></td>
-                                <td data-label="IDNo.:"  th:text="${saving.idNo}"></td>
-                                <td data-label="Phone No.:"  th:text="${saving.phone}"></td>
+                                <td data-label="IDNo.:"  th:text="${saving.idNo != null ? saving.idNo:'N/A'}"></td>
+                                <td data-label="Phone No.:"  th:text="${saving.phone != '' ? saving.phone: 'Not found'}"></td>
                                 <td data-label="Total Savings:"  th:text="'Ksh '+${saving.totalSavings}"></td>
-                                <td data-label="Residence" th:text="${saving.residence}"></td>
+                                <td data-label="Residence" th:text="${saving.residence != '' ? saving.residence:'Not found'}"></td>
                             </tr>
                             </tbody>
                         </table>
