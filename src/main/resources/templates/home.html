@@ -167,7 +167,7 @@
                             <tbody>
                             <tr th:each="saving: ${savings}">
                                 <td data-label="Member ID:" th:text="${saving.id}"></td>
-                                <td data-label="Name:"  th:text="${saving.firstName} +' '+ ${saving.midName}"></td>
+                                <td data-label="Name:"  th:text="${saving.firstName} +' '+ ${saving.midName != '' ? saving.midName : saving.lastName}"></td>
                                 <td data-label="Email:"  th:text="${saving.email}" class="hide-md"></td>
                                 <td data-label="IDNo.:"  th:text="${saving.idNo != null ? saving.idNo:'N/A'}"></td>
                                 <td data-label="Phone No.:"  th:text="${saving.phone != '' ? saving.phone: 'Not found'}"></td>

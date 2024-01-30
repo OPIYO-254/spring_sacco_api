@@ -15,6 +15,7 @@ public class MemberTotalSavingsDto {
     private String id;
     private String firstName;
     private String midName;
+    private String lastName;
     private Long idNo;
     private String email;
     private String phone;
