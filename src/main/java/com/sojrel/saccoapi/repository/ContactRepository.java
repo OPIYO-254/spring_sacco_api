@@ -19,7 +19,6 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     List<Contact> getAllMessages(@Param("isRead") boolean isRead);
 
     List<Contact> findByIsRead(boolean isRead);
-
     @Query("SELECT new com.sojrel.saccoapi.dto.responses.ItemCountDto(COUNT(*)) FROM Contact c WHERE c.isRead = FALSE")
     ItemCountDto countUnreadMessages();
 

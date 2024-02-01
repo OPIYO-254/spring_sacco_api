@@ -46,11 +46,11 @@
                         </tr>
                         <tr>
                             <th scope="row row-scoped">Principal:</th>
-                            <td th:text="'KES '+${loan.principal}"></td>
+                            <td th:text="'KES '+${#numbers.formatDecimal(loan.principal,0, 'COMMA', 0, 'POINT')}"></td>
                         </tr>
                         <tr>
                             <th scope="row row-scoped">Amount:</th>
-                            <td th:text="'KES '+${loan.amount}"></td>
+                            <td th:text="'KES '+${#numbers.formatDecimal(loan.amount,0, 'COMMA', 0, 'POINT')}"></td>
                         </tr>
                         <tr>
                             <th scope="row row-scoped">Instalments:</th>
@@ -58,7 +58,7 @@
                         </tr>
                         <tr>
                             <th scope="row row-scoped">Total Guaranteed:</th>
-                            <td th:text="${total != null ? 'KES '+total: 'Ksh 0'}"></td>
+                            <td th:text="${total != null ? 'KES '+ #numbers.formatDecimal(total,0, 'COMMA', 0, 'POINT'): 'Ksh 0.00'}"></td>
                         </tr>
                     </tbody>
                 </table>

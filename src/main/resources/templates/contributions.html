@@ -32,7 +32,7 @@
                 <div class="col text-light rounded-2 contribution-card">
                     <div class="col d-flex contribution-detail">
                         <span>TOTAL</span>
-                        <span th:text="${total_contributions}!=null?${'KES '+total_contributions}:'KES 0.00'"></span>
+                        <span th:text="${total_contributions}!=null?${'Ksh '+ #numbers.formatDecimal(total_contributions, 0, 'COMMA', 0, 'POINT')}:'KES 0.00'"></span>
                     </div>
                     <div class="text-light">
                         <i class="fa fa-briefcase" aria-hidden="true"></i>
@@ -41,7 +41,7 @@
                 <div class="col contribution-card text-light rounded-2">
                     <div class="col d-flex contribution-detail">
                         <span>SAVINGS</span>
-                        <span th:text="${savings}!=null?${'KES '+savings}:'KES 0.00'"></span>
+                        <span th:text="${savings}!=null?${'Ksh '+ #numbers.formatDecimal(savings,0, 'COMMA', 0, 'POINT')}:'Ksh 0.00'"></span>
                     </div>
                     <div class="text-light">
                         <i class="fa fa-database" aria-hidden="true"></i>
@@ -51,7 +51,7 @@
                 <div class="col contribution-card text-light rounded-2">
                     <div class="col d-flex contribution-detail">
                         <span>SHARES</span>
-                        <span th:text="${shares}!=null?${'KES '+shares}: 'KES 0.00'"></span>
+                        <span th:text="${shares}!=null?${'Ksh '+#numbers.formatDecimal(shares, 0, 'COMMA', 0, 'POINT')}: 'KES 0.00'"></span>
                     </div>
                     <div class="text-light">
                         <i class="fa fa-pie-chart" aria-hidden="true"></i>
@@ -77,7 +77,8 @@
                             <td data-label="Name" th:text="${contribution.firstName} +' ' +${contribution.midName}"></td>
                             <td data-label="Date" th:text="${#temporals.format(contribution.contributionDate, 'dd MMM yyyy')}"></td>
                             <td data-label="Type" th:text="${contribution.contributionType}"></td>
-                            <td data-label="Amount" th:text="'Ksh '+${contribution.amount}"></td>
+                            <td data-label="Amount" th:text="'Ksh '+${#numbers.formatDecimal(contribution.amount, 0, 'COMMA', 0, 'POINT')}"></td>
+<!--                            #numbers.formatDecimal(2514550, 0, 'COMMA', 2, 'POINT')-->
                         </tr>
                         </tbody>
                     </table>

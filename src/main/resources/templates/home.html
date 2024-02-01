@@ -171,7 +171,7 @@
                                 <td data-label="Email:"  th:text="${saving.email}" class="hide-md"></td>
                                 <td data-label="IDNo.:"  th:text="${saving.idNo != null ? saving.idNo:'N/A'}"></td>
                                 <td data-label="Phone No.:"  th:text="${saving.phone != null ? saving.phone: 'Not found'}"></td>
-                                <td data-label="Total Savings:"  th:text="'Ksh '+${saving.totalSavings}"></td>
+                                <td data-label="Total Savings:"  th:text="'Ksh '+${#numbers.formatDecimal(saving.totalSavings,0, 'COMMA', 0, 'POINT')}"></td>
                                 <td data-label="Residence" th:text="${saving.residence != '' ? saving.residence:'Not found'}"></td>
                             </tr>
                             </tbody>

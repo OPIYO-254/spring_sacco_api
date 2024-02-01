@@ -308,16 +308,16 @@
             <div class="totals">
                 <div class="contribution-box">
                     <span>Total</span>
-                    <span th:text="${total} != null ? ${'KES '+ total}: 'KES 0.00'"></span>
+                    <span th:text="${total} != null ? ${'Ksh '+ #numbers.formatDecimal(total,0, 'COMMA',0, 'POINT')}: 'KES 0.00'"></span>
                 </div>
                 <div class="contribution-box">
                     <span>Shares</span>
-                    <span th:text="${shares}!=null ? ${'KES '+shares}: 'KES 0.00'"></span>
+                    <span th:text="${shares}!=null ? ${'Ksh '+#numbers.formatDecimal(shares,0, 'COMMA', 0, 'POINT')}: 'KES 0.00'"></span>
 
                 </div>
                 <div class="contribution-box">
                     <span>Savings</span>
-                    <span th:text="${savings}!=null?${'KES '+savings}: 'KES 0.00'"></span>
+                    <span th:text="${savings}!=null?${'Ksh '+#numbers.formatDecimal(savings,0, 'COMMA', 0, 'POINT')}: 'KES 0.00'"></span>
                 </div>
                 <div class="contribution-btn d-flex align-items-center">
                     <button class="contrib-btn btn" data-bs-toggle="modal" data-bs-target="#contribModal">Add Contribution</button>
@@ -373,7 +373,7 @@
                             <td data-label="ID:" th:text="${contribution.id}"></td>
                             <td data-label="Date:" th:text="${#temporals.format(contribution.contributionDate,'dd MMM yyyy')}"></td>
                             <td data-label="Type:" th:text="${contribution.contributionType}"></td>
-                            <td data-label="Amount:" th:text="${contribution.amount != null? 'Ksh '+ contribution.amount: 'Ksh 0'}"></td>
+                            <td data-label="Amount:" th:text="${contribution.amount != null? 'Ksh '+ #numbers.formatDecimal(contribution.amount, 0, 'COMMA', 0, 'POINT'): 'Ksh 0.00'}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -397,7 +397,7 @@
                         <tr th:each="loan: ${member.loansTaken}">
                             <td data-label="Loan ID:" th:text="${loan.id}"></td>
                             <td data-label="Type:" th:text="${loan.loanType}"></td>
-                            <td data-label="Principal:" th:text="${'Ksh '+loan.principal}"></td>
+                            <td data-label="Principal:" th:text="${'Ksh '+#numbers.formatDecimal(loan.principal, 0, 'COMMA', 0, 'POINT')}"></td>
                             <td data-label="Instalments:" th:text="${loan.instalments}"></td>
                             <td data-label="Interest:" th:text="${loan.interest}+'%'" class="hide-md"></td>
                             <td data-label="Status:" th:text="${loan.loanStatus}"></td>
@@ -411,12 +411,12 @@
             <div class="container guarantee-container">
                 <div class="rounded guaranteed-sub-container text-light">
                     <span class="d-flex justify-content-center fw-bold">Total Guaranteed</span>
-                    <span class="d-flex justify-content-center fw-bold" th:text="'Ksh '+ ${guaranteed}"></span>
+                    <span class="d-flex justify-content-center fw-bold" th:text="'Ksh '+ ${#numbers.formatDecimal(guaranteed, 0, 'COMMA', 0, 'POINT')}"></span>
                 </div>
 
                 <div class="rounded guaranteed-sub-container text-light">
                     <span class="d-flex justify-content-center fw-bold">Guarantee Limit</span>
-                    <span class="d-flex justify-content-center fw-bold" th:text="'Ksh '+ ${guaranteeLimit}"></span>
+                    <span class="d-flex justify-content-center fw-bold" th:text="'Ksh '+ ${#numbers.formatDecimal(guaranteeLimit, 0, 'COMMA', 0, 'POINT')}"></span>
                 </div>
             </div>
 
@@ -439,7 +439,7 @@
                         <tr th:each="guarantee: ${member.loansGuaranteed}">
                             <td data-label="Loan ID:" th:text="${guarantee.id}"></td>
                             <td data-label="Type:" th:text="${guarantee.loanType}"></td>
-                            <td data-label="Principal:" th:text="${'Ksh '+guarantee.principal}"></td>
+                            <td data-label="Principal:" th:text="${'Ksh '+#numbers.formatDecimal(guarantee.principal, 0, 'COMMA', 0, 'POINT')}"></td>
                             <td data-label="Instalments:" th:text="${guarantee.instalments}"></td>
                             <td data-label="Interest:" th:text="${guarantee.interest}+'%'" class="hide-md"></td>
                             <td data-label="Status:" th:text="${guarantee.loanStatus}"></td>

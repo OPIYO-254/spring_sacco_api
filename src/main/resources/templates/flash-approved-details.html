@@ -56,24 +56,24 @@
                 </tr>
                 <tr>
                     <th scope="row row-scoped">Applied Amount:</th>
-                    <td th:text="'Ksh '+${flashLoan.principal}"></td>
+                    <td th:text="'Ksh '+${#numbers.formatDecimal(flashLoan.principal,0, 'COMMA', 0, 'POINT')}"></td>
                 </tr>
 
                 <tr>
                     <th scope="row row-scoped">Repayment Amount:</th>
-                    <td th:text="'Ksh '+${flashLoan.amount}"></td>
+                    <td th:text="'Ksh '+${#numbers.formatDecimal(flashLoan.amount,0, 'COMMA', 0, 'POINT')}"></td>
                 </tr>
                 <tr th:if="${flashLoan.loanPenalty} > 0.0">
                     <th scope="row row-scoped">Penalty:</th>
-                    <td th:text="'Ksh '+${flashLoan.loanPenalty}"></td>
+                    <td th:text="'Ksh '+${#numbers.formatDecimal(flashLoan.loanPenalty,0, 'COMMA', 0, 'POINT')}"></td>
                 </tr>
                 <tr>
                     <th scope="row row-scoped">Total Repaid:</th>
-                    <td th:text="'Ksh '+${totalRepaid}"></td>
+                    <td th:text="'Ksh '+${#numbers.formatDecimal(totalRepaid,0, 'COMMA', 0, 'POINT')}"></td>
                 </tr>
                 <tr>
                     <th scope="row row-scoped">Outstanding balance:</th>
-                    <td th:text="'Ksh '+${flashLoan.amount + flashLoan.loanPenalty - totalRepaid}"></td>
+                    <td th:text="'Ksh '+${#numbers.formatDecimal(flashLoan.amount,0, 'COMMA', 0, 'POINT') + #numbers.formatDecimal(flashLoan.loanPenalty,0, 'COMMA', 0, 'POINT') - #numbers.formatDecimal(totalRepaid,0, 'COMMA', 0, 'POINT')}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -140,7 +140,7 @@
                         <tr th:each="repay: ${flashLoan.repayments}">
                             <td data-label="ID:" th:text="${repay.id}"></td>
                             <td data-label="Date:" th:text="${#temporals.format(repay.transactionDate, 'dd MMM yyyy')}"></td>
-                            <td data-label="Amount:" th:text="${repay.amount != null ? 'Ksh ' + repay.amount : 'Ksh 0'}"></td>
+                            <td data-label="Amount:" th:text="${repay.amount != null ? 'Ksh ' + #numbers.formatDecimal(repay.amount,0, 'COMMA', 0, 'POINT') : 'Ksh 0.00'}"></td>
                             <td class="d-flex">
                                 <div><span class="material-symbols-outlined">edit_square</span></div>
                                 <div><span class="material-symbols-outlined">delete</span></div>

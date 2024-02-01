@@ -43,9 +43,9 @@
                         <tr th:each="flash:${flashLoans}">
                               <td data-label="ID" th:text="${flash.id}"></td>
                               <td data-label="Member No." th:text="${flash.memberId}"></td>
-                              <td data-label="Applied Amount" th:text="'Ksh '+${flash.principal}"></td>
+                              <td data-label="Applied Amount" th:text="'Ksh '+${#numbers.formatDecimal(flash.principal,0, 'COMMA', 0, 'POINT')}"></td>
                               <td data-label="Date Applied" th:text="${#temporals.format(flash.applicationDate,'dd MMM yyyy')}" class="hide-md"></td>
-                              <td data-label="Amount Repaid" th:text="'Ksh '+${flash.amount}"></td>
+                              <td data-label="Amount Repaid" th:text="'Ksh '+${#numbers.formatDecimal(flash.amount,0, 'COMMA', 0, 'POINT')}"></td>
                               <td data-label="Date Due" th:text="${#temporals.format(flash.repayDate, 'dd MMM yyyy')}" class="hide-md"></td>
                         </tbody>
                     </table>

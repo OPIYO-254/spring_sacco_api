@@ -108,7 +108,7 @@
                             <tr th:each="guarantor: ${guarantors}">
                                 <td data-label="Guarantor ID:" th:text="${guarantor.memberId}"></td>
                                 <td data-label="Name:" th:text="${guarantor.firstName}+' '+${guarantor.midName}"></td>
-                                <td data-label="Amount:" th:text="${guarantor.amount != null ? 'Ksh ' + guarantor.amount : 'Ksh 0'}"></td>
+                                <td data-label="Amount:" th:text="${guarantor.amount != null ? 'Ksh ' + #numbers.formatDecimal(guarantor.amount,0, 'COMMA', 0, 'POINT') : 'Ksh 0.00'}"></td>
                                 <td data-label="Phone:" th:text="${guarantor.phone}"></td>
                                 <td data-label="Email:" th:text="${guarantor.email}" class="hide-md"></td>
                             </tr>

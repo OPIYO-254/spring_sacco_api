@@ -49,11 +49,11 @@
                             </tr>
                             <tr>
                                 <th scope="row row-scoped">Principal:</th>
-                                <td th:text="'Ksh '+${loan.principal}"></td>
+                                <td th:text="'Ksh '+${#numbers.formatDecimal(loan.principal,0, 'COMMA', 0, 'POINT')}"></td>
                             </tr>
                             <tr>
                                 <th scope="row row-scoped">Amount:</th>
-                                <td th:text="'Ksh '+${loan.amount}"></td>
+                                <td th:text="'Ksh '+${#numbers.formatDecimal(loan.amount,0, 'COMMA', 0, 'POINT')}"></td>
                             </tr>
                             <tr>
                                 <th scope="row row-scoped">Instalments:</th>
@@ -61,7 +61,7 @@
                             </tr>
                             <tr>
                                 <th scope="row row-scoped">Total Guaranteed:</th>
-                                <td th:text="${total != null ? 'Ksh '+total: 'Ksh 0'}"></td>
+                                <td th:text="${total != null ? 'Ksh '+#numbers.formatDecimal(total,0, 'COMMA', 0, 'POINT'): 'Ksh 0.00'}"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -94,7 +94,7 @@
                             <tr th:each="guarantor: ${guarantors}">
                                 <td data-label="Guarantor ID:" th:text="${guarantor.memberId}"></td>
                                 <td data-label="Name:" th:text="${guarantor.firstName}+' '+${guarantor.midName}"></td>
-                                <td data-label="Amount:" th:text="${guarantor.amount != null ? 'Ksh ' + guarantor.amount : 'Ksh 0'}"></td>
+                                <td data-label="Amount:" th:text="${guarantor.amount != null ? 'Ksh ' + #numbers.formatDecimal(guarantor.amount,0, 'COMMA', 0, 'POINT') : 'Ksh 0.00'}"></td>
                                 <td data-label="Phone:" th:text="${guarantor.phone}"></td>
                                 <td data-label="Email:" th:text="${guarantor.email}" class="hide-md"></td>
                             </tr>

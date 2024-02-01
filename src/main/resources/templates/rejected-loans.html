@@ -44,7 +44,7 @@
                                     <td data-label="Name:" th:text="${loan.firstName} +' ' +${loan.midName}"></td>
                                     <td data-label="Date:" th:text="${#temporals.format(loan.applicationDate, 'dd MMM yyyy')}"></td>
                                     <td data-label="Type:" th:text="${loan.loanType}" class="hide-md"></td>
-                                    <td data-label="Principal:" th:text="'Ksh '+${loan.principal}"></td>
+                                    <td data-label="Principal:" th:text="'Ksh '+${#numbers.formatDecimal(loan.principal,0, 'COMMA', 2, 'POINT')}"></td>
                                     <td data-label="Instalments:" th:text="${loan.instalments}+' months'"></td>
                                     <td><a th:href="@{/rejected-loan-details(id=${loan.loanId})}" class="text-decoration-none"><button class="btn btn-success text-light">View</button></a></td>
                             </tbody>
