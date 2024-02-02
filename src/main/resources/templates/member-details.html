@@ -335,19 +335,26 @@
                                 <div class="mb-3">
                                     <input hidden id="id" th:value="${member.id}">
                                     <div class="mb-3">
+                                        <label for="contrib-date" class="form-label">Date:</label>
+                                        <input type="date" id="contrib-date" class="form-control">
+                                        <span id="contrib-msg"></span>
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="type" class="form-label">Contribution Type:</label>
                                         <select class="selection form-control col-2 mb-4" id="type">
                                             <option align="center" value="">----Select Contribution Type----</option>
                                             <option value="SAVINGS">SAVINGS</option>
                                             <option value="SHARES">SHARES</option>
                                         </select>
+                                        <span id="type-msg"></span>
                                     </div>
-                                    <span id="type-msg"></span>
+
                                     <div class="mb-3">
                                         <label for="amount" class="form-label">Enter Amount:</label>
                                         <input type="number" id="amount" class="form-control">
+                                        <span id="amt-msg"></span>
                                     </div>
-                                    <span id="amt-msg"></span>
+
                                 </div>
                                 <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" id="submitBtn" class="btn">Save</button>
@@ -371,7 +378,7 @@
                         <tbody>
                         <tr th:each="contribution: ${member.contributions}">
                             <td data-label="ID:" th:text="${contribution.id}"></td>
-                            <td data-label="Date:" th:text="${#temporals.format(contribution.contributionDate,'dd MMM yyyy')}"></td>
+                            <td data-label="Date:" th:text="${#dates.format(contribution.contributionDate,'dd MMM yyyy')}"></td>
                             <td data-label="Type:" th:text="${contribution.contributionType}"></td>
                             <td data-label="Amount:" th:text="${contribution.amount != null? 'Ksh '+ #numbers.formatDecimal(contribution.amount, 0, 'COMMA', 0, 'POINT'): 'Ksh 0.00'}"></td>
                         </tr>
@@ -476,70 +483,6 @@
             new DataTable("#member-guarantee-table", {
                 processing:true,
                 pagingType:'simple_numbers'
-            });
-        });
-
-
-        $(document).ready(function (){
-            $("#contrib-form").submit(function(event){
-                event.preventDefault();
-                if($("#id").val()==""){
-                    alert("Enter ID");
-                }
-                else if($("#type").val()==""){
-                    alert("Choose type");
-                }
-                else if($("#amount").val()==""){
-                    alert ("Enter amount");
-                }
-                else{
-                    var originalButtonText = $("#submitBtn").html();
-                    $("#submitBtn").html('<div class="spinner-border" role="status" id="spinner">' +
-                                  '<span class="visually-hidden"></span>' +
-                                  '</div> Please wait...');
-
-                    let formData = {
-                        memberId: $("#id").val(),
-                        contributionType:$("#type").val(),
-                        amount:$("#amount").val()
-                    }
-                    $.ajax({
-                        type : "POST",
-                        contentType : "application/json",
-                        url : "/save-contributions",
-                        data : JSON.stringify(formData),
-                        dataType : 'json',
-                        success: function(result){
-                            if(result.status == "success"){
-                                $("#submitBtn").html(originalButtonText);
-                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;"><p>Contribution added successfully</p></div>');
-                                $("#results").fadeToggle(3000);
-                                $("#contrib-form")[0].reset();
-                            }
-                            else{
-                                $("#submitBtn").html(originalButtonText);
-                                $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;">Failed</p></div>');
-                                $("#results").fadeToggle(3000);
-                                $("#contrib-form")[0].reset();
-                            }
-
-
-                        },
-                        error: function (xhr, status, error) {
-                            console.log(error)
-                            console.log(status)
-                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;"><p>Error</p></div>');
-                            $("#results").fadeToggle(3000);
-                            $("#sub-form")[0].reset();
-                            $("#submitBtn").html(originalButtonText);
-                            $("#contrib-form")[0].reset();
-                            // Log the error response for inspection
-                            console.log(xhr.responseText);
-                            //close activity indicator here
-                        }
-
-                    });
-                }
             });
         });
 

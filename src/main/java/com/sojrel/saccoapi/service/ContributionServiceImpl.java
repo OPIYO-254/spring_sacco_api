@@ -6,6 +6,7 @@ import com.sojrel.saccoapi.model.Contribution;
 import com.sojrel.saccoapi.model.Member;
 import com.sojrel.saccoapi.repository.ContributionRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import java.sql.Timestamp;
 @Service
+@Slf4j
 public class ContributionServiceImpl implements ContributionService{
     @Autowired
     private ContributionRepository contributionRepository;
@@ -28,11 +30,14 @@ public class ContributionServiceImpl implements ContributionService{
         Contribution contribution = new Contribution();
         Member member = memberService.getMemberById(contributionRequestDto.getMemberId());
         if(Objects.nonNull(member)){
+            contribution.setContributionDate(contributionRequestDto.getContributionDate());
             contribution.setMember(member);
             contribution.setContributionType(Contribution.ContributionType.valueOf(contributionRequestDto.getContributionType()));
             contribution.setAmount(contributionRequestDto.getAmount());
         }
-        else{System.out.print("Member is null");}
+        else{
+            log.info("Member is null");
+        }
         contributionRepository.save(contribution);
         return Mapper.contributionToContributionResponseDto(contribution);
     }

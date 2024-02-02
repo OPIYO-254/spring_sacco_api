@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Date;
 
 
 @Entity
@@ -21,8 +22,8 @@ public class Contribution {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(updatable = false)
-    private LocalDateTime contributionDate=LocalDateTime.now().minusMonths(1);//ZoneId.of("Africa/Nairobi")
+    @Column(nullable = false)
+    private Date contributionDate;//ZoneId.of("Africa/Nairobi")
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -44,7 +45,7 @@ public class Contribution {
 //    @PrePersist
 //    public void prePersist(){
 //        if(contributionDate == null){
-//            contributionDate = ;
+//            contributionDate = LocalDateTime.now();
 //        }
 //    }
 }

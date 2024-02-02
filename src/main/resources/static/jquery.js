@@ -53,13 +53,14 @@ $(document).ready(function(){
 $(document).ready(function (){
         $("#contribution-form").submit(function(event){
             event.preventDefault();
-            if($("#type").val()==""){
-                $("#type-msg").html("<p style='color:red; font-size:10px;'>Please select loan type</p>").
-                $("#type=msg").fadeToggle(3000);
+            if($("#contrib-date").val() == ""){
+                $("#contrib-msg").html("<p style='color:red; font-size:10px;'>Please select date</p>");
+            }
+            else if($("#type").val()==""){
+                $("#type-msg").html("<p style='color:red; font-size:10px;'>Please select loan type</p>");
             }
             else if($("#amount").val()==""){
-                $("#amt-msg").html("<p style='color:red; font-size:10px;'>Please enter amount</p>").
-                $("#amt-msg").fadeToggle(3000);
+                $("#amt-msg").html("<p style='color:red; font-size:10px;'>Please enter amount</p>");
             }
             else{
                 var originalButtonText = $("#submitBtn").html();
@@ -69,9 +70,11 @@ $(document).ready(function (){
 
                 let formData = {
                     memberId: $("#id").val(),
+                    contributionDate: $("#contrib-date").val(),
                     contributionType:$("#type").val(),
                     amount:$("#amount").val()
                 }
+//                alert(formData)
                 $.ajax({
                     type : "POST",
                     contentType : "application/json",
@@ -81,7 +84,7 @@ $(document).ready(function (){
                     success: function(result){
                         if(result.status == "success"){
                             $("#submitBtn").html(originalButtonText);
-                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;"><p>Contribution added successfully</p></div>');
+                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;"><p>'+result.message+'</p></div>');
                             $("#results").fadeToggle(3000);
                             $("#contribution-form")[0].reset();
                             $("#repayModal").modal("hide");
@@ -89,7 +92,7 @@ $(document).ready(function (){
                         }
                         else{
                             $("#submitBtn").html(originalButtonText);
-                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;">Failed</p></div>');
+                            $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;">'+result.message+'</p></div>');
                             $("#results").fadeToggle(3000);
                             $("#contribution-form")[0].reset();
                             $("#repayModal").modal("hide");
@@ -101,7 +104,7 @@ $(document).ready(function (){
                     error: function (xhr, status, error) {
                         console.log(error)
                         console.log(status)
-                        $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;"><p>Error</p></div>');
+                        $("#results").html('<div style="background-color:#7FA7B0; color:white;padding:20px 0px; text-align:center; width:100%;"><p>'+error+'</p></div>');
                         $("#results").fadeToggle(3000);
                         $("#contribution-form")[0].reset();
                         $("#submitBtn").html(originalButtonText);
