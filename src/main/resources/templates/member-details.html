@@ -69,6 +69,10 @@
                         <th scope="row row-scoped">Residence:</th>
                         <td th:text="${member.residence}"></td>
                     </tr>
+                    <tr>
+                        <th scope="row row-scoped">Registration Fee:</th>
+                        <td th:text="${totalFee!=null ? 'Ksh '+totalFee: 'Ksh 0.00'}"></td>
+                    </tr>
                     <tr th:if="${idFrontPath} !=null">
                         <th scope="row row-scoped">Id Front Image:</th>
                         <td>
@@ -320,7 +324,8 @@
                     <span th:text="${savings}!=null?${'Ksh '+#numbers.formatDecimal(savings,0, 'COMMA', 0, 'POINT')}: 'KES 0.00'"></span>
                 </div>
                 <div class="contribution-btn d-flex align-items-center">
-                    <button class="contrib-btn btn" data-bs-toggle="modal" data-bs-target="#contribModal">Add Contribution</button>
+                    <button th:if="${totalFee > 1600 or totalFee == 1600}" class= "contrib-btn btn" data-bs-toggle="modal" data-bs-target="#contribModal">Add Contribution</button>
+                    <button th:if = "${totalFee == null or totalFee < 1600}" class="contrib-btn btn" data-bs-toggle="modal" data-bs-target="#feeModal">Add Fee</button>
                 </div>
             </div>
             <div class="modal fade" id="contribModal" tabindex="-1" aria-labelledby="contribModalLabel" aria-hidden="true">
@@ -365,6 +370,40 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="feeModal" tabindex="-1" aria-labelledby="feeModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="feeModalLabel">Add Regsitration Fee</h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="fee-form" method="post">
+                                <div class="mb-3">
+                                    <input hidden id="memId" th:value="${member.id}">
+                                    <div class="mb-3">
+                                        <label for="pay-date" class="form-label">Date:</label>
+                                        <input type="date" id="pay-date" class="form-control">
+                                        <span id="pay-msg"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="fee-amount" class="form-label">Enter Amount:</label>
+                                        <input type="number" id="fee-amount" class="form-control">
+                                        <span id="fee-amt-msg"></span>
+                                    </div>
+
+                                </div>
+                                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" id="feeSubmitBtn" class="btn">Save</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <hr class="border-2 border-success">
             <div class="container detail-table-area mt-4">
                 <div class="table-responsive table-responsive-sm">

@@ -3,6 +3,7 @@ package com.sojrel.saccoapi.dto.responses;
 import com.sojrel.saccoapi.flashapi.model.FlashLoan;
 import com.sojrel.saccoapi.model.Contribution;
 import com.sojrel.saccoapi.model.Loan;
+import com.sojrel.saccoapi.model.RegistrationFee;
 import com.sojrel.saccoapi.model.UserFiles;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,5 +35,6 @@ public class MemberResponseDto {
     private List<Loan> loansGuaranteed;
     private List<FlashLoan> flashLoans;
     private List<UserFiles> userFiles;
+    private List<RegistrationFee> registrationFees;
     private Boolean isActive;
 }

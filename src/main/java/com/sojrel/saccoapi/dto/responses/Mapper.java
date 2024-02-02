@@ -28,6 +28,7 @@ public class Mapper {
         memberResponseDto.setLoansGuaranteed(member.getLoansGuaranteed());
         memberResponseDto.setFlashLoans(member.getFlashLoans());
         memberResponseDto.setUserFiles(member.getUserFiles());
+        memberResponseDto.setRegistrationFees(member.getRegistrationFees());
         memberResponseDto.setIsActive(member.getIsActive());
         return memberResponseDto;
     }
@@ -153,6 +154,23 @@ public class Mapper {
         List<UserFilesResponseDto> dtos = new ArrayList<>();
         for(UserFiles file : files){
             dtos.add(userFileToUserFileResponseDto(file));
+        }
+        return dtos;
+    }
+
+    public static RegistrationFeeResponseDto registrationFeeToRegistrationFeeResponseDto(RegistrationFee registrationFee){
+        RegistrationFeeResponseDto dto = new RegistrationFeeResponseDto();
+        dto.setId(registrationFee.getId());
+        dto.setPayDate(registrationFee.getPayDate());
+        dto.setAmount(registrationFee.getAmount());
+        dto.setMemberId(registrationFee.getMember().getId());
+        return dto;
+    }
+
+    public static List<RegistrationFeeResponseDto> registrationFeesToRegistrationFeeResponseDtos(List<RegistrationFee> registrationFees){
+        List<RegistrationFeeResponseDto> dtos = new ArrayList<>();
+        for(RegistrationFee registrationFee : registrationFees){
+            dtos.add(registrationFeeToRegistrationFeeResponseDto(registrationFee));
         }
         return dtos;
     }

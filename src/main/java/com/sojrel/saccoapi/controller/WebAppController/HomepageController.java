@@ -73,6 +73,9 @@ public class HomepageController {
     private FlashLoanService flashLoanService;
 
     @Autowired
+    private RegistrationFeeService registrationFeeService;
+
+    @Autowired
     private FlashRepaymentService flashRepaymentService;
     DecimalFormat df = new DecimalFormat("0.00");
 
@@ -268,6 +271,12 @@ public class HomepageController {
         else{
             availableGuarantee = Double.valueOf(totalSavings) - Double.valueOf(loanService.getGuaranteeBalance(id));
         }
+        List<RegistrationFeeResponseDto> registrationFeeRequestDtos = registrationFeeService.getMemberRegistrationFees(id);
+        ItemTotalDto totalRegistrationFee = registrationFeeService.getTotalFee(id);
+        Long totalFee = totalRegistrationFee.getTotal();
+//        System.out.println(totalFee);
+        modelAndView.addObject("registrationFees", registrationFeeRequestDtos);
+        modelAndView.addObject("totalFee", totalFee);
         modelAndView.addObject("member", memberResponseDto);
         modelAndView.addObject("savings", totalSavings);
         modelAndView.addObject("shares", totalShares);
@@ -276,6 +285,19 @@ public class HomepageController {
         modelAndView.addObject("total", totalContribs);
 
         return modelAndView;
+    }
+
+    @PostMapping("/add-fee")
+    public ResponseEntity<?> addFee(@RequestBody RegistrationFeeRequestDto registrationFeeRequestDto){
+        try {
+            registrationFeeService.addRegistrationFee(registrationFeeRequestDto);
+            // Return a JSON response with success message
+            return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Fee added successfully.\"}");
+        } catch (Exception e) {
+            // Return a JSON response with error message
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"status\": \"error\", \"message\": \"Error adding fee.\"}");
+        }
     }
 
     @GetMapping("/add-contribution")

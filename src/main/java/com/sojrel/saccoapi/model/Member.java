@@ -18,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "member")
-//@Data
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
@@ -79,164 +79,11 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserFiles> userFiles;
 
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<RegistrationFee> registrationFees;
+
     @Column(nullable = false, columnDefinition = "tinyint(1) default 1")
-    private boolean isActive;
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMidName() {
-        return midName;
-    }
-
-    public void setMidName(String midName) {
-        this.midName = midName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDateTime getRegDate() {
-        return regDate;
-    }
-
-    public void setRegDate(LocalDateTime regDate) {
-        this.regDate = regDate;//.atZone(ZoneId.of("Africa/Nairobi")).toLocalDateTime();
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Long getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(Long idNo) {
-        this.idNo = idNo;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAlternativePhone() {
-        return alternativePhone;
-    }
-
-    public void setAlternativePhone(String alternativePhone) {
-        this.alternativePhone = alternativePhone;
-    }
-
-    public String getKraPin() {
-        return kraPin;
-    }
-
-    public void setKraPin(String kraPin) {
-        this.kraPin = kraPin;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public String getResidence() {
-        return residence;
-    }
-
-    public void setResidence(String residence) {
-        this.residence = residence;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public List<Contribution> getContributions() {
-        return contributions;
-    }
-
-    public void setContributions(List<Contribution> contributions) {
-        this.contributions = contributions;
-    }
-
-    public List<Loan> getLoansTaken() {
-        return loansTaken;
-    }
-
-    public void setLoansTaken(List<Loan> loansTaken) {
-        this.loansTaken = loansTaken;
-    }
-
-    public List<Loan> getLoansGuaranteed() {
-        return loansGuaranteed;
-    }
-
-    public void setLoansGuaranteed(List<Loan> loansGuaranteed) {
-        this.loansGuaranteed = loansGuaranteed;
-    }
-
-    public List<FlashLoan> getFlashLoans() {
-        return flashLoans;
-    }
-
-    public void setFlashLoans(List<FlashLoan> flashLoans) {
-        this.flashLoans = flashLoans;
-    }
-
-    public List<UserFiles> getUserFiles() {
-        return userFiles;
-    }
-
-    public void setUserFiles(List<UserFiles> userFiles) {
-        this.userFiles = userFiles;
-    }
-
-    public boolean getIsActive(){return isActive;}
-    public void setIsActive(boolean isActive){this.isActive = isActive;}
+    private Boolean isActive;
 
     public enum Gender{
         MALE,FEMALE,NONE
@@ -263,6 +110,13 @@ public class Member {
 
     public void removeLoanGuaranteed(Loan loan){
         loansGuaranteed.remove(loan);
+    }
+    public void addRegistrationFee(RegistrationFee registrationFee){
+        registrationFees.add(registrationFee);
+    }
+
+    public void removeRegistrationFee(RegistrationFee registrationFee){
+        registrationFees.remove(registrationFee);
     }
 
 
