@@ -25,7 +25,7 @@
         <div th:insert="~{base :: sidebar}" class="sidebar-container col-lg-2 p-0" id="sidebar-container"></div>
         <div class="my-section col-lg-10">
             <span id="results"></span>
-            <span class="d-flex justify-content-center mt-3 text-success fs-3 fw-bold">Member Details</span>
+            <span class="d-flex justify-content-center mt-3 text-success fs-3 fw-bold" th:text="${'Details of '+member.firstName+' '+member.midName+' '+member.lastName}"></span>
             <hr class="border-2 border-success">
             <table class="table" id="details-table">
                 <tbody>
