@@ -25,7 +25,7 @@
         <div th:insert="~{base :: sidebar}" class="sidebar-container col-md-3 col-lg-2 p-0" id="sidebar-container"></div>
         <div class="col-md-10 main-section p-0">
             <span class="m-0 p-0" id="results"></span>
-            <div class="page-title d-flex justify-content-center align-items-center pt-2 pb-2 mt-4 mx-2">
+            <div class="page-title d-flex justify-content-center align-items-center pt-2 pb-2 mt-3 mx-3">
               <span class="text-light">Add Credentials</span>
             </div>
             <div style="height:60px;"></div>
@@ -36,12 +36,12 @@
                             <input hidden id="id" th:value="${member.id}" name="memberId">
                             <div class="mb-3">
                                 <label for="id-front" class="form-label">ID Front:</label>
-                                <input type="file" class="form-control" id="id-front" name="idFrontPath" required>
+                                <input type="file" class="form-control" id="id-front" name="idFrontPath">
                                 <span id="front_msg"></span>
                             </div>
                             <div class="mb-3">
                                 <label for="id-back" class="form-label">ID Back:</label>
-                                <input type="file" class="form-control" id="id-back" name="idBackPath" required>
+                                <input type="file" class="form-control" id="id-back" name="idBackPath">
                                 <span id="back_msg"></span>
                             </div>
                             <div class="mb-3">
@@ -51,7 +51,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="passport" class="form-label">Passport Photo:</label>
-                                <input type="file" class="form-control" id="passport" name="passportPath" required>
+                                <input type="file" class="form-control" id="passport" name="passportPath">
                                 <span id="passport_msg"></span>
                             </div>
                             <div class="progress mb-3" id="progress" hidden>
