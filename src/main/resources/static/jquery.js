@@ -140,7 +140,7 @@ $(document).ready(function (){
 
                 let formData = {
                     memberId: $("#memId").val(),
-                    contributionDate: $("#pay-date").val(),
+                    payDate: $("#pay-date").val(),
                     amount:$("#fee-amount").val()
                 }
 //                alert(formData)
