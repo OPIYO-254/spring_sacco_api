@@ -8,6 +8,8 @@ public class Constants {
     public static final String CACHE_CONTROL_HEADER = "cache-control";
     public static final String CACHE_CONTROL_HEADER_VALUE = "no-cache";
     public static MediaType JSON_MEDIA_TYPE=MediaType.parse("application/json; charset=utf-8");
+    public static final String TRANSACTION_STATUS_QUERY_COMMAND = "TransactionStatusQuery";
+    public static final String ACCOUNT_BALANCE_COMMAND = "AccountBalance";
     public static String BEARER_AUTH_STRING = "Bearer";
     public static final String CUSTOMER_PAYBILL_ONLINE = "CustomerPayBillOnline";
     public static final String TRANSACTION_STATUS_VALUE = "Transaction Status";

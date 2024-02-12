@@ -127,6 +127,20 @@ public class ContributionServiceImpl implements ContributionService{
         return savings;
     }
 
+    @Override
+    public List<MemberMonthlySavingsDto> getMemberMonthlySavings(String memberId) {
+        Member member = memberService.getMemberById(memberId);
+        List<Contribution> contributions = contributionRepository.findByMemberAndContributionType(member, Contribution.ContributionType.SAVINGS);
+        List<MemberMonthlySavingsDto> savingsDtos = new ArrayList<>();
+        for(Contribution contribution : contributions){
+            MemberMonthlySavingsDto dto = new MemberMonthlySavingsDto();
+            dto.setContributionDate(contribution.getContributionDate());
+            dto.setAmount(contribution.getAmount());
+            savingsDtos.add(dto);
+        }
+        return savingsDtos;
+    }
+
 
 //    @Transactional
 //    @Override

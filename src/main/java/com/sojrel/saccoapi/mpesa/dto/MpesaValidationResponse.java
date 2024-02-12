@@ -14,12 +14,6 @@ public class MpesaValidationResponse {
     @JsonProperty("MSISDN")
     private String mSISDN;
 
-    @JsonProperty("FirstName")
-    private String firstName;
-
-    @JsonProperty("MiddleName")
-    private String middleName;
-
     @JsonProperty("BusinessShortCode")
     private String businessShortCode;
 
@@ -34,6 +28,12 @@ public class MpesaValidationResponse {
 
     @JsonProperty("InvoiceNumber")
     private String invoiceNumber;
+
+    @JsonProperty("FirstName")
+    private String firstName;
+
+    @JsonProperty("MiddleName")
+    private String middleName;
 
     @JsonProperty("LastName")
     private String lastName;

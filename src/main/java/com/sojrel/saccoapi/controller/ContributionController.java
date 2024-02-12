@@ -64,6 +64,13 @@ public class ContributionController {
         return new ResponseEntity<>(memberTotalSavingDtos, HttpStatus.OK);
     }
 
+    @GetMapping("/monthly-contributions")
+    public ResponseEntity<List<MemberMonthlySavingsDto>> getMemberMonthlySavings(@RequestParam String memberId){
+        List<MemberMonthlySavingsDto> savingsDtos = contributionService.getMemberMonthlySavings(memberId);
+        return new ResponseEntity<>(savingsDtos, HttpStatus.OK);
+
+    }
+
 
 
 

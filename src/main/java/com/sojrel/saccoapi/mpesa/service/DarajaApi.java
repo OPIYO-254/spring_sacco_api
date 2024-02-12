@@ -10,7 +10,13 @@ public interface DarajaApi {
 
     RegisterUrlResponse registerUrl();
     SimulateTransactionResponse simulateC2BTransaction(SimulateTransactionRequest simulateTransactionRequest);
-    B2CTransactionSyncResponse performB2CTransaction(InternalB2CTransactionRequest internalB2CTransactionRequest);
+    CommonSyncResponse performB2CTransaction(InternalB2CTransactionRequest internalB2CTransactionRequest);
 
     StkPushSyncResponse performStkPushTransaction(InternalStkPushRequest internalStkPushRequest);
+
+    TransactionStatusSyncResponse getTransactionResult(InternalTransactionStatusRequest internalTransactionStatusRequest);
+
+    CommonSyncResponse checkAccountBalance();
+
+    LNMQueryResponse getTransactionStatus(InternalLNMRequest internalLNMRequest);
 }

@@ -20,3 +20,4 @@ public class SimulateTransactionRequest {
     @JsonProperty("CommandID")
     private String commandID;
 }
+

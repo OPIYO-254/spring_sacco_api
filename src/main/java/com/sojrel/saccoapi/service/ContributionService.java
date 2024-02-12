@@ -1,10 +1,7 @@
 package com.sojrel.saccoapi.service;
 
 import com.sojrel.saccoapi.dto.requests.ContributionRequestDto;
-import com.sojrel.saccoapi.dto.responses.ContributionResponseDto;
-import com.sojrel.saccoapi.dto.responses.ItemCountDto;
-import com.sojrel.saccoapi.dto.responses.ItemTotalDto;
-import com.sojrel.saccoapi.dto.responses.MemberContributionsResponseDto;
+import com.sojrel.saccoapi.dto.responses.*;
 import com.sojrel.saccoapi.model.Contribution;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
@@ -25,5 +22,7 @@ public interface ContributionService {
     public ItemTotalDto getTotalSavings();
     public ItemTotalDto getMemberTotalShares(String memberId);
     public ItemTotalDto getMemberTotalSavings(String memberId);
+
+    public List<MemberMonthlySavingsDto> getMemberMonthlySavings(String memberId);
 
 }

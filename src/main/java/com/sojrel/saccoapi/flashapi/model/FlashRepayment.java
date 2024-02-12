@@ -35,7 +35,10 @@ public class FlashRepayment {
             transactionDate = LocalDateTime.now();//ZoneId.of("Africa/Nairobi")
         }
     }
+    
 
+
+//    stk response
     /**
      * {
      *     "Body": {
