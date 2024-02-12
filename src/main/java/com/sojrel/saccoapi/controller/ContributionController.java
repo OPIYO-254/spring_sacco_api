@@ -47,17 +47,6 @@ public class ContributionController {
         return new ResponseEntity<>(contributionResponseDto, HttpStatus.NOT_FOUND);
     }
 
-//    @PostMapping("/add-member/{contributionId}/{memberId}")
-//    public ResponseEntity<ContributionResponseDto> addMember(@PathVariable Long contributionId, @PathVariable String memberId){
-//        ContributionResponseDto contributionResponseDto = contributionService.addMemberToContribution(contributionId, memberId);
-//        return new ResponseEntity<>(contributionResponseDto, HttpStatus.OK);
-//    }
-//
-//    @PostMapping("/remove-member/{contributionId}/{memberId}")
-//    public ResponseEntity<ContributionResponseDto> removeMember(@PathVariable Long contributionId, @PathVariable String memberId){
-//        ContributionResponseDto contributionResponseDto = contributionService.removeMemberFromContribution(contributionId, memberId);
-//        return new ResponseEntity<>(contributionResponseDto, HttpStatus.OK);
-//    }
     @GetMapping("/total-savings")
     public ResponseEntity<List<MemberTotalSavingsDto>> membersTotalSavings(){
         List<MemberTotalSavingsDto> memberTotalSavingDtos = memberService.findMemberSavings();
