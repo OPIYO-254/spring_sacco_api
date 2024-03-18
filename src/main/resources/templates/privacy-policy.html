@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sojrel Sacco privacy policy</title>
+  <link th:fragment="icon" rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!--  <link href="https://fonts.googleapis.com/css2?family=Mina:wght@400;700&display=swap" rel="stylesheet">-->
+  <link href="https://db.onlinewebfonts.com/c/1bc63305a1c0194a52fbbd76c1143710?family=CenturyGothic-Regular" rel="stylesheet">
+  <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/datatables.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="navbar-container" th:insert="~{client_base :: navbar}"></div>
+<section class="container-fluid downloads-upper-section">
+  <div class="section-cover">
+    <div class="title text-light">
+      <h2>Our Data Privacy Policy</h2>
+    </div>
+  </div>
+</section>
+<main class="container">
+  <h4>1. Introduction</h4>
+  <p>This Data Privacy Policy outlines how we collect,
+    use, and protect the information you provide when you use our mobile app.</p>
+  <h4>2. Information we collect</h4>
+  <h6>a. User Account Information</h6>
+  When you sign up for Sojrel Sacco, we collect the following information:
+  <ul>
+    <li>Email Address</li>
+    <li>Password</li>
+    <li>Biometric authentication data (fingerprint and faceID)</li>
+  </ul>
+  <h6>b. Limited Access to Sacco Server</h6>
+  <p>
+    Sojrel Sacco Ltd does not gather any additional information from users other
+    than what is essential for providing financial services, specifically loan products
+    of different categories. The app accesses and displays only the registered details
+    from the Sacco server.
+  </p>
+  <h4>3. How We Use Your Information</h4>
+    We use the information you provide for the following purposes:
+    <ul>
+      <li>User authentication and authorization</li>
+      <li>Providing access to registered details from the Sacco server</li>
+      <li>Issuing financial services, including loan products as outlines <a th:href="@{/services}">here</a></li>
+    </ul>
+
+  <h4>4. Data Security</h4>
+  <p>Sojrel Sacco Ltd takes the security of your information seriously. We implement
+    industry-standard security measures to protect your data from unauthorized access,
+    disclosure, alteration, and destruction.</p>
+  <h4>5. Data Sharing</h4>
+  <p>We do not share your personal information with third parties unless
+    required by law or necessary for the provision of financial services.</p>
+  <h4>6. Consent</h4>
+  <p>By using the Sojrel Sacco mobile app, you consent to the collection, use,
+    and sharing of your information as described in this Data Privacy Policy.</p>
+  <h5>7. User Rights</h5>
+  As a user, you have the right to:
+  <li>Access and review your personal information</li>
+  <li>Correct any inaccuracies in your personal information</li>
+  <li>Request the deletion of your personal information</li>
+  <h4>8. Updates to the Privacy Policy</h4>
+  <p>We may update this Data Privacy Policy from time to time. The latest version
+    will be available within the app. It is your responsibility to review this policy
+    periodically for any changes.</p>
+  <h4>9. Contact Us </h4>
+  <p>If you have any questions or concerns regarding this Data Privacy Policy,
+    please contact us at sojrelsaccomanager@gmail.com.</p>
+</main>
+<div th:insert="~{client_base :: footer}"></div>
+<script>
+    $(document).ready( function () {
+        new DataTable("#downloads-table", {
+            processing:true,
+            pagingType:'simple_numbers'
+        });
+    });
+  </script>
+</body>
+</html>

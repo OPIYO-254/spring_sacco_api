@@ -84,7 +84,7 @@ public class SecurityConfig {
                         .requestMatchers("/styles.css","/main.js","/jquery.js","/error",
                         "/verify","/verify-success","/verify-fail","/images/**","/favicon.ico",
                         "/","/create-account","/api/auth/**","/login","/about-us","/membership","/services",
-                        "/contact-us","/downloads","/forgot-password","/reset-password","/file/**",
+                        "/contact-us","/downloads","/privacy-policy","/forgot-password","/reset-password","/file/**",
                         "/download/**","/payments/**","/downloadFile/**").permitAll()
                         .anyRequest().authenticated())
 

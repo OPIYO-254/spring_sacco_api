@@ -692,6 +692,10 @@ public class HomepageController {
     @GetMapping("/blogs")
     public String blogs(){return "blogs";}
 
+    @GetMapping("/privacy-policy")
+    public String openPrivacyPolicy(){
+        return "privacy-policy";
+    }
     @GetMapping("/downloads")
     public ModelAndView downloads(){
         ModelAndView modelAndView = new ModelAndView("downloads");
