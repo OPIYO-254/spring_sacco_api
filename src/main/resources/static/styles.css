@@ -1184,9 +1184,10 @@ body{
     .sidebar-container{
             display:none;
         }
-    .hide-md{
+    .hide-md, .long-span{
              display: none;
         }
+
 
     .left-icon{
         width: 22px;
@@ -1702,7 +1703,7 @@ body{
         width: 100%;
         margin: 8px 0;
     }
-    .hide-md{
+    .hide-md, .long-span{
          display: none;
     }
     .input-row{
